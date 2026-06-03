@@ -11,8 +11,8 @@ A single-file HTML Toastmasters Pathways progress tracker. Members self-report c
 ## Related Project
 Bond7010/toastmasters-pathways-app contains all 8 Pathways paths with project names, levels, and competencies. Reuse that data structure rather than recreating it.
 
-## Hosting Constraint
-Deployed to FTH (Free Toast Host) at 4039.toastmastersclubs.org. FTH imposes a file size limit — verify the limit against the existing app before adding large assets.
+## Hosting
+Served from GitHub Pages (github.com/Bond7010/pathways-dashboard). No file size constraint.
 
 ## Repo
 https://github.com/Bond7010/pathways-dashboard

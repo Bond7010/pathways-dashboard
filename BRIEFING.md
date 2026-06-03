@@ -5,15 +5,14 @@ Personal Toastmasters Pathways tracker. At-a-glance: path + level, projects comp
 
 ## Stack
 Single `.html` file · localStorage · no login · no backend
-FTH-hosted: 4039.toastmastersclubs.org (verify file size limit)
-Repo: github.com/Bond7010/pathways-dashboard
+Hosted: GitHub Pages — github.com/Bond7010/pathways-dashboard (no file size constraint)
 Data: reuse all 8 paths from Bond7010/toastmasters-pathways-app
 
 ## Current State
 Phase 2 complete — brand styling applied (56ad192)
 
 ## Active Task
-Phase 3: path data model + add/display one path
+Phase 4: CSS polish + next-project highlighting
 
 
 ## Key Files
