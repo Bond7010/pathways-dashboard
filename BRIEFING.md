@@ -9,10 +9,10 @@ Hosted: GitHub Pages — github.com/Bond7010/pathways-dashboard (no file size co
 Data: reuse all 8 paths from Bond7010/toastmasters-pathways-app
 
 ## Current State
-Phase 2 complete — brand styling applied (56ad192)
+Phase 3 complete — path data + structure (5fbb7d1)
 
 ## Active Task
-Phase 4: CSS polish + next-project highlighting
+Phase 4: CSS polish + visual hierarchy
 
 
 ## Key Files
