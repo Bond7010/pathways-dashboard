@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Pathways Dashboard</title>
+<style>
+  body { font-family: sans-serif; max-width: 800px; margin: 2rem auto; padding: 0 1rem; }
+  h2 { border-bottom: 1px solid #ccc; padding-bottom: 0.25rem; }
+  select, button { font-size: 1rem; padding: 0.3rem 0.6rem; margin-right: 0.5rem; }
+  #path-detail { display: none; }
+</style>
+</head>
+<body>
+<h1>My Pathways Dashboard</h1>
+
+<section id="my-paths">
+  <h2>My Active Paths</h2>
+  <div id="paths-list">(no paths tracked yet)</div>
+</section>
+
+<section id="add-path">
+  <h2>Track a New Path</h2>
+  <select id="path-select"><option value="">-- select a path --</option></select>
+  <button id="add-btn">Add Path</button>
+</section>
+
+<section id="path-detail">
+  <h2>Path Detail</h2>
+  <div id="detail-content"></div>
+</section>
+
+<script>
+const STORAGE_KEY = 'pathways_dashboard_v1';
+
+function loadDashboard() {
+  const raw = localStorage.getItem(STORAGE_KEY);
+  const data = raw ? JSON.parse(raw) : { paths: [] };
+  console.log('Dashboard data:', data);
+  // render nothing yet
+}
+
+document.addEventListener('DOMContentLoaded', loadDashboard);
+</script>
+</body>
+</html>
