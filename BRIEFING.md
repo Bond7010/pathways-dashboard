@@ -9,14 +9,12 @@ FTH-hosted: 4039.toastmastersclubs.org (verify file size limit)
 Repo: github.com/Bond7010/pathways-dashboard
 Data: reuse all 8 paths from Bond7010/toastmasters-pathways-app
 
-## Active Task
-Phase 1 only: scaffold the HTML shell + wire up localStorage data model.
-No path data yet. No UI polish. Just structure.
+## Current State
+Phase 2 complete — brand styling applied (56ad192)
 
-## Do NOT Do
-- Do NOT copy the full path data yet (that comes in Phase 2)
-- Do NOT add CSS polish in Phase 1
-- Do NOT exceed 30 lines total in this file — trim if needed
+## Active Task
+Phase 3: path data model + add/display one path
+
 
 ## Key Files
 - `pathways-dashboard.html` — the app (does not exist yet)
