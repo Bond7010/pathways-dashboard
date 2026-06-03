@@ -4,15 +4,75 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>My Pathways Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Source+Sans+Pro:wght@400;600&display=swap">
 <style>
-  body { font-family: sans-serif; max-width: 800px; margin: 2rem auto; padding: 0 1rem; }
-  h2 { border-bottom: 1px solid #ccc; padding-bottom: 0.25rem; }
-  select, button { font-size: 1rem; padding: 0.3rem 0.6rem; margin-right: 0.5rem; }
+  :root {
+    --maroon: #772432;
+    --blue:   #004165;
+    --gray:   #A9B2B1;
+    --yellow: #F2DF74;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: 'Source Sans Pro', sans-serif;
+    background: #F5F5F5;
+    margin: 0;
+    padding: 0;
+  }
+  header {
+    background: var(--maroon);
+    padding: 1rem 1.5rem;
+  }
+  header h1 {
+    font-family: 'Montserrat', sans-serif;
+    color: #fff;
+    margin: 0;
+    font-size: 1.6rem;
+    font-weight: 700;
+  }
+  main {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+  }
+  h2 {
+    font-family: 'Montserrat', sans-serif;
+    color: var(--blue);
+    border-bottom: 2px solid var(--gray);
+    padding-bottom: 0.25rem;
+    font-size: 1.15rem;
+    font-weight: 600;
+  }
+  select {
+    font-family: 'Source Sans Pro', sans-serif;
+    font-size: 1rem;
+    padding: 0.35rem 0.6rem;
+    margin-right: 0.5rem;
+    border: 1px solid var(--gray);
+    border-radius: 4px;
+  }
+  button {
+    font-family: 'Source Sans Pro', sans-serif;
+    font-size: 1rem;
+    padding: 0.35rem 0.9rem;
+    background: var(--maroon);
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  button:hover { background: #5a1b26; }
+  .progress-accent { color: var(--yellow); }
   #path-detail { display: none; }
 </style>
 </head>
 <body>
-<h1>My Pathways Dashboard</h1>
+<header>
+  <h1>My Pathways Dashboard</h1>
+</header>
+<main>
 
 <section id="my-paths">
   <h2>My Active Paths</h2>
@@ -30,6 +90,7 @@
   <div id="detail-content"></div>
 </section>
 
+</main>
 <script>
 const STORAGE_KEY = 'pathways_dashboard_v1';
 
