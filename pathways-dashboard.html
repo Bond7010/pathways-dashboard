@@ -6,23 +6,26 @@
 <title>My Pathways Dashboard</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Source+Sans+Pro:wght@400;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Source+Sans+3:wght@400;600&display=swap">
 <style>
   :root {
-    --maroon: #772432;
-    --blue:   #004165;
-    --gray:   #A9B2B1;
-    --yellow: #F2DF74;
+    --maroon:     #772432;
+    --blue:       #004165;
+    --gray:       #A9B2B1;
+    --yellow:     #F2DF74;
+    --blue-grad:   linear-gradient(135deg, #004165, #006094);
+    --maroon-grad: linear-gradient(135deg, #3B0104, #772432);
+    --gray-light:  #F0F2F2;
   }
   * { box-sizing: border-box; }
   body {
-    font-family: 'Source Sans Pro', sans-serif;
-    background: #F5F5F5;
+    font-family: 'Source Sans 3', sans-serif;
+    background: var(--gray-light);
     margin: 0;
     padding: 0;
   }
   header {
-    background: var(--maroon);
+    background: var(--blue-grad);
     padding: 1rem 1.5rem;
   }
   header h1 {
@@ -53,19 +56,25 @@
     background: #fff;
     border: 1px solid var(--gray);
     border-radius: 6px;
-    padding: 1rem;
+    padding: 0;
+    overflow: hidden;
   }
-  .path-header {
+  .path-col-header {
+    background: var(--blue-grad);
+    color: #fff;
+    padding: 0.75rem 1rem;
     display: flex;
     align-items: flex-start;
     gap: 0.5rem;
-    margin-bottom: 0.2rem;
+  }
+  .path-col-body {
+    padding: 0.75rem 1rem 1rem;
   }
   .path-name {
     font-family: 'Montserrat', sans-serif;
     font-weight: 700;
     font-size: 1rem;
-    color: var(--blue);
+    color: #fff;
     flex: 1;
   }
   .path-badge {
@@ -113,7 +122,10 @@
   }
   .project-name { flex: 1; }
   .status-pill {
-    font-size: 0.68rem;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
     padding: 0.1rem 0.35rem;
     border-radius: 999px;
     border: 1px solid var(--gray);
@@ -122,6 +134,7 @@
     white-space: nowrap;
     user-select: none;
     flex-shrink: 0;
+    transition: background 0.15s, border-color 0.15s, color 0.15s;
   }
   .status-pill.complete    { background: #d4edda; border-color: #28a745; color: #155724; }
   .status-pill.in-progress { background: #fff3cd; border-color: #e0a800; color: #7a5c00; }
@@ -130,9 +143,11 @@
     color: #555;
     margin-top: 0.25rem;
     line-height: 1.4;
+    border-left: 3px solid var(--blue);
+    padding-left: 0.5rem;
   }
   .meta-line strong { color: var(--blue); }
-  .meta-line.ed { }
+  .meta-line.ed { border-left-color: var(--maroon); }
   .meta-line.ed strong { color: var(--maroon); }
   .path-completion-row {
     border-top: 1px solid #eee;
@@ -190,6 +205,9 @@
 </section>
 
 </main>
+<footer style="background:#fff;border-top:1px solid #A9B2B1;padding:0.75rem 1.5rem;font-size:0.72rem;color:#555;line-height:1.5;">
+  The information on this website is for the sole use of Toastmasters' members, for Toastmasters business only. It is not to be used for solicitation and distribution of non-Toastmasters material or information.
+</footer>
 <script>
 const STORAGE_KEY = 'pathways_dashboard_v1';
 
@@ -556,10 +574,11 @@ function renderPath(path) {
   const typeLabel = path.type.charAt(0).toUpperCase() + path.type.slice(1) + ' path';
 
   let html = `<div class="path-col">`;
-  html += `<div class="path-header">
+  html += `<div class="path-col-header">
     <span class="path-name">${path.name}</span>
     <span class="path-badge ${badgeClass}">${badgeText}</span>
   </div>`;
+  html += `<div class="path-col-body">`;
   html += `<p class="path-type-label">${typeLabel}</p>`;
   html += `<p class="path-completion-date">Completed: —</p>`;
 
@@ -575,6 +594,7 @@ function renderPath(path) {
     </div>
   </div>`;
 
+  html += `</div>`;
   html += `</div>`;
   return html;
 }

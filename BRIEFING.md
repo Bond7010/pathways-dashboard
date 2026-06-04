@@ -9,13 +9,12 @@ Hosted: GitHub Pages — github.com/Bond7010/pathways-dashboard (no file size co
 Data: reuse all 8 paths from Bond7010/toastmasters-pathways-app
 
 ## Current State
-Phase 3 complete — path data + structure (5fbb7d1)
+Phase 4a complete — TM brand colors, card headers, fonts, footer disclaimer
 
 ## Active Task
-Phase 4: CSS polish + visual hierarchy
-
+Phase 4b: enhancement flag toggle + Basic Training defaults
 
 ## Key Files
-- `pathways-dashboard.html` — the app (does not exist yet)
+- `pathways-dashboard.html` — the app
 - `BRIEFING.md` — session briefing (this file)
 - `CLAUDE.md` — architecture reference
