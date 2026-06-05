@@ -9,7 +9,7 @@ Hosted: GitHub Pages — github.com/Bond7010/pathways-dashboard (no file size co
 Data: reuse all 8 paths from Bond7010/toastmasters-pathways-app
 
 ## Current State
-Phase 4e complete — header consolidation, single scrollbar, achievement pill brand fix
+Phase 4d complete — horizontal scroll visible with styled scrollbar
 
 ## Active Task
 Phase 5: deploy to GitHub Pages and share with club

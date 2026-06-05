@@ -6,6 +6,12 @@ Phase 4e — header consolidation, single scrollbar, achievement pill brand fix
 
 ## What Was Done
 
+### Scrollbar (Phase 4d — post 4e patch)
+- `main`: `overflow-x: hidden` to contain layout
+- `#paths-section`: `overflow: hidden` to clip child overflow
+- `#paths-scroll`: `overflow-x: scroll` (not auto), `width: 100%`, `min-width: 0`
+- Added `::-webkit-scrollbar` rules: 8px height, `#004165` thumb, `#772432` hover, `#e0e0e0` track
+
 ### Layout (Phase 4e)
 - Reverted fixed-viewport layout — `body` is simple block flow, no `height: 100vh` or `overflow: hidden`
 - ONE horizontal scrollbar: `#paths-scroll` has `overflow-x: auto`; no per-column overflow
