@@ -278,6 +278,25 @@
     border: none;
     color: #fff;
   }
+  @media print {
+    @page {
+      size: A3 landscape;
+      margin: 5mm;
+    }
+    body {
+      zoom: 0.38;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    header { position: static !important; }
+    #paths-scroll {
+      overflow: visible !important;
+      display: flex !important;
+      flex-wrap: nowrap !important;
+    }
+    .path-col { break-inside: avoid; page-break-inside: avoid; }
+    .standalone-section { page-break-before: avoid; }
+  }
 </style>
 </head>
 <body>
