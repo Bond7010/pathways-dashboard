@@ -9,10 +9,10 @@ Hosted: GitHub Pages — github.com/Bond7010/pathways-dashboard (no file size co
 Data: reuse all 8 paths from Bond7010/toastmasters-pathways-app
 
 ## Current State
-Phase 4a complete — TM brand colors, card headers, fonts, footer disclaimer
+Phase 4c complete — brand pills, In Progress state, ID in header, completion date removed
 
 ## Active Task
-Phase 4c: visual QA and GitHub Pages deploy check
+Phase 4d: GitHub Pages deploy check + final QA
 
 ## Key Files
 - `pathways-dashboard.html` — the app

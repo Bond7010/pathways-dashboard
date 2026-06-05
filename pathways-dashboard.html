@@ -115,11 +115,6 @@
     color: #888;
     margin-bottom: 0.25rem;
   }
-  .path-completion-date {
-    font-size: 0.8rem;
-    color: #666;
-    margin-bottom: 0.75rem;
-  }
   .level-section {
     border-top: 1px solid #eee;
     padding-top: 0.5rem;
@@ -176,8 +171,10 @@
     flex-shrink: 0;
     transition: background 0.15s, border-color 0.15s, color 0.15s;
   }
-  .status-pill.complete    { background: #d4edda; border-color: #28a745; color: #155724; }
-  .status-pill.in-progress { background: #fff3cd; border-color: #e0a800; color: #7a5c00; }
+  .status-pill.complete    { background: linear-gradient(135deg, #3B0104, #772432); border-color: transparent; color: #fff; }
+  .status-pill.in-progress { background: #F2DF74; border-color: #F2DF74; color: #3B0104; }
+  .project-item:has(.status-pill.complete) .elec-badge    { background: linear-gradient(135deg, #3B0104, #772432); color: #fff; }
+  .project-item:has(.status-pill.in-progress) .elec-badge { background: #F2DF74; color: #3B0104; }
   .meta-line {
     font-size: 0.72rem;
     color: #555;
@@ -254,7 +251,7 @@
 </head>
 <body>
 <header>
-  <h1>My Pathways Dashboard</h1>
+  <h1>My Pathways Dashboard (ID: PN-07351286)</h1>
   <button id="toggle-enhancements" class="toggle-btn">+ Enhancements</button>
 </header>
 <main>
@@ -723,9 +720,38 @@ function saveStore() {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(store));
 }
 
-function initBasicTrainingDefaults() {
+function initDefaults() {
   if (store['basic-training.L1.req.0'] === undefined) store['basic-training.L1.req.0'] = 'Complete';
   if (store['basic-training.L1.req.1'] === undefined) store['basic-training.L1.req.1'] = 'Complete';
+  if (store['basic-training.L1.req.2'] === undefined) store['basic-training.L1.req.2'] = 'In Progress';
+
+  const inProgressKeys = [
+    'engaging-humor.L3.elec.researching-and-presenting',
+    'engaging-humor.L3.elec.make-connections-through-networking',
+    'engaging-humor.L4.elec.public-relations-strategies',
+    'engaging-humor.L5.elec.high-performance-leadership',
+    'presentation-mastery.L3.elec.know-your-sense-of-humor',
+    'presentation-mastery.L3.elec.understanding-vocal-variety',
+    'presentation-mastery.L4.elec.manage-projects-successfully',
+    'presentation-mastery.L5.elec.high-performance-leadership',
+    'persuasive-influence.L3.elec.inspire-your-audience',
+    'persuasive-influence.L3.elec.researching-and-presenting',
+    'persuasive-influence.L4.elec.write-a-compelling-blog',
+    'persuasive-influence.L4.elec.create-a-podcast',
+    'persuasive-influence.L5.elec.leading-in-your-volunteer-organization',
+    'team-collaboration.L3.elec.active-listening',
+    'team-collaboration.L3.elec.using-presentation-software',
+    'team-collaboration.L4.elec.write-a-compelling-blog',
+    'team-collaboration.L5.elec.high-performance-leadership',
+    'team-collaboration.L5.elec.prepare-to-speak-professionally',
+    'innovative-planning.L3.elec.researching-and-presenting',
+    'innovative-planning.L3.elec.focus-on-the-positive',
+    'innovative-planning.L3.elec.creating-effective-visual-aids',
+    'innovative-planning.L4.elec.public-relations-strategies',
+    'innovative-planning.L4.elec.manage-online-meetings',
+    'innovative-planning.L5.elec.moderate-a-panel-discussion',
+  ];
+  inProgressKeys.forEach(k => { if (store[k] === undefined) store[k] = 'In Progress'; });
   saveStore();
 }
 
@@ -825,7 +851,6 @@ function renderPath(path) {
   </div>`;
   html += `<div class="path-col-body">`;
   html += `<p class="path-type-label">${typeLabel}</p>`;
-  html += `<p class="path-completion-date">Completed: —</p>`;
 
   path.levels.forEach((level, lIdx) => {
     html += renderLevel(path, lIdx + 1, level);
@@ -856,7 +881,7 @@ function renderAll() {
 
 document.addEventListener('DOMContentLoaded', function () {
   loadStore();
-  initBasicTrainingDefaults();
+  initDefaults();
   renderAll();
 
   // Pill toggle (event delegation — attached once)
