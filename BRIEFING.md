@@ -12,7 +12,7 @@ Data: reuse all 8 paths from Bond7010/toastmasters-pathways-app
 Phase 4a complete — TM brand colors, card headers, fonts, footer disclaimer
 
 ## Active Task
-Phase 4b: enhancement flag toggle + Basic Training defaults
+Phase 4c: visual QA and GitHub Pages deploy check
 
 ## Key Files
 - `pathways-dashboard.html` — the app

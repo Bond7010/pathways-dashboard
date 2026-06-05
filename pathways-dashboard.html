@@ -26,7 +26,12 @@
   }
   header {
     background: var(--blue-grad);
-    padding: 1rem 1.5rem;
+    padding: 0.85rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
   }
   header h1 {
     font-family: 'Montserrat', sans-serif;
@@ -34,6 +39,25 @@
     margin: 0;
     font-size: 1.6rem;
     font-weight: 700;
+  }
+  .toggle-btn {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    padding: 0.3rem 0.8rem;
+    border-radius: 999px;
+    border: 1.5px solid rgba(255,255,255,0.5);
+    background: transparent;
+    color: rgba(255,255,255,0.8);
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.15s, border-color 0.15s, color 0.15s;
+  }
+  .toggle-btn.active {
+    background: rgba(255,255,255,0.18);
+    border-color: rgba(255,255,255,0.9);
+    color: #fff;
   }
   main { padding: 1.5rem 1rem; }
   h2 {
@@ -84,7 +108,7 @@
     white-space: nowrap;
     flex-shrink: 0;
   }
-  .path-badge.completed  { background: var(--maroon); color: #fff; }
+  .path-badge.completed   { background: var(--maroon); color: #fff; }
   .path-badge.in-progress { background: var(--yellow); color: #333; }
   .path-type-label {
     font-size: 0.7rem;
@@ -121,6 +145,22 @@
     font-size: 0.82rem;
   }
   .project-name { flex: 1; }
+  .elec-badge {
+    font-size: 0.58rem;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #999;
+    background: #f0f0f0;
+    border-radius: 3px;
+    padding: 0.05rem 0.28rem;
+    margin-right: 0.2rem;
+    vertical-align: middle;
+    display: inline-block;
+    position: relative;
+    top: -1px;
+  }
   .status-pill {
     font-family: 'Montserrat', sans-serif;
     font-size: 0.65rem;
@@ -149,11 +189,48 @@
   .meta-line strong { color: var(--blue); }
   .meta-line.ed { border-left-color: var(--maroon); }
   .meta-line.ed strong { color: var(--maroon); }
+  .enhancement-block {
+    margin-top: 0.3rem;
+  }
+  .enhancement-block.pre-oct {
+    padding: 0.3rem 0.4rem;
+    background: #fafafa;
+    border-radius: 3px;
+    margin-top: 0.4rem;
+  }
+  .pre-oct-label {
+    display: block;
+    font-size: 0.63rem;
+    color: #aaa;
+    font-style: italic;
+    margin-bottom: 0.2rem;
+  }
+  .enhancement-block.pre-oct .meta-line {
+    color: #ccc;
+    border-left-color: #ddd;
+  }
+  .enhancement-block.pre-oct .meta-line strong { color: #ccc; }
+  .enhancement-block.pre-oct .meta-line.ed { border-left-color: #ddd; }
+  .enhancement-block.pre-oct .meta-line.ed strong { color: #ccc; }
   .path-completion-row {
     border-top: 1px solid #eee;
     padding-top: 0.5rem;
     margin-top: 0.75rem;
   }
+  .reset-btn {
+    display: block;
+    margin-top: 0.75rem;
+    font-size: 0.72rem;
+    font-family: 'Source Sans 3', sans-serif;
+    color: #c0392b;
+    background: none;
+    border: 1px solid #c0392b;
+    border-radius: 4px;
+    padding: 0.25rem 0.6rem;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .reset-btn:hover { background: #fdf0f0; }
   #achievements-section { max-width: 600px; }
   .achievement-list { list-style: none; margin: 0; padding: 0; }
   .achievement-item {
@@ -178,6 +255,7 @@
 <body>
 <header>
   <h1>My Pathways Dashboard</h1>
+  <button id="toggle-enhancements" class="toggle-btn">+ Enhancements</button>
 </header>
 <main>
 
@@ -221,7 +299,7 @@ const L3_ED = 'Successful Club Series: Creating the Best Club Climate, Meeting R
 const L4_ED = 'Successful Club: Finding New Members, Closing the Sale, How to Be a Distinguished Club, Toastmasters Educational Program; or Better Speaker: any of 10 titles';
 const L5_ED = 'Successful Club: Moments of Truth, Evaluate to Motivate, Mentoring; or Leadership Excellence: any of 11 titles';
 
-const LEVEL_NAMES_CURRENT = [
+const LN = [
   'Level 1 — Mastering Fundamentals',
   'Level 2 — Learning Your Style',
   'Level 3 — Increasing Knowledge',
@@ -229,7 +307,52 @@ const LEVEL_NAMES_CURRENT = [
   'Level 5 — Demonstrating Expertise',
 ];
 
+// e(name, done) — helper for elective items
+function e(name, done) { return { name, defaultStatus: done ? 'Complete' : '—' }; }
+
 const PATHS_DATA = [
+  // ── 1. BASIC TRAINING (vintage, in-progress) ──────────────────────────────
+  {
+    id: 'basic-training',
+    name: 'Basic Training for Toastmasters',
+    type: 'vintage',
+    defaultStatus: '—',
+    levels: [
+      {
+        name: 'Level 1 — Introduction to Basic Training',
+        required: ['Speech 1: The Ice Breaker', 'Speech 2: Be in Earnest', 'When You Are Table Topic Chairperson'],
+        electiveItems: [],
+        meetingRoles: null, edSeries: null,
+      },
+      {
+        name: 'Level 2 — Developing Your Skills',
+        required: ['When You Are Toastmaster of the Evening', 'Speech 3: Building a Speech', 'Speech 4: Hands Up'],
+        electiveItems: [],
+        meetingRoles: null, edSeries: null,
+      },
+      {
+        name: 'Level 3 — Building on the Fundamentals',
+        required: ['Speech 5: Vocal Variety', 'Speech 6: Speech Building', 'When You Are a Critic or Evaluator', 'Take Your Measure Again'],
+        electiveItems: [],
+        meetingRoles: null, edSeries: null,
+      },
+      {
+        name: 'Level 4 — Advancing Your Technique',
+        required: ['Speech 7: Reading the Speech', 'Speech 8: Illuminate the Speech', 'Speech 9: Working With Words'],
+        electiveItems: [],
+        meetingRoles: null, edSeries: null,
+      },
+      {
+        name: 'Level 5 — Mastering the Craft',
+        required: ['Speech 10: Special Types of Speech', 'Speech 11: Organizing the Speech', 'Speech 12: Carrying On'],
+        electiveItems: [],
+        meetingRoles: null, edSeries: null,
+      },
+    ],
+    completion: 'What Did You Get Out of It?',
+  },
+
+  // ── 2. ENGAGING HUMOR (current, Complete, pre-Oct 2025) ───────────────────
   {
     id: 'engaging-humor',
     name: 'Engaging Humor',
@@ -237,43 +360,70 @@ const PATHS_DATA = [
     defaultStatus: 'Complete',
     levels: [
       {
-        name: LEVEL_NAMES_CURRENT[0],
+        name: LN[0],
         required: ['Ice Breaker', 'Writing a Speech with Purpose', 'Introduction to Vocal Variety and Body Language', 'Evaluation and Feedback'],
-        electives: 0,
-        meetingRoles: L1_ROLES,
-        edSeries: null,
+        electiveItems: [],
+        meetingRoles: L1_ROLES, edSeries: null,
       },
       {
-        name: LEVEL_NAMES_CURRENT[1],
+        name: LN[1],
         required: ['Know Your Sense of Humor', 'Connect with Your Audience', 'Introduction to Toastmasters Mentoring'],
-        electives: 0,
-        meetingRoles: L2_ROLES,
-        edSeries: null,
+        electiveItems: [],
+        meetingRoles: L2_ROLES, edSeries: null,
       },
       {
-        name: LEVEL_NAMES_CURRENT[2],
+        name: LN[2],
         required: ['Engage Your Audience with Humor'],
-        electives: 2,
-        meetingRoles: L3_ROLES,
-        edSeries: L3_ED,
+        electiveItems: [
+          e('Effective Body Language', true),
+          e('Focus on the Positive', true),
+          e('Inspire Your Audience', true),
+          e('Using Presentation Software', true),
+          e('Active Listening', false),
+          e('Connect with Storytelling', false),
+          e('Creating Effective Visual Aids', false),
+          e('Deliver Social Speeches', false),
+          e('Make Connections Through Networking', false),
+          e('Prepare for an Interview', false),
+          e('Researching and Presenting', false),
+          e('Understanding Vocal Variety', false),
+          e('Using Descriptive Language', false),
+        ],
+        meetingRoles: L3_ROLES, edSeries: L3_ED,
       },
       {
-        name: LEVEL_NAMES_CURRENT[3],
+        name: LN[3],
         required: ['The Power of Humor in an Impromptu Speech'],
-        electives: 1,
-        meetingRoles: L4_ROLES,
-        edSeries: L4_ED,
+        electiveItems: [
+          e('Question-and-Answer Session', true),
+          e('Building a Social Media Presence', false),
+          e('Create a Podcast', false),
+          e('Manage Online Meetings', false),
+          e('Manage Projects Successfully', false),
+          e('Managing a Difficult Audience', false),
+          e('Public Relations Strategies', false),
+          e('Write a Compelling Blog', false),
+        ],
+        meetingRoles: L4_ROLES, edSeries: L4_ED,
       },
       {
-        name: LEVEL_NAMES_CURRENT[4],
+        name: LN[4],
         required: ['Deliver Your Message with Humor'],
-        electives: 1,
-        meetingRoles: L5_ROLES,
-        edSeries: L5_ED,
+        electiveItems: [
+          e('Leading in Your Volunteer Organization', true),
+          e('Ethical Leadership', false),
+          e('High Performance Leadership', false),
+          e('Lessons Learned', false),
+          e('Moderate a Panel Discussion', false),
+          e('Prepare to Speak Professionally', false),
+        ],
+        meetingRoles: L5_ROLES, edSeries: L5_ED,
       },
     ],
     completion: 'Reflect on Your Path',
   },
+
+  // ── 3. PRESENTATION MASTERY (current, Complete, pre-Oct 2025) ─────────────
   {
     id: 'presentation-mastery',
     name: 'Presentation Mastery',
@@ -281,43 +431,69 @@ const PATHS_DATA = [
     defaultStatus: 'Complete',
     levels: [
       {
-        name: LEVEL_NAMES_CURRENT[0],
+        name: LN[0],
         required: ['Ice Breaker', 'Writing a Speech with Purpose', 'Introduction to Vocal Variety and Body Language', 'Evaluation and Feedback'],
-        electives: 0,
-        meetingRoles: L1_ROLES,
-        edSeries: null,
+        electiveItems: [],
+        meetingRoles: L1_ROLES, edSeries: null,
       },
       {
-        name: LEVEL_NAMES_CURRENT[1],
+        name: LN[1],
         required: ['Understanding Your Communication Style', 'Effective Body Language', 'Introduction to Toastmasters Mentoring'],
-        electives: 0,
-        meetingRoles: L2_ROLES,
-        edSeries: null,
+        electiveItems: [],
+        meetingRoles: L2_ROLES, edSeries: null,
       },
       {
-        name: LEVEL_NAMES_CURRENT[2],
+        name: LN[2],
         required: ['Persuasive Speaking'],
-        electives: 2,
-        meetingRoles: L3_ROLES,
-        edSeries: L3_ED,
+        electiveItems: [
+          e('Creating Effective Visual Aids', true),
+          e('Focus on the Positive', true),
+          e('Inspire Your Audience', true),
+          e('Using Presentation Software', true),
+          e('Active Listening', false),
+          e('Connect with Storytelling', false),
+          e('Connect with Your Audience', false),
+          e('Deliver Social Speeches', false),
+          e('Know Your Sense of Humor', false),
+          e('Make Connections Through Networking', false),
+          e('Prepare for an Interview', false),
+          e('Researching and Presenting', false),
+          e('Understanding Vocal Variety', false),
+          e('Using Descriptive Language', false),
+        ],
+        meetingRoles: L3_ROLES, edSeries: L3_ED,
       },
       {
-        name: LEVEL_NAMES_CURRENT[3],
+        name: LN[3],
         required: ['Managing a Difficult Audience'],
-        electives: 1,
-        meetingRoles: L4_ROLES,
-        edSeries: L4_ED,
+        electiveItems: [
+          e('Write a Compelling Blog', true),
+          e('Building a Social Media Presence', false),
+          e('Create a Podcast', false),
+          e('Manage Online Meetings', false),
+          e('Manage Projects Successfully', false),
+          e('Public Relations Strategies', false),
+          e('Question-and-Answer Session', false),
+        ],
+        meetingRoles: L4_ROLES, edSeries: L4_ED,
       },
       {
-        name: LEVEL_NAMES_CURRENT[4],
+        name: LN[4],
         required: ['Prepare to Speak Professionally'],
-        electives: 1,
-        meetingRoles: L5_ROLES,
-        edSeries: L5_ED,
+        electiveItems: [
+          e('Lessons Learned', true),
+          e('Ethical Leadership', false),
+          e('High Performance Leadership', false),
+          e('Leading in Your Volunteer Organization', false),
+          e('Moderate a Panel Discussion', false),
+        ],
+        meetingRoles: L5_ROLES, edSeries: L5_ED,
       },
     ],
     completion: 'Reflect on Your Path',
   },
+
+  // ── 4. PERSUASIVE INFLUENCE (current, Complete, pre-Oct 2025) ─────────────
   {
     id: 'persuasive-influence',
     name: 'Persuasive Influence',
@@ -325,43 +501,70 @@ const PATHS_DATA = [
     defaultStatus: 'Complete',
     levels: [
       {
-        name: LEVEL_NAMES_CURRENT[0],
+        name: LN[0],
         required: ['Ice Breaker', 'Writing a Speech with Purpose', 'Introduction to Vocal Variety and Body Language', 'Evaluation and Feedback'],
-        electives: 0,
-        meetingRoles: L1_ROLES,
-        edSeries: null,
+        electiveItems: [],
+        meetingRoles: L1_ROLES, edSeries: null,
       },
       {
-        name: LEVEL_NAMES_CURRENT[1],
+        name: LN[1],
         required: ['Understanding Your Leadership Style', 'Active Listening', 'Introduction to Toastmasters Mentoring'],
-        electives: 0,
-        meetingRoles: L2_ROLES,
-        edSeries: null,
+        electiveItems: [],
+        meetingRoles: L2_ROLES, edSeries: null,
       },
       {
-        name: LEVEL_NAMES_CURRENT[2],
+        name: LN[2],
         required: ['Understanding Conflict Resolution'],
-        electives: 2,
-        meetingRoles: L3_ROLES,
-        edSeries: L3_ED,
+        electiveItems: [
+          e('Deliver Social Speeches', true),
+          e('Using Presentation Software', true),
+          e('Connect with Storytelling', false),
+          e('Connect with Your Audience', false),
+          e('Creating Effective Visual Aids', false),
+          e('Effective Body Language', false),
+          e('Focus on the Positive', false),
+          e('Inspire Your Audience', false),
+          e('Know Your Sense of Humor', false),
+          e('Make Connections Through Networking', false),
+          e('Prepare for an Interview', false),
+          e('Researching and Presenting', false),
+          e('Understanding Vocal Variety', false),
+          e('Using Descriptive Language', false),
+        ],
+        meetingRoles: L3_ROLES, edSeries: L3_ED,
       },
       {
-        name: LEVEL_NAMES_CURRENT[3],
+        name: LN[3],
         required: ['Leading in Difficult Situations'],
-        electives: 1,
-        meetingRoles: L4_ROLES,
-        edSeries: L4_ED,
+        electiveItems: [
+          e('Manage Online Meetings', true),
+          e('Building a Social Media Presence', false),
+          e('Create a Podcast', false),
+          e('Manage Projects Successfully', false),
+          e('Managing a Difficult Audience', false),
+          e('Public Relations Strategies', false),
+          e('Question-and-Answer Session', false),
+          e('Write a Compelling Blog', false),
+        ],
+        meetingRoles: L4_ROLES, edSeries: L4_ED,
       },
       {
-        name: LEVEL_NAMES_CURRENT[4],
+        name: LN[4],
         required: ['High Performance Leadership'],
-        electives: 1,
-        meetingRoles: L5_ROLES,
-        edSeries: L5_ED,
+        electiveItems: [
+          e('Lessons Learned', true),
+          e('Ethical Leadership', false),
+          e('Leading in Your Volunteer Organization', false),
+          e('Moderate a Panel Discussion', false),
+          e('Prepare to Speak Professionally', false),
+        ],
+        meetingRoles: L5_ROLES, edSeries: L5_ED,
       },
     ],
     completion: 'Reflect on Your Path',
   },
+
+  // ── 5. TEAM COLLABORATION (legacy, Complete) ──────────────────────────────
   {
     id: 'team-collaboration',
     name: 'Team Collaboration',
@@ -371,41 +574,70 @@ const PATHS_DATA = [
       {
         name: 'Level 1',
         required: ['Ice Breaker', 'Writing a Speech with Purpose', 'Introduction to Vocal Variety and Body Language', 'Evaluation and Feedback'],
-        electives: 0,
-        meetingRoles: null,
-        edSeries: null,
+        electiveItems: [],
+        meetingRoles: null, edSeries: null,
       },
       {
         name: 'Level 2',
         required: ['Understanding Your Leadership Style', 'Active Listening', 'Introduction to Toastmasters Mentoring'],
-        electives: 0,
-        meetingRoles: null,
-        edSeries: null,
+        electiveItems: [],
+        meetingRoles: null, edSeries: null,
       },
       {
         name: 'Level 3',
         required: ['Successful Collaboration'],
-        electives: 2,
-        meetingRoles: null,
-        edSeries: null,
+        electiveItems: [
+          e('Connect with Your Audience', true),
+          e('Make Connections Through Networking', true),
+          e('Active Listening', false),
+          e('Connect with Storytelling', false),
+          e('Creating Effective Visual Aids', false),
+          e('Deliver Social Speeches', false),
+          e('Effective Body Language', false),
+          e('Focus on the Positive', false),
+          e('Inspire Your Audience', false),
+          e('Know Your Sense of Humor', false),
+          e('Prepare for an Interview', false),
+          e('Researching and Presenting', false),
+          e('Understanding Vocal Variety', false),
+          e('Using Descriptive Language', false),
+          e('Using Presentation Software', false),
+        ],
+        meetingRoles: null, edSeries: null,
       },
       {
         name: 'Level 4',
         required: ['Motivate Others'],
-        electives: 1,
-        meetingRoles: null,
-        edSeries: null,
+        electiveItems: [
+          e('Public Relations Strategies', true),
+          e('Building a Social Media Presence', false),
+          e('Create a Podcast', false),
+          e('Manage Online Meetings', false),
+          e('Manage Projects Successfully', false),
+          e('Managing a Difficult Audience', false),
+          e('Question-and-Answer Session', false),
+          e('Write a Compelling Blog', false),
+        ],
+        meetingRoles: null, edSeries: null,
       },
       {
         name: 'Level 5',
         required: ['Lead in Any Situation'],
-        electives: 1,
-        meetingRoles: null,
-        edSeries: null,
+        electiveItems: [
+          e('Moderate a Panel Discussion', true),
+          e('Ethical Leadership', false),
+          e('High Performance Leadership', false),
+          e('Leading in Your Volunteer Organization', false),
+          e('Lessons Learned', false),
+          e('Prepare to Speak Professionally', false),
+        ],
+        meetingRoles: null, edSeries: null,
       },
     ],
     completion: 'Reflect on Your Path',
   },
+
+  // ── 6. INNOVATIVE PLANNING (legacy, Complete) ─────────────────────────────
   {
     id: 'innovative-planning',
     name: 'Innovative Planning',
@@ -415,90 +647,72 @@ const PATHS_DATA = [
       {
         name: 'Level 1',
         required: ['Ice Breaker', 'Writing a Speech with Purpose', 'Introduction to Vocal Variety and Body Language', 'Evaluation and Feedback'],
-        electives: 0,
-        meetingRoles: null,
-        edSeries: null,
+        electiveItems: [],
+        meetingRoles: null, edSeries: null,
       },
       {
         name: 'Level 2',
         required: ['Understanding Your Leadership Style', 'Connect with Your Audience', 'Introduction to Toastmasters Mentoring'],
-        electives: 0,
-        meetingRoles: null,
-        edSeries: null,
+        electiveItems: [],
+        meetingRoles: null, edSeries: null,
       },
       {
         name: 'Level 3',
         required: ['Present a Proposal'],
-        electives: 2,
-        meetingRoles: null,
-        edSeries: null,
+        electiveItems: [
+          e('Deliver Social Speeches', true),
+          e('Know Your Sense of Humor', true),
+          e('Using Presentation Software', true),
+          e('Active Listening', false),
+          e('Connect with Storytelling', false),
+          e('Connect with Your Audience', false),
+          e('Creating Effective Visual Aids', false),
+          e('Effective Body Language', false),
+          e('Focus on the Positive', false),
+          e('Inspire Your Audience', false),
+          e('Make Connections Through Networking', false),
+          e('Prepare for an Interview', false),
+          e('Researching and Presenting', false),
+          e('Understanding Vocal Variety', false),
+          e('Using Descriptive Language', false),
+        ],
+        meetingRoles: null, edSeries: null,
       },
       {
         name: 'Level 4',
         required: ['Manage Projects Successfully'],
-        electives: 1,
-        meetingRoles: null,
-        edSeries: null,
+        electiveItems: [
+          e('Write a Compelling Blog', true),
+          e('Building a Social Media Presence', false),
+          e('Create a Podcast', false),
+          e('Manage Online Meetings', false),
+          e('Managing a Difficult Audience', false),
+          e('Public Relations Strategies', false),
+          e('Question-and-Answer Session', false),
+        ],
+        meetingRoles: null, edSeries: null,
       },
       {
         name: 'Level 5',
         required: ['High Performance Leadership'],
-        electives: 1,
-        meetingRoles: null,
-        edSeries: null,
+        electiveItems: [
+          e('Ethical Leadership', true),
+          e('Leading in Your Volunteer Organization', false),
+          e('Lessons Learned', false),
+          e('Moderate a Panel Discussion', false),
+          e('Prepare to Speak Professionally', false),
+        ],
+        meetingRoles: null, edSeries: null,
       },
     ],
     completion: 'Reflect on Your Path',
   },
-  {
-    id: 'basic-training',
-    name: 'Basic Training for Toastmasters',
-    type: 'vintage',
-    defaultStatus: '—',
-    levels: [
-      {
-        name: 'Level 1 — Introduction to Basic Training',
-        required: ['Speech 1: The Ice Breaker', 'Speech 2: Be in Earnest', 'When You Are Table Topics Chairperson'],
-        electives: 0,
-        meetingRoles: null,
-        edSeries: null,
-      },
-      {
-        name: 'Level 2',
-        required: ['When You Are Toastmaster of the Evening', 'Speech 3: Building a Speech', 'Speech 4: Hands Up'],
-        electives: 0,
-        meetingRoles: null,
-        edSeries: null,
-      },
-      {
-        name: 'Level 3',
-        required: ['Speech 5: Vocal Variety', 'Speech 6: Speech Building', 'When You Are a Critic or Evaluator', 'Take Your Measure Again'],
-        electives: 0,
-        meetingRoles: null,
-        edSeries: null,
-      },
-      {
-        name: 'Level 4',
-        required: ['Speech 7: Reading the Speech', 'Speech 8: Illuminate the Speech', 'Speech 9: Working With Words'],
-        electives: 0,
-        meetingRoles: null,
-        edSeries: null,
-      },
-      {
-        name: 'Level 5',
-        required: ['Speech 10: Special Types of Speech', 'Speech 11: Organizing the Speech', 'Speech 12: Carrying On'],
-        electives: 0,
-        meetingRoles: null,
-        edSeries: null,
-      },
-    ],
-    completion: 'What Did You Get Out of It?',
-  },
 ];
 
-// ---- Storage ----
+// ── Storage ────────────────────────────────────────────────────────────────
 
 let store = {};
+let showEnhancements = false;
 
 function loadStore() {
   const raw = localStorage.getItem(STORAGE_KEY);
@@ -509,14 +723,27 @@ function saveStore() {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(store));
 }
 
+function initBasicTrainingDefaults() {
+  if (store['basic-training.L1.req.0'] === undefined) store['basic-training.L1.req.0'] = 'Complete';
+  if (store['basic-training.L1.req.1'] === undefined) store['basic-training.L1.req.1'] = 'Complete';
+  saveStore();
+}
+
+function resetBasicTraining() {
+  if (!confirm('Reset Speech 1: The Ice Breaker and Speech 2: Be in Earnest back to incomplete?')) return;
+  delete store['basic-training.L1.req.0'];
+  delete store['basic-training.L1.req.1'];
+  saveStore();
+  renderAll();
+}
+
 function getStatus(key, defaultStatus) {
   return store[key] !== undefined ? store[key] : defaultStatus;
 }
 
 function cycleStatus(current) {
   const order = ['—', 'In Progress', 'Complete'];
-  const idx = order.indexOf(current);
-  return order[(idx + 1) % order.length];
+  return order[(order.indexOf(current) + 1) % order.length];
 }
 
 function pillClass(status) {
@@ -525,42 +752,60 @@ function pillClass(status) {
   return 'status-pill';
 }
 
-// ---- Rendering ----
+function elecSlug(name) {
+  return name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+}
+
+function elecKey(pathId, levelIdx, name) {
+  return `${pathId}.L${levelIdx}.elec.${elecSlug(name)}`;
+}
+
+// ── Rendering ──────────────────────────────────────────────────────────────
 
 function renderPill(key, defaultStatus) {
   const status = getStatus(key, defaultStatus);
   return `<span class="${pillClass(status)}" data-key="${key}" data-default="${defaultStatus}">${status}</span>`;
 }
 
-function renderLevel(pathId, levelIdx, level, defaultStatus) {
+function renderLevel(path, levelIdx, level) {
+  const pathId = path.id;
+  const defStatus = path.defaultStatus;
+
   let html = `<div class="level-section">`;
   html += `<p class="level-name">${level.name}</p>`;
   html += `<ul class="project-list">`;
 
+  // Required items
   level.required.forEach((proj, pIdx) => {
     const key = `${pathId}.L${levelIdx}.req.${pIdx}`;
     html += `<li class="project-item">
       <span class="project-name">${proj}</span>
-      ${renderPill(key, defaultStatus)}
+      ${renderPill(key, defStatus)}
     </li>`;
   });
 
-  for (let e = 0; e < level.electives; e++) {
-    const key = `${pathId}.L${levelIdx}.elec.${e}`;
-    const label = level.electives > 1 ? `Elective ${e + 1} (choose ${level.electives})` : `Elective (choose 1)`;
+  // Named elective items
+  level.electiveItems.forEach(elec => {
+    const key = elecKey(pathId, levelIdx, elec.name);
     html += `<li class="project-item">
-      <span class="project-name">${label}</span>
-      ${renderPill(key, defaultStatus)}
+      <span class="project-name"><span class="elec-badge">E</span>${elec.name}</span>
+      ${renderPill(key, elec.defaultStatus)}
     </li>`;
-  }
+  });
 
   html += `</ul>`;
 
-  if (level.meetingRoles) {
-    html += `<p class="meta-line"><strong>Meeting roles:</strong> ${level.meetingRoles}</p>`;
-  }
-  if (level.edSeries) {
-    html += `<p class="meta-line ed"><strong>Ed Series:</strong> ${level.edSeries}</p>`;
+  // Enhancement block — current paths only, when toggle is on
+  if (showEnhancements && path.type === 'current' && (level.meetingRoles || level.edSeries)) {
+    html += `<div class="enhancement-block pre-oct">`;
+    html += `<span class="pre-oct-label">Completed pre-Oct 2025 — not required</span>`;
+    if (level.meetingRoles) {
+      html += `<p class="meta-line"><strong>Meeting roles:</strong> ${level.meetingRoles}</p>`;
+    }
+    if (level.edSeries) {
+      html += `<p class="meta-line ed"><strong>Ed Series:</strong> ${level.edSeries}</p>`;
+    }
+    html += `</div>`;
   }
 
   html += `</div>`;
@@ -570,8 +815,8 @@ function renderLevel(pathId, levelIdx, level, defaultStatus) {
 function renderPath(path) {
   const isCompleted = path.defaultStatus === 'Complete';
   const badgeClass = isCompleted ? 'completed' : 'in-progress';
-  const badgeText = isCompleted ? 'Completed' : 'In Progress';
-  const typeLabel = path.type.charAt(0).toUpperCase() + path.type.slice(1) + ' path';
+  const badgeText  = isCompleted ? 'Completed' : 'In Progress';
+  const typeLabel  = path.type.charAt(0).toUpperCase() + path.type.slice(1) + ' path';
 
   let html = `<div class="path-col">`;
   html += `<div class="path-col-header">
@@ -583,7 +828,7 @@ function renderPath(path) {
   html += `<p class="path-completion-date">Completed: —</p>`;
 
   path.levels.forEach((level, lIdx) => {
-    html += renderLevel(path.id, lIdx + 1, level, path.defaultStatus);
+    html += renderLevel(path, lIdx + 1, level);
   });
 
   const compKey = `${path.id}.completion`;
@@ -594,32 +839,47 @@ function renderPath(path) {
     </div>
   </div>`;
 
+  if (path.id === 'basic-training') {
+    html += `<button class="reset-btn" onclick="resetBasicTraining()">Reset Speech 1 &amp; 2</button>`;
+  }
+
   html += `</div>`;
   html += `</div>`;
   return html;
 }
 
 function renderAll() {
-  const container = document.getElementById('paths-scroll');
-  container.innerHTML = PATHS_DATA.map(renderPath).join('');
+  document.getElementById('paths-scroll').innerHTML = PATHS_DATA.map(renderPath).join('');
+}
 
-  container.addEventListener('click', function(e) {
+// ── Boot ───────────────────────────────────────────────────────────────────
+
+document.addEventListener('DOMContentLoaded', function () {
+  loadStore();
+  initBasicTrainingDefaults();
+  renderAll();
+
+  // Pill toggle (event delegation — attached once)
+  document.getElementById('paths-scroll').addEventListener('click', function (e) {
     const pill = e.target.closest('.status-pill');
     if (!pill) return;
-    const key = pill.dataset.key;
-    const def = pill.dataset.default;
+    const key     = pill.dataset.key;
+    const def     = pill.dataset.default;
     const current = getStatus(key, def);
-    const next = cycleStatus(current);
+    const next    = cycleStatus(current);
     store[key] = next;
     saveStore();
     pill.textContent = next;
-    pill.className = pillClass(next);
+    pill.className   = pillClass(next);
   });
-}
 
-document.addEventListener('DOMContentLoaded', function() {
-  loadStore();
-  renderAll();
+  // Enhancement toggle
+  document.getElementById('toggle-enhancements').addEventListener('click', function () {
+    showEnhancements = !showEnhancements;
+    this.textContent = showEnhancements ? '− Enhancements' : '+ Enhancements';
+    this.classList.toggle('active', showEnhancements);
+    renderAll();
+  });
 });
 </script>
 </body>
