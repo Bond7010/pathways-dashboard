@@ -302,7 +302,6 @@
 <body>
 <header>
   <h1>Bond Wang — Pathways Dashboard</h1>
-  <button id="toggle-enhancements" class="toggle-btn">+ Enhancements</button>
 </header>
 <main>
 
@@ -789,7 +788,7 @@ const store = {
   'innovative-planning.L4.elec.manage-online-meetings': 'In Progress',
   'innovative-planning.L5.elec.moderate-a-panel-discussion': 'In Progress',
 };
-let showEnhancements = false;
+let showEnhancements = true;
 
 function resetBasicTraining() {}
 function cycleStatus() {}
@@ -847,8 +846,7 @@ function renderLevel(path, levelIdx, level) {
 
   html += `</ul>`;
 
-  // Enhancement block — current paths only, when toggle is on
-  if (showEnhancements && path.type === 'current' && (level.meetingRoles || level.edSeries)) {
+  if (path.type === 'current' && (level.meetingRoles || level.edSeries)) {
     html += `<div class="enhancement-block pre-oct">`;
     html += `<span class="pre-oct-label">Completed pre-Oct 2025 — not required</span>`;
     if (level.meetingRoles) {
