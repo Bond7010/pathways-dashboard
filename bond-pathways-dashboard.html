@@ -1,571 +1,913 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bond Wang — Pathways Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Source+Sans+3:wght@400;600&display=swap">
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Source+Sans+3:wght@400;600&display=swap');
-
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-:root {
-  --blue:    #004165;
-  --blue-lt: #0065a0;
-  --maroon:  #772432;
-  --purple:  #4A3468;
-  --yellow:  #F2DF74;
-  --amber:   #b86e00;
-  --text:    #1a1a1a;
-  --muted:   #666;
-  --border:  #e0e0e0;
-}
-
-body {
-  font-family: 'Source Sans 3', Arial, sans-serif;
-  color: var(--text);
-  background: #f5f5f5;
-  font-size: 14px;
-}
-
-/* ── Header ────────────────────────────────────────────── */
-header {
-  background: var(--blue);
-  color: #fff;
-  padding: 0.75rem 1.5rem;
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-}
-.hdr-title {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 1.1rem;
-  font-weight: 700;
-  letter-spacing: 0.02em;
-  flex: 1;
-}
-.dtm-badge {
-  background: var(--yellow);
-  color: #000;
-  font-family: 'Montserrat', sans-serif;
-  font-size: 0.65rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  padding: 0.2rem 0.5rem;
-  border-radius: 3px;
-}
-.member-id {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 0.75rem;
-  opacity: 0.8;
-}
-
-/* ── Main / scroll ──────────────────────────────────────── */
-main { padding: 0.75rem 1rem 1rem; overflow-x: hidden; }
-
-#paths-scroll {
-  display: flex;
-  gap: 0.75rem;
-  overflow-x: scroll;
-  -webkit-overflow-scrolling: touch;
-  padding-bottom: 1rem;
-  width: 100%;
-  min-width: 0;
-}
-#paths-scroll::-webkit-scrollbar { height: 8px; }
-#paths-scroll::-webkit-scrollbar-track { background: #e0e0e0; border-radius: 4px; }
-#paths-scroll::-webkit-scrollbar-thumb { background: var(--blue); border-radius: 4px; }
-#paths-scroll::-webkit-scrollbar-thumb:hover { background: var(--maroon); }
-
-/* ── Path column ────────────────────────────────────────── */
-.path-col {
-  flex: 0 0 260px;
-  min-width: 260px;
-  background: #fff;
-  border-radius: 6px;
-  box-shadow: 0 1px 4px rgba(0,0,0,.12);
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-}
-.path-hdr {
-  padding: 0.6rem 0.75rem;
-  color: #fff;
-}
-.path-name {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 0.8rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  margin-bottom: 0.3rem;
-  line-height: 1.2;
-}
-.path-meta { display: flex; align-items: center; gap: 0.4rem; flex-wrap: wrap; }
-.path-prog { font-size: 0.7rem; opacity: 0.85; margin-left: auto; }
-
-/* ── Category badge ─────────────────────────────────────── */
-.cat-badge {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 0.58rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  padding: 0.1rem 0.35rem;
-  border-radius: 3px;
-  border: 1px solid rgba(255,255,255,.5);
-  color: #fff;
-}
-
-/* ── Status pills ───────────────────────────────────────── */
-.pill {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 0.6rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  padding: 0.12rem 0.45rem;
-  border-radius: 3px;
-  white-space: nowrap;
-}
-.pill-complete { background: var(--maroon); color: #fff; }
-.pill-inprog   { background: var(--yellow); color: #000; }
-.pill-blank    { color: var(--muted); font-size: 0.8rem; background: transparent; }
-
-/* ── Path body ──────────────────────────────────────────── */
-.path-body { flex: 1; overflow-y: auto; }
-
-/* ── Level sections ─────────────────────────────────────── */
-.level-hdr {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 0.63rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: #fff;
-  background: #888;
-  padding: 0.2rem 0.6rem;
-}
-.level-complete .level-hdr { background: var(--maroon); }
-
-/* ── Project rows ───────────────────────────────────────── */
-.proj-row {
-  display: flex;
-  align-items: baseline;
-  gap: 0.3rem;
-  padding: 0.22rem 0.6rem;
-  border-bottom: 1px solid var(--border);
-  font-size: 0.76rem;
-  line-height: 1.3;
-}
-.proj-row:last-child { border-bottom: none; }
-.proj-name { flex: 1; }
-.row-enh .proj-name { font-style: italic; color: var(--amber); font-size: 0.7rem; }
-
-/* Elective badge */
-.e-badge {
-  flex: 0 0 auto;
-  background: #e8e8e8;
-  color: #555;
-  font-family: 'Montserrat', sans-serif;
-  font-size: 0.55rem;
-  font-weight: 700;
-  padding: 0.08rem 0.3rem;
-  border-radius: 3px;
-  letter-spacing: 0.03em;
-}
-
-/* ── Achievements ───────────────────────────────────────── */
-.ach-section {
-  margin-top: 1rem;
-  padding: 0.75rem 1rem;
-  background: #fff;
-  border-radius: 6px;
-  box-shadow: 0 1px 4px rgba(0,0,0,.10);
-}
-.ach-section h2 {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 0.88rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  color: var(--blue);
-  margin-bottom: 0.5rem;
-}
-.ach-count {
-  background: var(--maroon);
-  color: #fff;
-  border-radius: 10px;
-  padding: 0.1rem 0.45rem;
-  font-size: 0.72rem;
-  vertical-align: middle;
-}
-.ach-pills { display: flex; flex-wrap: wrap; gap: 0.4rem; }
-.ach-pill {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 0.7rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  padding: 0.25rem 0.6rem;
-  border-radius: 3px;
-  color: #fff;
-}
-.ach-current { background: var(--blue); }
-.ach-legacy  { background: var(--maroon); }
-.ach-vintage { background: var(--purple); }
-.pill-dtm    { background: var(--yellow); color: #000; }
-
-.ach-rows { display: flex; flex-direction: column; gap: 0.35rem; }
-.ach-row  { display: flex; align-items: center; gap: 0.5rem; }
-.ach-label { font-size: 0.8rem; flex: 1; }
-
-/* ── Footer ─────────────────────────────────────────────── */
-footer {
-  margin-top: 1rem;
-  padding: 0.75rem 1rem;
-  font-size: 0.68rem;
-  color: var(--muted);
-  text-align: center;
-  border-top: 1px solid var(--border);
-  line-height: 1.6;
-}
-
-/* ── Print ──────────────────────────────────────────────── */
-@media print {
-  @page { size: A3 landscape; margin: 5mm; }
-  body { zoom: 0.38; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-  header { position: static !important; }
-  #paths-scroll {
-    overflow: visible !important;
-    display: flex !important;
-    flex-wrap: nowrap !important;
+  :root {
+    --maroon:     #772432;
+    --blue:       #004165;
+    --gray:       #A9B2B1;
+    --yellow:     #F2DF74;
+    --blue-grad:   linear-gradient(135deg, #004165, #006094);
+    --maroon-grad: linear-gradient(135deg, #3B0104, #772432);
+    --gray-light:  #F0F2F2;
+    --text-muted:  #888;
   }
-  .path-col { break-inside: avoid; page-break-inside: avoid; }
-  .ach-section { page-break-before: avoid; }
-}
+  * { box-sizing: border-box; }
+  body {
+    font-family: 'Source Sans 3', sans-serif;
+    background: var(--gray-light);
+    margin: 0;
+    padding: 0;
+  }
+  header {
+    background: var(--blue-grad);
+    padding: 0.85rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  header h1 {
+    font-family: 'Montserrat', sans-serif;
+    color: #fff;
+    margin: 0;
+    font-size: 1.6rem;
+    font-weight: 700;
+  }
+  .toggle-btn {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    padding: 0.3rem 0.8rem;
+    border-radius: 999px;
+    border: 1.5px solid rgba(255,255,255,0.5);
+    background: transparent;
+    color: rgba(255,255,255,0.8);
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.15s, border-color 0.15s, color 0.15s;
+  }
+  .toggle-btn.active {
+    background: rgba(255,255,255,0.18);
+    border-color: rgba(255,255,255,0.9);
+    color: #fff;
+  }
+  main { padding: 0.5rem 1.5rem 1.5rem; overflow-x: hidden; }
+  #paths-section { padding: 0; overflow: hidden; }
+  h2 {
+    font-family: 'Montserrat', sans-serif;
+    color: var(--blue);
+    border-bottom: 2px solid var(--gray);
+    padding-bottom: 0.25rem;
+    font-size: 1.15rem;
+    font-weight: 600;
+    margin-top: 1rem;
+    margin-bottom: 0.4rem;
+  }
+  .section-note {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 400;
+    color: var(--text-muted);
+    letter-spacing: 0;
+  }
+  #paths-scroll {
+    display: flex;
+    gap: 1rem;
+    overflow-x: scroll;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 1rem;
+    width: 100%;
+    min-width: 0;
+  }
+  #paths-scroll::-webkit-scrollbar {
+    height: 8px;
+  }
+  #paths-scroll::-webkit-scrollbar-track {
+    background: #e0e0e0;
+    border-radius: 4px;
+  }
+  #paths-scroll::-webkit-scrollbar-thumb {
+    background: #004165;
+    border-radius: 4px;
+  }
+  #paths-scroll::-webkit-scrollbar-thumb:hover {
+    background: #772432;
+  }
+  .path-col {
+    flex: 0 0 280px;
+    min-width: 280px;
+    background: #fff;
+    border: 1px solid var(--gray);
+    border-radius: 6px;
+    padding: 0;
+  }
+  .path-col-header {
+    background: var(--blue-grad);
+    color: #fff;
+    padding: 0.75rem 1rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+  .path-col-body {
+    padding: 0.75rem 1rem 1rem;
+  }
+  .path-name {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    color: #fff;
+    flex: 1;
+  }
+  .path-badge {
+    font-size: 0.7rem;
+    padding: 0.15rem 0.45rem;
+    border-radius: 999px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .path-badge.completed   { background: var(--maroon); color: #fff; }
+  .path-badge.in-progress { background: var(--yellow); color: #333; }
+  .path-type-label {
+    font-size: 0.82rem;
+    color: #888;
+    margin: 0 0 0.1rem;
+  }
+  .level-section {
+    border-top: 1px solid #eee;
+    padding-top: 0.5rem;
+    margin-top: 0.5rem;
+  }
+  .level-name {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--blue);
+    margin: 0 0 0.4rem;
+  }
+  .project-list {
+    list-style: none;
+    margin: 0 0 0.4rem;
+    padding: 0;
+  }
+  .project-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.4rem;
+    margin-bottom: 0.25rem;
+    font-size: 0.82rem;
+  }
+  .project-name { flex: 1; }
+  .elec-badge {
+    font-size: 0.58rem;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #999;
+    background: #f0f0f0;
+    border-radius: 3px;
+    padding: 0.05rem 0.28rem;
+    margin-right: 0.2rem;
+    vertical-align: middle;
+    display: inline-block;
+    position: relative;
+    top: -1px;
+  }
+  .status-pill {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    padding: 0.1rem 0.35rem;
+    border-radius: 999px;
+    border: 1px solid var(--gray);
+    background: #f5f5f5;
+    cursor: pointer;
+    white-space: nowrap;
+    user-select: none;
+    flex-shrink: 0;
+    transition: background 0.15s, border-color 0.15s, color 0.15s;
+  }
+  .status-pill.complete    { background: linear-gradient(135deg, #3B0104, #772432); border-color: transparent; color: #fff; }
+  .status-pill.in-progress { background: #F2DF74; border-color: #F2DF74; color: #3B0104; }
+  .project-item:has(.status-pill.complete) .elec-badge    { background: linear-gradient(135deg, #3B0104, #772432); color: #fff; }
+  .project-item:has(.status-pill.in-progress) .elec-badge { background: #F2DF74; color: #3B0104; }
+  .meta-line {
+    font-size: 0.72rem;
+    color: #555;
+    margin-top: 0.25rem;
+    line-height: 1.4;
+    border-left: 3px solid var(--blue);
+    padding-left: 0.5rem;
+  }
+  .meta-line strong { color: var(--blue); }
+  .meta-line.ed { border-left-color: var(--maroon); }
+  .meta-line.ed strong { color: var(--maroon); }
+  .enhancement-block {
+    margin-top: 0.3rem;
+  }
+  .enhancement-block.pre-oct {
+    padding: 0.3rem 0.4rem;
+    background: #fafafa;
+    border-radius: 3px;
+    margin-top: 0.4rem;
+  }
+  .pre-oct-label {
+    display: block;
+    font-size: 0.63rem;
+    color: #aaa;
+    font-style: italic;
+    margin-bottom: 0.2rem;
+  }
+  .enhancement-block.pre-oct .meta-line {
+    color: #ccc;
+    border-left-color: #ddd;
+  }
+  .enhancement-block.pre-oct .meta-line strong { color: #ccc; }
+  .enhancement-block.pre-oct .meta-line.ed { border-left-color: #ddd; }
+  .enhancement-block.pre-oct .meta-line.ed strong { color: #ccc; }
+  .path-completion-row {
+    border-top: 1px solid #eee;
+    padding-top: 0.5rem;
+    margin-top: 0.75rem;
+  }
+  .reset-btn {
+    display: block;
+    margin-top: 0.75rem;
+    font-size: 0.72rem;
+    font-family: 'Source Sans 3', sans-serif;
+    color: #c0392b;
+    background: none;
+    border: 1px solid #c0392b;
+    border-radius: 4px;
+    padding: 0.25rem 0.6rem;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .reset-btn:hover { background: #fdf0f0; }
+  #achievements-section { max-width: 600px; }
+  .achievement-list { list-style: none; margin: 0; padding: 0; }
+  .achievement-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.4rem 0;
+    border-bottom: 1px solid #eee;
+    font-size: 0.9rem;
+  }
+  .achievement-name { flex: 1; }
+  .achievement-badge {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.65rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    padding: 0.1rem 0.45rem;
+    border-radius: 999px;
+    background: var(--maroon-grad);
+    border: none;
+    color: #fff;
+  }
+  @media print {
+    @page {
+      size: A3 landscape;
+      margin: 5mm;
+    }
+    body {
+      zoom: 0.38;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    header { position: static !important; }
+    #paths-scroll {
+      overflow: visible !important;
+      display: flex !important;
+      flex-wrap: nowrap !important;
+    }
+    .path-col { break-inside: avoid; page-break-inside: avoid; }
+    .standalone-section { page-break-before: avoid; }
+  }
 </style>
-
+</head>
+<body>
 <header>
-  <div class="hdr-title">Bond Wang — Pathways Dashboard</div>
-  <span class="dtm-badge">DTM</span>
-  <span class="member-id">EE4039</span>
+  <h1>Bond Wang — Pathways Dashboard</h1>
+  <button id="toggle-enhancements" class="toggle-btn">+ Enhancements</button>
 </header>
-
 <main>
-  <div id="paths-scroll">
-<div class="path-col"><div class="path-hdr" style="background:#4A3468;"><div class="path-name">Basic Training for Toastmasters</div><div class="path-meta"><span class="cat-badge">VINTAGE</span> <span class="pill pill-inprog">IN PROGRESS</span><span class="path-prog">2 / 17</span></div></div><div class="path-body"><div class="level-section"><div class="level-hdr">Introduction to Basic Training</div><div class="proj-row"><span class="proj-name">Speech 1: The Ice Breaker</span><span class="pill pill-complete">COMPLETE</span></div>
-<div class="proj-row"><span class="proj-name">Speech 2: Be in Earnest</span><span class="pill pill-complete">COMPLETE</span></div>
-<div class="proj-row"><span class="proj-name">When You Are Table Topic Chairperson</span><span class="pill pill-inprog">IN PROGRESS</span></div>
-</div>
-<div class="level-section"><div class="level-hdr">Level 2</div><div class="proj-row"><span class="proj-name">When You Are Toastmaster of the Evening</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row"><span class="proj-name">Speech 3: Building a Speech</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row"><span class="proj-name">Speech 4: Hands Up</span><span class="pill pill-blank">—</span></div>
-</div>
-<div class="level-section"><div class="level-hdr">Level 3</div><div class="proj-row"><span class="proj-name">Speech 5: Vocal Variety</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row"><span class="proj-name">Speech 6: Speech Building</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row"><span class="proj-name">When You Are a Critic or Evaluator</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row"><span class="proj-name">Take Your Measure Again</span><span class="pill pill-blank">—</span></div>
-</div>
-<div class="level-section"><div class="level-hdr">Level 4</div><div class="proj-row"><span class="proj-name">Speech 7: Reading the Speech</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row"><span class="proj-name">Speech 8: Illuminate the Speech</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row"><span class="proj-name">Speech 9: Working With Words</span><span class="pill pill-blank">—</span></div>
-</div>
-<div class="level-section"><div class="level-hdr">Level 5</div><div class="proj-row"><span class="proj-name">Speech 10: Special Types of Speech</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row"><span class="proj-name">Speech 11: Organizing the Speech</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row"><span class="proj-name">Speech 12: Carrying On</span><span class="pill pill-blank">—</span></div>
-</div>
-<div class="level-section"><div class="level-hdr">Completion</div><div class="proj-row"><span class="proj-name">What Did You Get Out of It?</span><span class="pill pill-blank">—</span></div>
-</div>
-</div></div>
-<div class="path-col"><div class="path-hdr" style="background:#0065a0;"><div class="path-name">Engaging Humor</div><div class="path-meta"><span class="cat-badge">CURRENT</span> <span class="pill pill-complete">COMPLETE</span><span class="path-prog">14 / 14</span></div></div><div class="path-body"><div class="level-section level-complete"><div class="level-hdr">Level 1</div><div class="proj-row"><span class="proj-name">Ice Breaker</span><span class="pill pill-complete">COMPLETE</span></div>
-<div class="proj-row"><span class="proj-name">Writing a Speech with Purpose</span><span class="pill pill-complete">COMPLETE</span></div>
-<div class="proj-row"><span class="proj-name">Introduction to Vocal Variety and Body Language</span><span class="pill pill-complete">COMPLETE</span></div>
-<div class="proj-row"><span class="proj-name">Evaluation and Feedback</span><span class="pill pill-complete">COMPLETE</span></div>
-<div class="proj-row row-enh"><span class="proj-name">Table Topics Speaker</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row row-enh"><span class="proj-name">Evaluator</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row row-enh"><span class="proj-name">Timer OR Ah-Counter</span><span class="pill pill-blank">—</span></div>
-</div>
-<div class="level-section level-complete"><div class="level-hdr">Level 2</div><div class="proj-row"><span class="proj-name">Know Your Sense of Humor</span><span class="pill pill-complete">COMPLETE</span></div>
-<div class="proj-row"><span class="proj-name">Connect with Your Audience</span><span class="pill pill-complete">COMPLETE</span></div>
-<div class="proj-row"><span class="proj-name">Introduction to Toastmasters Mentoring</span><span class="pill pill-complete">COMPLETE</span></div>
-<div class="proj-row row-enh"><span class="proj-name">Grammarian</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row row-enh"><span class="proj-name">Topicsmaster</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row row-enh"><span class="proj-name">Evaluator</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row row-enh"><span class="proj-name">Toastmaster OR Timer OR Ah-Counter</span><span class="pill pill-blank">—</span></div>
-</div>
-<div class="level-section level-complete"><div class="level-hdr">Level 3</div><div class="proj-row"><span class="proj-name">Engage Your Audience with Humor</span><span class="pill pill-complete">COMPLETE</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Active Listening</span><span class="pill pill-inprog">IN PROGRESS</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Connect with Storytelling</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Connect with Your Audience</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Creating Effective Visual Aids</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Deliver Social Speeches</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Effective Body Language</span><span class="pill pill-complete">COMPLETE</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Focus on the Positive</span><span class="pill pill-complete">COMPLETE</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Inspire Your Audience</span><span class="pill pill-complete">COMPLETE</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Making Connections Through Networking</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Prepare for an Interview</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Understanding Vocal Variety</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Using Descriptive Language</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Using Presentation Software</span><span class="pill pill-complete">COMPLETE</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Researching and Presenting</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row row-enh"><span class="proj-name">Toastmaster</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row row-enh"><span class="proj-name">Evaluator</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row row-enh"><span class="proj-name">Topicsmaster OR Table Topics Speaker OR Introductory Mentor</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row row-enh"><span class="proj-name">Choose 1: Successful Club Series</span><span class="pill pill-blank">—</span></div>
-</div>
-<div class="level-section level-complete"><div class="level-hdr">Level 4</div><div class="proj-row"><span class="proj-name">The Power of Humor in an Impromptu Speech</span><span class="pill pill-complete">COMPLETE</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Building a Social Media Presence</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Create a Podcast</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Manage Online Meetings</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Manage Projects Successfully</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Managing a Difficult Audience</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Public Relations Strategies</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Question and Answer Session</span><span class="pill pill-complete">COMPLETE</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Write a Compelling Blog</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row row-enh"><span class="proj-name">Toastmaster</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row row-enh"><span class="proj-name">General Evaluator</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row row-enh"><span class="proj-name">Evaluator</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row row-enh"><span class="proj-name">Table Topics Speaker OR Topicsmaster OR Specialized Role OR repeat</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row row-enh"><span class="proj-name">Choose 1: Successful Club Series</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row row-enh"><span class="proj-name">Choose 1: Better Speaker Series</span><span class="pill pill-blank">—</span></div>
-</div>
-<div class="level-section level-complete"><div class="level-hdr">Level 5</div><div class="proj-row"><span class="proj-name">Deliver Your Message with Humor</span><span class="pill pill-complete">COMPLETE</span></div>
-<div class="proj-row"><span class="proj-name">Reflect on Your Path</span><span class="pill pill-complete">COMPLETE</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Ethical Leadership</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">High Performance Leadership</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Leading in Your Volunteer Organization</span><span class="pill pill-complete">COMPLETE</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Lessons Learned</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Moderate a Panel Discussion</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Prepare to Speak Professionally</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row row-enh"><span class="proj-name">General Evaluator (x2)</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row row-enh"><span class="proj-name">Toastmaster (x2)</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row row-enh"><span class="proj-name">Evaluator (x2)</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row row-enh"><span class="proj-name">Table Topics Speaker OR Topicsmaster OR Ah-Counter OR Timer OR Grammarian OR Club Mentor OR Specialized Role OR repeat</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row row-enh"><span class="proj-name">Choose 1: Successful Club Series</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row row-enh"><span class="proj-name">Choose 1: Leadership Excellence Series</span><span class="pill pill-blank">—</span></div>
-</div>
-</div></div>
-<div class="path-col"><div class="path-hdr" style="background:#0065a0;"><div class="path-name">Persuasive Influence</div><div class="path-meta"><span class="cat-badge">CURRENT</span> <span class="pill pill-complete">COMPLETE</span><span class="path-prog">14 / 14</span></div></div><div class="path-body"><div class="level-section level-complete"><div class="level-hdr">Level 1</div><div class="proj-row"><span class="proj-name">Ice Breaker</span><span class="pill pill-complete">COMPLETE</span></div>
-<div class="proj-row"><span class="proj-name">Writing a Speech with Purpose</span><span class="pill pill-complete">COMPLETE</span></div>
-<div class="proj-row"><span class="proj-name">Introduction to Vocal Variety and Body Language</span><span class="pill pill-complete">COMPLETE</span></div>
-<div class="proj-row"><span class="proj-name">Evaluation and Feedback</span><span class="pill pill-complete">COMPLETE</span></div>
-<div class="proj-row row-enh"><span class="proj-name">Table Topics Speaker</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row row-enh"><span class="proj-name">Evaluator</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row row-enh"><span class="proj-name">Timer OR Ah-Counter</span><span class="pill pill-blank">—</span></div>
-</div>
-<div class="level-section level-complete"><div class="level-hdr">Level 2</div><div class="proj-row"><span class="proj-name">Understanding Your Leadership Style</span><span class="pill pill-complete">COMPLETE</span></div>
-<div class="proj-row"><span class="proj-name">Active Listening</span><span class="pill pill-complete">COMPLETE</span></div>
-<div class="proj-row"><span class="proj-name">Introduction to Toastmasters Mentoring</span><span class="pill pill-complete">COMPLETE</span></div>
-<div class="proj-row row-enh"><span class="proj-name">Grammarian</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row row-enh"><span class="proj-name">Topicsmaster</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row row-enh"><span class="proj-name">Evaluator</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row row-enh"><span class="proj-name">Toastmaster OR Timer OR Ah-Counter</span><span class="pill pill-blank">—</span></div>
-</div>
-<div class="level-section level-complete"><div class="level-hdr">Level 3</div><div class="proj-row"><span class="proj-name">Understanding Conflict Resolution</span><span class="pill pill-complete">COMPLETE</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Deliver Social Speeches</span><span class="pill pill-complete">COMPLETE</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Using Presentation Software</span><span class="pill pill-complete">COMPLETE</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Connect with Storytelling</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Creating Effective Visual Aids</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Using Descriptive Language</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Connect with Your Audience</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Make Connections Through Networking</span><span class="pill pill-inprog">IN PROGRESS</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Focus on the Positive</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Inspire Your Audience</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Prepare for an Interview</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Understanding Vocal Variety</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Effective Body Language</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Know Your Sense of Humor</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Researching and Presenting</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row row-enh"><span class="proj-name">Toastmaster</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row row-enh"><span class="proj-name">Evaluator</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row row-enh"><span class="proj-name">Topicsmaster OR Table Topics Speaker OR Introductory Mentor</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row row-enh"><span class="proj-name">Choose 1: Successful Club Series</span><span class="pill pill-blank">—</span></div>
-</div>
-<div class="level-section level-complete"><div class="level-hdr">Level 4</div><div class="proj-row"><span class="proj-name">Leading in Difficult Situations</span><span class="pill pill-complete">COMPLETE</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Create a Podcast</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Building a Social Media Presence</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Managing a Difficult Audience</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Write a Compelling Blog</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Manage Online Meetings</span><span class="pill pill-complete">COMPLETE</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Question and Answer Session</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Public Relations Strategies</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Manage Projects Successfully</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row row-enh"><span class="proj-name">Toastmaster</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row row-enh"><span class="proj-name">General Evaluator</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row row-enh"><span class="proj-name">Evaluator</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row row-enh"><span class="proj-name">Table Topics Speaker OR Topicsmaster OR Specialized Role OR repeat</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row row-enh"><span class="proj-name">Choose 1: Successful Club Series</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row row-enh"><span class="proj-name">Choose 1: Better Speaker Series</span><span class="pill pill-blank">—</span></div>
-</div>
-<div class="level-section level-complete"><div class="level-hdr">Level 5</div><div class="proj-row"><span class="proj-name">High Performance Leadership</span><span class="pill pill-complete">COMPLETE</span></div>
-<div class="proj-row"><span class="proj-name">Reflect on Your Path</span><span class="pill pill-complete">COMPLETE</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Lessons Learned</span><span class="pill pill-complete">COMPLETE</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Moderate a Panel Discussion</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Ethical Leadership</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Leading in Your Volunteer Organization</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Prepare to Speak Professionally</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row row-enh"><span class="proj-name">General Evaluator (x2)</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row row-enh"><span class="proj-name">Toastmaster (x2)</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row row-enh"><span class="proj-name">Evaluator (x2)</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row row-enh"><span class="proj-name">Table Topics Speaker OR Topicsmaster OR Ah-Counter OR Timer OR Grammarian OR Club Mentor OR Specialized Role OR repeat</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row row-enh"><span class="proj-name">Choose 1: Successful Club Series</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row row-enh"><span class="proj-name">Choose 1: Leadership Excellence Series</span><span class="pill pill-blank">—</span></div>
-</div>
-</div></div>
-<div class="path-col"><div class="path-hdr" style="background:#0065a0;"><div class="path-name">Presentation Mastery</div><div class="path-meta"><span class="cat-badge">CURRENT</span> <span class="pill pill-complete">COMPLETE</span><span class="path-prog">14 / 14</span></div></div><div class="path-body"><div class="level-section level-complete"><div class="level-hdr">Level 1</div><div class="proj-row"><span class="proj-name">Ice Breaker</span><span class="pill pill-complete">COMPLETE</span></div>
-<div class="proj-row"><span class="proj-name">Writing a Speech with Purpose</span><span class="pill pill-complete">COMPLETE</span></div>
-<div class="proj-row"><span class="proj-name">Introduction to Vocal Variety and Body Language</span><span class="pill pill-complete">COMPLETE</span></div>
-<div class="proj-row"><span class="proj-name">Evaluation and Feedback</span><span class="pill pill-complete">COMPLETE</span></div>
-<div class="proj-row row-enh"><span class="proj-name">Table Topics Speaker</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row row-enh"><span class="proj-name">Evaluator</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row row-enh"><span class="proj-name">Timer OR Ah-Counter</span><span class="pill pill-blank">—</span></div>
-</div>
-<div class="level-section level-complete"><div class="level-hdr">Level 2</div><div class="proj-row"><span class="proj-name">Understanding Your Communication Style</span><span class="pill pill-complete">COMPLETE</span></div>
-<div class="proj-row"><span class="proj-name">Effective Body Language</span><span class="pill pill-complete">COMPLETE</span></div>
-<div class="proj-row"><span class="proj-name">Introduction to Toastmasters Mentoring</span><span class="pill pill-complete">COMPLETE</span></div>
-<div class="proj-row row-enh"><span class="proj-name">Grammarian</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row row-enh"><span class="proj-name">Topicsmaster</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row row-enh"><span class="proj-name">Evaluator</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row row-enh"><span class="proj-name">Toastmaster OR Timer OR Ah-Counter</span><span class="pill pill-blank">—</span></div>
-</div>
-<div class="level-section level-complete"><div class="level-hdr">Level 3</div><div class="proj-row"><span class="proj-name">Persuasive Speaking</span><span class="pill pill-complete">COMPLETE</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Deliver Social Speeches</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Using Presentation Software</span><span class="pill pill-complete">COMPLETE</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Connect with Storytelling</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Creating Effective Visual Aids</span><span class="pill pill-complete">COMPLETE</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Using Descriptive Language</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Connect with Your Audience</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Focus on the Positive</span><span class="pill pill-complete">COMPLETE</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Inspire Your Audience</span><span class="pill pill-complete">COMPLETE</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Making Connections Through Networking</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Prepare for an Interview</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Understanding Vocal Variety</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Active Listening</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Know Your Sense of Humor</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Researching and Presenting</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row row-enh"><span class="proj-name">Toastmaster</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row row-enh"><span class="proj-name">Evaluator</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row row-enh"><span class="proj-name">Topicsmaster OR Table Topics Speaker OR Introductory Mentor</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row row-enh"><span class="proj-name">Choose 1: Successful Club Series</span><span class="pill pill-blank">—</span></div>
-</div>
-<div class="level-section level-complete"><div class="level-hdr">Level 4</div><div class="proj-row"><span class="proj-name">Managing a Difficult Audience</span><span class="pill pill-complete">COMPLETE</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Create a Podcast</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Building a Social Media Presence</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Write a Compelling Blog</span><span class="pill pill-complete">COMPLETE</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Manage Online Meetings</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Question and Answer Session</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Public Relations Strategies</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Manage Projects Successfully</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row row-enh"><span class="proj-name">Toastmaster</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row row-enh"><span class="proj-name">General Evaluator</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row row-enh"><span class="proj-name">Evaluator</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row row-enh"><span class="proj-name">Table Topics Speaker OR Topicsmaster OR Specialized Role OR repeat</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row row-enh"><span class="proj-name">Choose 1: Successful Club Series</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row row-enh"><span class="proj-name">Choose 1: Better Speaker Series</span><span class="pill pill-blank">—</span></div>
-</div>
-<div class="level-section level-complete"><div class="level-hdr">Level 5</div><div class="proj-row"><span class="proj-name">Prepare to Speak Professionally</span><span class="pill pill-complete">COMPLETE</span></div>
-<div class="proj-row"><span class="proj-name">Reflect on Your Path</span><span class="pill pill-complete">COMPLETE</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Lessons Learned</span><span class="pill pill-complete">COMPLETE</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Moderate a Panel Discussion</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Ethical Leadership</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Leading in Your Volunteer Organization</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">High Performance Leadership</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row row-enh"><span class="proj-name">General Evaluator (x2)</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row row-enh"><span class="proj-name">Toastmaster (x2)</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row row-enh"><span class="proj-name">Evaluator (x2)</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row row-enh"><span class="proj-name">Table Topics Speaker OR Topicsmaster OR Ah-Counter OR Timer OR Grammarian OR Club Mentor OR Specialized Role OR repeat</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row row-enh"><span class="proj-name">Choose 1: Successful Club Series</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row row-enh"><span class="proj-name">Choose 1: Leadership Excellence Series</span><span class="pill pill-blank">—</span></div>
-</div>
-</div></div>
-<div class="path-col"><div class="path-hdr" style="background:#772432;"><div class="path-name">Innovative Planning</div><div class="path-meta"><span class="cat-badge">LEGACY</span> <span class="pill pill-complete">COMPLETE</span><span class="path-prog">13 / 13</span></div></div><div class="path-body"><div class="level-section level-complete"><div class="level-hdr">Level 1</div><div class="proj-row"><span class="proj-name">Ice Breaker</span><span class="pill pill-complete">COMPLETE</span></div>
-<div class="proj-row"><span class="proj-name">Evaluation and Feedback</span><span class="pill pill-complete">COMPLETE</span></div>
-<div class="proj-row"><span class="proj-name">Researching and Presenting</span><span class="pill pill-complete">COMPLETE</span></div>
-</div>
-<div class="level-section level-complete"><div class="level-hdr">Level 2</div><div class="proj-row"><span class="proj-name">Understanding Your Leadership Style</span><span class="pill pill-complete">COMPLETE</span></div>
-<div class="proj-row"><span class="proj-name">Connect with Your Audience</span><span class="pill pill-complete">COMPLETE</span></div>
-<div class="proj-row"><span class="proj-name">Introduction to Toastmasters Mentoring</span><span class="pill pill-complete">COMPLETE</span></div>
-</div>
-<div class="level-section level-complete"><div class="level-hdr">Level 3</div><div class="proj-row"><span class="proj-name">Present a Proposal</span><span class="pill pill-complete">COMPLETE</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Deliver Social Speeches</span><span class="pill pill-complete">COMPLETE</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Using Presentation Software</span><span class="pill pill-complete">COMPLETE</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Connect with Storytelling</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Creating Effective Visual Aids</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Using Descriptive Language</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Make Connections Through Networking</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Focus on the Positive</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Inspire Your Audience</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Prepare for an Interview</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Understanding Vocal Variety</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Effective Body Language</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Active Listening</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Know Your Sense of Humor</span><span class="pill pill-complete">COMPLETE</span></div>
-</div>
-<div class="level-section level-complete"><div class="level-hdr">Level 4</div><div class="proj-row"><span class="proj-name">Manage Projects Successfully</span><span class="pill pill-complete">COMPLETE</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Create a Podcast</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Building a Social Media Presence</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Managing a Difficult Audience</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Write a Compelling Blog</span><span class="pill pill-complete">COMPLETE</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Manage Online Meetings</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Question and Answer Session</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Public Relations Strategies</span><span class="pill pill-blank">—</span></div>
-</div>
-<div class="level-section level-complete"><div class="level-hdr">Level 5</div><div class="proj-row"><span class="proj-name">High Performance Leadership</span><span class="pill pill-complete">COMPLETE</span></div>
-<div class="proj-row"><span class="proj-name">Reflect on Your Path</span><span class="pill pill-complete">COMPLETE</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Lessons Learned</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Moderate a Panel Discussion</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Ethical Leadership</span><span class="pill pill-complete">COMPLETE</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Leading in Your Volunteer Organization</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Prepare to Speak Professionally</span><span class="pill pill-blank">—</span></div>
-</div>
-</div></div>
-<div class="path-col"><div class="path-hdr" style="background:#772432;"><div class="path-name">Team Collaboration</div><div class="path-meta"><span class="cat-badge">LEGACY</span> <span class="pill pill-complete">COMPLETE</span><span class="path-prog">13 / 13</span></div></div><div class="path-body"><div class="level-section level-complete"><div class="level-hdr">Level 1</div><div class="proj-row"><span class="proj-name">Ice Breaker</span><span class="pill pill-complete">COMPLETE</span></div>
-<div class="proj-row"><span class="proj-name">Evaluation and Feedback</span><span class="pill pill-complete">COMPLETE</span></div>
-<div class="proj-row"><span class="proj-name">Researching and Presenting</span><span class="pill pill-complete">COMPLETE</span></div>
-</div>
-<div class="level-section level-complete"><div class="level-hdr">Level 2</div><div class="proj-row"><span class="proj-name">Understanding Your Communication Style</span><span class="pill pill-complete">COMPLETE</span></div>
-<div class="proj-row"><span class="proj-name">Active Listening</span><span class="pill pill-complete">COMPLETE</span></div>
-<div class="proj-row"><span class="proj-name">Introduction to Toastmasters Mentoring</span><span class="pill pill-complete">COMPLETE</span></div>
-</div>
-<div class="level-section level-complete"><div class="level-hdr">Level 3</div><div class="proj-row"><span class="proj-name">Successful Collaboration</span><span class="pill pill-complete">COMPLETE</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Deliver Social Speeches</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Using Presentation Software</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Connect with Storytelling</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Creating Effective Visual Aids</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Using Descriptive Language</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Connect with Your Audience</span><span class="pill pill-complete">COMPLETE</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Make Connections Through Networking</span><span class="pill pill-complete">COMPLETE</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Focus on the Positive</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Inspire Your Audience</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Prepare for an Interview</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Understanding Vocal Variety</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Effective Body Language</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Know Your Sense of Humor</span><span class="pill pill-blank">—</span></div>
-</div>
-<div class="level-section level-complete"><div class="level-hdr">Level 4</div><div class="proj-row"><span class="proj-name">Motivate Others</span><span class="pill pill-complete">COMPLETE</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Create a Podcast</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Building a Social Media Presence</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Managing a Difficult Audience</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Write a Compelling Blog</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Manage Online Meetings</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Question and Answer Session</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Public Relations Strategies</span><span class="pill pill-complete">COMPLETE</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Manage Projects Successfully</span><span class="pill pill-blank">—</span></div>
-</div>
-<div class="level-section level-complete"><div class="level-hdr">Level 5</div><div class="proj-row"><span class="proj-name">Lead in Any Situation</span><span class="pill pill-complete">COMPLETE</span></div>
-<div class="proj-row"><span class="proj-name">Reflect on Your Path</span><span class="pill pill-complete">COMPLETE</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Lessons Learned</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Moderate a Panel Discussion</span><span class="pill pill-complete">COMPLETE</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Ethical Leadership</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Leading in Your Volunteer Organization</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">Prepare to Speak Professionally</span><span class="pill pill-blank">—</span></div>
-<div class="proj-row"><span class="e-badge">E</span> <span class="proj-name">High Performance Leadership</span><span class="pill pill-blank">—</span></div>
-</div>
-</div></div>
-  </div>
-<section class="ach-section"><h2>Achievements</h2><div class="ach-rows"><div class="ach-row"><span class="ach-label">Story Collection</span><span class="pill pill-complete">COMPLETE</span></div>
-<div class="ach-row"><span class="ach-label">Distinguished Toastmaster</span><span class="pill pill-dtm">COMPLETE</span></div>
-<div class="ach-row"><span class="ach-label">Club Coach Program</span><span class="pill pill-complete">COMPLETE</span></div>
-</div></section>
-</main>
 
-<footer>
-  <p>Toastmasters International is a registered trademark of Toastmasters International. This page is not affiliated with or endorsed by Toastmasters International.</p>
-  <p>Generated 2026-06-05 from personal Pathways records.</p>
+<section id="paths-section">
+  <h2>Active &amp; Completed Paths <span class="section-note">(Click Enhancement to view additional requirements — applies only to current paths completed after Oct 2025)</span></h2>
+  <div id="paths-scroll"></div>
+</section>
+
+<section id="achievements-section">
+  <h2>Standalone Achievements</h2>
+  <ul class="achievement-list">
+    <li class="achievement-item">
+      <span class="achievement-name">Story Collection</span>
+      <span class="achievement-badge">Completed</span>
+    </li>
+    <li class="achievement-item">
+      <span class="achievement-name">Distinguished Toastmaster</span>
+      <span class="achievement-badge">Completed ×2</span>
+    </li>
+    <li class="achievement-item">
+      <span class="achievement-name">Club Coach Program</span>
+      <span class="achievement-badge">Completed</span>
+    </li>
+  </ul>
+</section>
+
+</main>
+<footer style="background:#fff;border-top:1px solid #A9B2B1;padding:0.75rem 1.5rem;font-size:0.72rem;color:#555;line-height:1.5;">
+  The information on this website is for the sole use of Toastmasters' members, for Toastmasters business only. It is not to be used for solicitation and distribution of non-Toastmasters material or information.
 </footer>
+<script>
+const STORAGE_KEY = 'pathways_dashboard_v1';
+
+const L1_ROLES = 'Table Topics Speaker, Evaluator, Timer OR Ah-Counter';
+const L2_ROLES = 'Grammarian, Topicsmaster, Evaluator, Toastmaster/Timer/Ah-Counter';
+const L3_ROLES = 'Toastmaster, Evaluator, Topicsmaster/Table Topics/Introductory Mentor';
+const L4_ROLES = 'Toastmaster, General Evaluator, Evaluator, Table Topics/Topicsmaster/Specialized/repeat';
+const L5_ROLES = 'General Evaluator ×2, Toastmaster ×2, Evaluator ×2, plus one more';
+
+const L3_ED = 'Successful Club Series: Creating the Best Club Climate, Meeting Roles and Responsibilities, Keeping the Commitment, or Going Beyond Our Club';
+const L4_ED = 'Successful Club: Finding New Members, Closing the Sale, How to Be a Distinguished Club, Toastmasters Educational Program; or Better Speaker: any of 10 titles';
+const L5_ED = 'Successful Club: Moments of Truth, Evaluate to Motivate, Mentoring; or Leadership Excellence: any of 11 titles';
+
+const LN = [
+  'Level 1 — Mastering Fundamentals',
+  'Level 2 — Learning Your Style',
+  'Level 3 — Increasing Knowledge',
+  'Level 4 — Building Skills',
+  'Level 5 — Demonstrating Expertise',
+];
+
+// e(name, done) — helper for elective items
+function e(name, done) { return { name, defaultStatus: done ? 'Complete' : '—' }; }
+
+const PATHS_DATA = [
+  // ── 1. BASIC TRAINING (vintage, in-progress) ──────────────────────────────
+  {
+    id: 'basic-training',
+    name: 'Basic Training for Toastmasters',
+    type: 'vintage',
+    defaultStatus: '—',
+    levels: [
+      {
+        name: 'Level 1 — Introduction to Basic Training',
+        required: ['Speech 1: The Ice Breaker', 'Speech 2: Be in Earnest', 'When You Are Table Topic Chairperson'],
+        electiveItems: [],
+        meetingRoles: null, edSeries: null,
+      },
+      {
+        name: 'Level 2 — Developing Your Skills',
+        required: ['When You Are Toastmaster of the Evening', 'Speech 3: Building a Speech', 'Speech 4: Hands Up'],
+        electiveItems: [],
+        meetingRoles: null, edSeries: null,
+      },
+      {
+        name: 'Level 3 — Building on the Fundamentals',
+        required: ['Speech 5: Vocal Variety', 'Speech 6: Speech Building', 'When You Are a Critic or Evaluator', 'Take Your Measure Again'],
+        electiveItems: [],
+        meetingRoles: null, edSeries: null,
+      },
+      {
+        name: 'Level 4 — Advancing Your Technique',
+        required: ['Speech 7: Reading the Speech', 'Speech 8: Illuminate the Speech', 'Speech 9: Working With Words'],
+        electiveItems: [],
+        meetingRoles: null, edSeries: null,
+      },
+      {
+        name: 'Level 5 — Mastering the Craft',
+        required: ['Speech 10: Special Types of Speech', 'Speech 11: Organizing the Speech', 'Speech 12: Carrying On'],
+        electiveItems: [],
+        meetingRoles: null, edSeries: null,
+      },
+    ],
+    completion: 'What Did You Get Out of It?',
+  },
+
+  // ── 2. ENGAGING HUMOR (current, Complete, pre-Oct 2025) ───────────────────
+  {
+    id: 'engaging-humor',
+    name: 'Engaging Humor',
+    type: 'current',
+    defaultStatus: 'Complete',
+    levels: [
+      {
+        name: LN[0],
+        required: ['Ice Breaker', 'Writing a Speech with Purpose', 'Introduction to Vocal Variety and Body Language', 'Evaluation and Feedback'],
+        electiveItems: [],
+        meetingRoles: L1_ROLES, edSeries: null,
+      },
+      {
+        name: LN[1],
+        required: ['Know Your Sense of Humor', 'Connect with Your Audience', 'Introduction to Toastmasters Mentoring'],
+        electiveItems: [],
+        meetingRoles: L2_ROLES, edSeries: null,
+      },
+      {
+        name: LN[2],
+        required: ['Engage Your Audience with Humor'],
+        electiveItems: [
+          e('Effective Body Language', true),
+          e('Focus on the Positive', true),
+          e('Inspire Your Audience', true),
+          e('Using Presentation Software', true),
+          e('Active Listening', false),
+          e('Connect with Storytelling', false),
+          e('Creating Effective Visual Aids', false),
+          e('Deliver Social Speeches', false),
+          e('Make Connections Through Networking', false),
+          e('Prepare for an Interview', false),
+          e('Researching and Presenting', false),
+          e('Understanding Vocal Variety', false),
+          e('Using Descriptive Language', false),
+        ],
+        meetingRoles: L3_ROLES, edSeries: L3_ED,
+      },
+      {
+        name: LN[3],
+        required: ['The Power of Humor in an Impromptu Speech'],
+        electiveItems: [
+          e('Question-and-Answer Session', true),
+          e('Building a Social Media Presence', false),
+          e('Create a Podcast', false),
+          e('Manage Online Meetings', false),
+          e('Manage Projects Successfully', false),
+          e('Managing a Difficult Audience', false),
+          e('Public Relations Strategies', false),
+          e('Write a Compelling Blog', false),
+        ],
+        meetingRoles: L4_ROLES, edSeries: L4_ED,
+      },
+      {
+        name: LN[4],
+        required: ['Deliver Your Message with Humor'],
+        electiveItems: [
+          e('Leading in Your Volunteer Organization', true),
+          e('Ethical Leadership', false),
+          e('High Performance Leadership', false),
+          e('Lessons Learned', false),
+          e('Moderate a Panel Discussion', false),
+          e('Prepare to Speak Professionally', false),
+        ],
+        meetingRoles: L5_ROLES, edSeries: L5_ED,
+      },
+    ],
+    completion: 'Reflect on Your Path',
+  },
+
+  // ── 3. PRESENTATION MASTERY (current, Complete, pre-Oct 2025) ─────────────
+  {
+    id: 'presentation-mastery',
+    name: 'Presentation Mastery',
+    type: 'current',
+    defaultStatus: 'Complete',
+    levels: [
+      {
+        name: LN[0],
+        required: ['Ice Breaker', 'Writing a Speech with Purpose', 'Introduction to Vocal Variety and Body Language', 'Evaluation and Feedback'],
+        electiveItems: [],
+        meetingRoles: L1_ROLES, edSeries: null,
+      },
+      {
+        name: LN[1],
+        required: ['Understanding Your Communication Style', 'Effective Body Language', 'Introduction to Toastmasters Mentoring'],
+        electiveItems: [],
+        meetingRoles: L2_ROLES, edSeries: null,
+      },
+      {
+        name: LN[2],
+        required: ['Persuasive Speaking'],
+        electiveItems: [
+          e('Creating Effective Visual Aids', true),
+          e('Focus on the Positive', true),
+          e('Inspire Your Audience', true),
+          e('Using Presentation Software', true),
+          e('Active Listening', false),
+          e('Connect with Storytelling', false),
+          e('Connect with Your Audience', false),
+          e('Deliver Social Speeches', false),
+          e('Know Your Sense of Humor', false),
+          e('Make Connections Through Networking', false),
+          e('Prepare for an Interview', false),
+          e('Researching and Presenting', false),
+          e('Understanding Vocal Variety', false),
+          e('Using Descriptive Language', false),
+        ],
+        meetingRoles: L3_ROLES, edSeries: L3_ED,
+      },
+      {
+        name: LN[3],
+        required: ['Managing a Difficult Audience'],
+        electiveItems: [
+          e('Write a Compelling Blog', true),
+          e('Building a Social Media Presence', false),
+          e('Create a Podcast', false),
+          e('Manage Online Meetings', false),
+          e('Manage Projects Successfully', false),
+          e('Public Relations Strategies', false),
+          e('Question-and-Answer Session', false),
+        ],
+        meetingRoles: L4_ROLES, edSeries: L4_ED,
+      },
+      {
+        name: LN[4],
+        required: ['Prepare to Speak Professionally'],
+        electiveItems: [
+          e('Lessons Learned', true),
+          e('Ethical Leadership', false),
+          e('High Performance Leadership', false),
+          e('Leading in Your Volunteer Organization', false),
+          e('Moderate a Panel Discussion', false),
+        ],
+        meetingRoles: L5_ROLES, edSeries: L5_ED,
+      },
+    ],
+    completion: 'Reflect on Your Path',
+  },
+
+  // ── 4. PERSUASIVE INFLUENCE (current, Complete, pre-Oct 2025) ─────────────
+  {
+    id: 'persuasive-influence',
+    name: 'Persuasive Influence',
+    type: 'current',
+    defaultStatus: 'Complete',
+    levels: [
+      {
+        name: LN[0],
+        required: ['Ice Breaker', 'Writing a Speech with Purpose', 'Introduction to Vocal Variety and Body Language', 'Evaluation and Feedback'],
+        electiveItems: [],
+        meetingRoles: L1_ROLES, edSeries: null,
+      },
+      {
+        name: LN[1],
+        required: ['Understanding Your Leadership Style', 'Active Listening', 'Introduction to Toastmasters Mentoring'],
+        electiveItems: [],
+        meetingRoles: L2_ROLES, edSeries: null,
+      },
+      {
+        name: LN[2],
+        required: ['Understanding Conflict Resolution'],
+        electiveItems: [
+          e('Deliver Social Speeches', true),
+          e('Using Presentation Software', true),
+          e('Connect with Storytelling', false),
+          e('Connect with Your Audience', false),
+          e('Creating Effective Visual Aids', false),
+          e('Effective Body Language', false),
+          e('Focus on the Positive', false),
+          e('Inspire Your Audience', false),
+          e('Know Your Sense of Humor', false),
+          e('Make Connections Through Networking', false),
+          e('Prepare for an Interview', false),
+          e('Researching and Presenting', false),
+          e('Understanding Vocal Variety', false),
+          e('Using Descriptive Language', false),
+        ],
+        meetingRoles: L3_ROLES, edSeries: L3_ED,
+      },
+      {
+        name: LN[3],
+        required: ['Leading in Difficult Situations'],
+        electiveItems: [
+          e('Manage Online Meetings', true),
+          e('Building a Social Media Presence', false),
+          e('Create a Podcast', false),
+          e('Manage Projects Successfully', false),
+          e('Managing a Difficult Audience', false),
+          e('Public Relations Strategies', false),
+          e('Question-and-Answer Session', false),
+          e('Write a Compelling Blog', false),
+        ],
+        meetingRoles: L4_ROLES, edSeries: L4_ED,
+      },
+      {
+        name: LN[4],
+        required: ['High Performance Leadership'],
+        electiveItems: [
+          e('Lessons Learned', true),
+          e('Ethical Leadership', false),
+          e('Leading in Your Volunteer Organization', false),
+          e('Moderate a Panel Discussion', false),
+          e('Prepare to Speak Professionally', false),
+        ],
+        meetingRoles: L5_ROLES, edSeries: L5_ED,
+      },
+    ],
+    completion: 'Reflect on Your Path',
+  },
+
+  // ── 5. TEAM COLLABORATION (legacy, Complete) ──────────────────────────────
+  {
+    id: 'team-collaboration',
+    name: 'Team Collaboration',
+    type: 'legacy',
+    defaultStatus: 'Complete',
+    levels: [
+      {
+        name: 'Level 1',
+        required: ['Ice Breaker', 'Writing a Speech with Purpose', 'Introduction to Vocal Variety and Body Language', 'Evaluation and Feedback'],
+        electiveItems: [],
+        meetingRoles: null, edSeries: null,
+      },
+      {
+        name: 'Level 2',
+        required: ['Understanding Your Leadership Style', 'Active Listening', 'Introduction to Toastmasters Mentoring'],
+        electiveItems: [],
+        meetingRoles: null, edSeries: null,
+      },
+      {
+        name: 'Level 3',
+        required: ['Successful Collaboration'],
+        electiveItems: [
+          e('Connect with Your Audience', true),
+          e('Make Connections Through Networking', true),
+          e('Active Listening', false),
+          e('Connect with Storytelling', false),
+          e('Creating Effective Visual Aids', false),
+          e('Deliver Social Speeches', false),
+          e('Effective Body Language', false),
+          e('Focus on the Positive', false),
+          e('Inspire Your Audience', false),
+          e('Know Your Sense of Humor', false),
+          e('Prepare for an Interview', false),
+          e('Researching and Presenting', false),
+          e('Understanding Vocal Variety', false),
+          e('Using Descriptive Language', false),
+          e('Using Presentation Software', false),
+        ],
+        meetingRoles: null, edSeries: null,
+      },
+      {
+        name: 'Level 4',
+        required: ['Motivate Others'],
+        electiveItems: [
+          e('Public Relations Strategies', true),
+          e('Building a Social Media Presence', false),
+          e('Create a Podcast', false),
+          e('Manage Online Meetings', false),
+          e('Manage Projects Successfully', false),
+          e('Managing a Difficult Audience', false),
+          e('Question-and-Answer Session', false),
+          e('Write a Compelling Blog', false),
+        ],
+        meetingRoles: null, edSeries: null,
+      },
+      {
+        name: 'Level 5',
+        required: ['Lead in Any Situation'],
+        electiveItems: [
+          e('Moderate a Panel Discussion', true),
+          e('Ethical Leadership', false),
+          e('High Performance Leadership', false),
+          e('Leading in Your Volunteer Organization', false),
+          e('Lessons Learned', false),
+          e('Prepare to Speak Professionally', false),
+        ],
+        meetingRoles: null, edSeries: null,
+      },
+    ],
+    completion: 'Reflect on Your Path',
+  },
+
+  // ── 6. INNOVATIVE PLANNING (legacy, Complete) ─────────────────────────────
+  {
+    id: 'innovative-planning',
+    name: 'Innovative Planning',
+    type: 'legacy',
+    defaultStatus: 'Complete',
+    levels: [
+      {
+        name: 'Level 1',
+        required: ['Ice Breaker', 'Writing a Speech with Purpose', 'Introduction to Vocal Variety and Body Language', 'Evaluation and Feedback'],
+        electiveItems: [],
+        meetingRoles: null, edSeries: null,
+      },
+      {
+        name: 'Level 2',
+        required: ['Understanding Your Leadership Style', 'Connect with Your Audience', 'Introduction to Toastmasters Mentoring'],
+        electiveItems: [],
+        meetingRoles: null, edSeries: null,
+      },
+      {
+        name: 'Level 3',
+        required: ['Present a Proposal'],
+        electiveItems: [
+          e('Deliver Social Speeches', true),
+          e('Know Your Sense of Humor', true),
+          e('Using Presentation Software', true),
+          e('Active Listening', false),
+          e('Connect with Storytelling', false),
+          e('Connect with Your Audience', false),
+          e('Creating Effective Visual Aids', false),
+          e('Effective Body Language', false),
+          e('Focus on the Positive', false),
+          e('Inspire Your Audience', false),
+          e('Make Connections Through Networking', false),
+          e('Prepare for an Interview', false),
+          e('Researching and Presenting', false),
+          e('Understanding Vocal Variety', false),
+          e('Using Descriptive Language', false),
+        ],
+        meetingRoles: null, edSeries: null,
+      },
+      {
+        name: 'Level 4',
+        required: ['Manage Projects Successfully'],
+        electiveItems: [
+          e('Write a Compelling Blog', true),
+          e('Building a Social Media Presence', false),
+          e('Create a Podcast', false),
+          e('Manage Online Meetings', false),
+          e('Managing a Difficult Audience', false),
+          e('Public Relations Strategies', false),
+          e('Question-and-Answer Session', false),
+        ],
+        meetingRoles: null, edSeries: null,
+      },
+      {
+        name: 'Level 5',
+        required: ['High Performance Leadership'],
+        electiveItems: [
+          e('Ethical Leadership', true),
+          e('Leading in Your Volunteer Organization', false),
+          e('Lessons Learned', false),
+          e('Moderate a Panel Discussion', false),
+          e('Prepare to Speak Professionally', false),
+        ],
+        meetingRoles: null, edSeries: null,
+      },
+    ],
+    completion: 'Reflect on Your Path',
+  },
+];
+
+// ── Storage ────────────────────────────────────────────────────────────────
+
+const store = {
+  'basic-training.L1.req.0': 'Complete',
+  'basic-training.L1.req.1': 'Complete',
+  'basic-training.L1.req.2': 'In Progress',
+  'engaging-humor.L3.elec.researching-and-presenting': 'In Progress',
+  'engaging-humor.L3.elec.make-connections-through-networking': 'In Progress',
+  'engaging-humor.L3.elec.active-listening': 'In Progress',
+  'engaging-humor.L4.elec.public-relations-strategies': 'In Progress',
+  'engaging-humor.L5.elec.high-performance-leadership': 'In Progress',
+  'presentation-mastery.L3.elec.know-your-sense-of-humor': 'In Progress',
+  'presentation-mastery.L3.elec.understanding-vocal-variety': 'In Progress',
+  'presentation-mastery.L4.elec.manage-projects-successfully': 'In Progress',
+  'presentation-mastery.L5.elec.high-performance-leadership': 'In Progress',
+  'persuasive-influence.L3.elec.inspire-your-audience': 'In Progress',
+  'persuasive-influence.L3.elec.researching-and-presenting': 'In Progress',
+  'persuasive-influence.L3.elec.make-connections-through-networking': 'In Progress',
+  'persuasive-influence.L4.elec.write-a-compelling-blog': 'In Progress',
+  'persuasive-influence.L4.elec.create-a-podcast': 'In Progress',
+  'persuasive-influence.L5.elec.leading-in-your-volunteer-organization': 'In Progress',
+  'team-collaboration.L3.elec.active-listening': 'In Progress',
+  'team-collaboration.L3.elec.using-presentation-software': 'In Progress',
+  'team-collaboration.L4.elec.write-a-compelling-blog': 'In Progress',
+  'team-collaboration.L5.elec.high-performance-leadership': 'In Progress',
+  'team-collaboration.L5.elec.prepare-to-speak-professionally': 'In Progress',
+  'innovative-planning.L3.elec.researching-and-presenting': 'In Progress',
+  'innovative-planning.L3.elec.focus-on-the-positive': 'In Progress',
+  'innovative-planning.L3.elec.creating-effective-visual-aids': 'In Progress',
+  'innovative-planning.L4.elec.public-relations-strategies': 'In Progress',
+  'innovative-planning.L4.elec.manage-online-meetings': 'In Progress',
+  'innovative-planning.L5.elec.moderate-a-panel-discussion': 'In Progress',
+};
+let showEnhancements = false;
+
+function resetBasicTraining() {}
+function cycleStatus() {}
+
+function getStatus(key, defaultStatus) {
+  return store[key] !== undefined ? store[key] : defaultStatus;
+}
+
+function pillClass(status) {
+  if (status === 'Complete') return 'status-pill complete';
+  if (status === 'In Progress') return 'status-pill in-progress';
+  return 'status-pill';
+}
+
+function elecSlug(name) {
+  return name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+}
+
+function elecKey(pathId, levelIdx, name) {
+  return `${pathId}.L${levelIdx}.elec.${elecSlug(name)}`;
+}
+
+// ── Rendering ──────────────────────────────────────────────────────────────
+
+function renderPill(key, defaultStatus) {
+  const status = getStatus(key, defaultStatus);
+  return `<span class="${pillClass(status)}" data-key="${key}" data-default="${defaultStatus}">${status}</span>`;
+}
+
+function renderLevel(path, levelIdx, level) {
+  const pathId = path.id;
+  const defStatus = path.defaultStatus;
+
+  let html = `<div class="level-section">`;
+  html += `<p class="level-name">${level.name}</p>`;
+  html += `<ul class="project-list">`;
+
+  // Required items
+  level.required.forEach((proj, pIdx) => {
+    const key = `${pathId}.L${levelIdx}.req.${pIdx}`;
+    html += `<li class="project-item">
+      <span class="project-name">${proj}</span>
+      ${renderPill(key, defStatus)}
+    </li>`;
+  });
+
+  // Named elective items
+  level.electiveItems.forEach(elec => {
+    const key = elecKey(pathId, levelIdx, elec.name);
+    html += `<li class="project-item">
+      <span class="project-name"><span class="elec-badge">E</span>${elec.name}</span>
+      ${renderPill(key, elec.defaultStatus)}
+    </li>`;
+  });
+
+  html += `</ul>`;
+
+  // Enhancement block — current paths only, when toggle is on
+  if (showEnhancements && path.type === 'current' && (level.meetingRoles || level.edSeries)) {
+    html += `<div class="enhancement-block pre-oct">`;
+    html += `<span class="pre-oct-label">Completed pre-Oct 2025 — not required</span>`;
+    if (level.meetingRoles) {
+      html += `<p class="meta-line"><strong>Meeting roles:</strong> ${level.meetingRoles}</p>`;
+    }
+    if (level.edSeries) {
+      html += `<p class="meta-line ed"><strong>Ed Series:</strong> ${level.edSeries}</p>`;
+    }
+    html += `</div>`;
+  }
+
+  html += `</div>`;
+  return html;
+}
+
+function renderPath(path) {
+  const isCompleted = path.defaultStatus === 'Complete';
+  const badgeClass = isCompleted ? 'completed' : 'in-progress';
+  const badgeText  = isCompleted ? 'Completed' : 'In Progress';
+  const typeLabel  = path.type.charAt(0).toUpperCase() + path.type.slice(1) + ' path';
+
+  let html = `<div class="path-col">`;
+  html += `<div class="path-col-header">
+    <span class="path-name">${path.name}</span>
+    <span class="path-badge ${badgeClass}">${badgeText}</span>
+  </div>`;
+  html += `<div class="path-col-body">`;
+  html += `<p class="path-type-label">${typeLabel}</p>`;
+
+  path.levels.forEach((level, lIdx) => {
+    html += renderLevel(path, lIdx + 1, level);
+  });
+
+  const compKey = `${path.id}.completion`;
+  html += `<div class="path-completion-row">
+    <div class="project-item">
+      <span class="project-name"><strong>${path.completion}</strong></span>
+      ${renderPill(compKey, path.defaultStatus)}
+    </div>
+  </div>`;
+
+  if (path.id === 'basic-training') {
+    html += `<button class="reset-btn" onclick="resetBasicTraining()">Reset Speech 1 &amp; 2</button>`;
+  }
+
+  html += `</div>`;
+  html += `</div>`;
+  return html;
+}
+
+function renderAll() {
+  document.getElementById('paths-scroll').innerHTML = PATHS_DATA.map(renderPath).join('');
+}
+
+// ── Boot ───────────────────────────────────────────────────────────────────
+
+document.addEventListener('DOMContentLoaded', function () {
+  renderAll();
+});
+</script>
+</body>
+</html>
