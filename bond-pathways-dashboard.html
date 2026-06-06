@@ -306,7 +306,7 @@
 <main>
 
 <section id="paths-section">
-  <h2>Active &amp; Completed Paths <span class="section-note">(Click Enhancement to view additional requirements — applies only to current paths completed after Oct 2025)</span></h2>
+  <h2>Active &amp; Completed Paths <span class="section-note">(Find all the <a href="https://4039.toastmastersclubs.org/pathways-navigator.html" target="_blank" style="color:#004165;font-weight:600;">paths</a> here. Enhancement requirement only apply to current paths completed after Oct 2025)</span></h2>
   <div id="paths-scroll"></div>
 </section>
 
@@ -848,6 +848,7 @@ function renderLevel(path, levelIdx, level) {
 
   if (path.type === 'current' && (level.meetingRoles || level.edSeries)) {
     html += `<div class="enhancement-block pre-oct">`;
+    html += `<div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;color:#1a1a1a;margin-bottom:3px;">Enhancement</div>`;
     html += `<span class="pre-oct-label">Completed pre-Oct 2025 — not required</span>`;
     if (level.meetingRoles) {
       html += `<p class="meta-line"><strong>Meeting roles:</strong> ${level.meetingRoles}</p>`;
