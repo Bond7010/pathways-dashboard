@@ -1,0 +1,46 @@
+<style type="text/css">/*<![CDATA[*/
+.pd-card { max-width:600px; margin:0 auto; font-family:Arial,sans-serif; font-size:14px; color:#1a1a1a; }
+.pd-header { background:#004165; color:#fff; padding:16px 20px; border-radius:6px 6px 0 0; }
+.pd-header h2 { margin:0 0 4px; font-size:18px; font-weight:700; }
+.pd-header p { margin:0; font-size:12px; opacity:0.85; }
+.pd-body { background:#fff; border:1px solid #ccc; border-top:none; padding:16px 20px; border-radius:0 0 6px 6px; }
+.pd-stats { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:16px; }
+.pd-pill { padding:5px 12px; border-radius:999px; font-size:11px; font-weight:700; white-space:nowrap; }
+.pd-pill-completed { background:#772432; color:#fff; }
+.pd-pill-progress  { background:#F2DF74; color:#1a1a1a; }
+.pd-pill-achiev    { background:#f0f2f2; color:#555; }
+.pd-paths { display:grid; grid-template-columns:1fr 1fr; gap:4px 16px; margin-bottom:16px; }
+@media(max-width:400px){ .pd-paths{ grid-template-columns:1fr; } .pd-stats{ flex-direction:column; } }
+.pd-path-item { font-size:12px; padding:3px 0; border-bottom:1px solid #f0f0f0; }
+.pd-cta { text-align:center; margin:16px 0 12px; }
+.pd-cta a { background:#772432; color:#fff; text-decoration:none; padding:12px 28px; border-radius:6px; font-weight:700; font-size:13px; display:inline-block; }
+.pd-cta a:hover { background:#5a1a22; }
+.pd-footer { font-size:10px; color:#888; text-align:center; margin-top:10px; line-height:1.5; }
+/*]]>*/</style>
+
+<div class="pd-card">
+  <div class="pd-header">
+    <h2>Member's Pathways Dashboard</h2>
+    <p>Bond Wang &middot; DTM &middot; EE Club #4039</p>
+  </div>
+  <div class="pd-body">
+    <div class="pd-stats">
+      <span class="pd-pill pd-pill-completed">5 Paths Completed</span>
+      <span class="pd-pill pd-pill-progress">1 Path In Progress</span>
+      <span class="pd-pill pd-pill-achiev">DTM &middot; Story Collection &middot; Club Coach</span>
+    </div>
+    <div class="pd-paths">
+      <div class="pd-path-item">&#9989; Engaging Humor <em>(Current)</em></div>
+      <div class="pd-path-item">&#9989; Team Collaboration <em>(Legacy)</em></div>
+      <div class="pd-path-item">&#9989; Presentation Mastery <em>(Current)</em></div>
+      <div class="pd-path-item">&#9989; Innovative Planning <em>(Legacy)</em></div>
+      <div class="pd-path-item">&#9989; Persuasive Influence <em>(Current)</em></div>
+      <div class="pd-path-item">&#x1F504; Basic Training <em>(Vintage &middot; In Progress)</em></div>
+    </div>
+    <div class="pd-cta">
+      <a href="https://bond7010.github.io/pathways-dashboard/pathways-dashboard.html" target="_blank">View Full Interactive Dashboard &rarr;</a>
+    </div>
+    <p class="pd-footer">Full dashboard opens in a new tab with complete project-level details for all paths.<br>
+    The information on this website is for the sole use of Toastmasters' members for Toastmasters activities only.</p>
+  </div>
+</div>
