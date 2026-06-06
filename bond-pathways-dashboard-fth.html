@@ -1,4 +1,14 @@
 <style type="text/css">/*<![CDATA[*/
+  /* FTH breakout: escape the narrow content column */
+  body, html { max-width: none !important; overflow-x: visible !important; }
+  #pd-root {
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 98vw;
+    max-width: 98vw;
+    overflow-x: auto;
+  }
   :root {
     --maroon:     #772432;
     --blue:       #004165;
@@ -51,7 +61,7 @@
     border-color: rgba(255,255,255,0.9);
     color: #fff;
   }
-  main { padding: 0.5rem 1.5rem 1.5rem; overflow-x: hidden; }
+  main { padding: 0.5rem 1.5rem 1.5rem; overflow-x: visible; }
   #paths-section { padding: 0; overflow: hidden; }
   h2 {
     font-family: 'Montserrat', sans-serif;
@@ -289,6 +299,7 @@
     .standalone-section { page-break-before: avoid; }
   }
 /*]]>*/</style>
+<div id="pd-root">
 <header>
   <h1>Member's Pathways Dashboard (ID: PN-07351286)</h1>
 </header>
@@ -321,6 +332,7 @@
 <footer style="background:#fff;border-top:1px solid #A9B2B1;padding:0.75rem 1.5rem;font-size:0.72rem;color:#555;line-height:1.5;">
   The information on this website is for the sole use of Toastmasters' members, for Toastmasters business only. It is not to be used for solicitation and distribution of non-Toastmasters material or information.
 </footer>
+</div>
 <script type="text/javascript">//<![CDATA[
 const STORAGE_KEY = 'pathways_dashboard_v1';
 
