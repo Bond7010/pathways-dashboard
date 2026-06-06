@@ -9,10 +9,10 @@ Hosted: GitHub Pages — github.com/Bond7010/pathways-dashboard (no file size co
 Data: reuse all 8 paths from Bond7010/toastmasters-pathways-app
 
 ## Current State
-Phase 4d complete — horizontal scroll visible with styled scrollbar
+Strategy B Phase 1 complete — generate-dashboard.py + bond-pathways-dashboard.html
 
 ## Active Task
-Phase 5: deploy to GitHub Pages and share with club
+Strategy B Phase 2: upload bond-pathways-dashboard.html to FTH subpage
 
 ## Key Files
 - `pathways-dashboard.html` — the app

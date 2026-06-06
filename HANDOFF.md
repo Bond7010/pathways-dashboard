@@ -6,6 +6,27 @@ Phase 4e — header consolidation, single scrollbar, achievement pill brand fix
 
 ## What Was Done
 
+### Strategy B Phase 1 — Excel-to-static-HTML generator (2026-06-05)
+- `generate-dashboard.py`: reads `pathway-record-master.xlsx` (MY RECORD sheet via `wb.sheetnames[2]`) using openpyxl
+- Parses PATH / CATEGORY / LEVEL / PROJECT / KIND / STATUS columns
+- Skips section-header rows (path = 'PATH' or project in ('Current Path', ...))
+- Groups rows: path → level → [rows]
+- Level COMPLETE = all Required=COMPLETE + ≥1 Elective=COMPLETE (if electives exist)
+- Path status: COMPLETE / IN PROGRESS / NOT STARTED
+- Progress (done/total): Required rows + 1 elective slot per level with electives
+- Sort: IN PROGRESS first, then COMPLETE, then NOT STARTED; within each: current < legacy < vintage
+- Outputs `bond-pathways-dashboard.html`: FTH-compatible (no html/head/body), pure CSS, no JS
+- Header colors: current+InProgress=#004165, current+other=#0065a0, legacy=#772432, vintage=#4A3468
+- Status pills: COMPLETE=maroon filled, IN PROGRESS=yellow black-text, blank=em dash gray
+- Enhancement rows (Meeting Role, Ed Series): italic amber smaller text
+- Elective rows: E badge prefix
+- 5 achievements: Engaging Humor, Persuasive Influence, Presentation Mastery, Innovative Planning, Team Collaboration
+- 929 lines, ~104KB
+
+**Next step:** Upload `bond-pathways-dashboard.html` to FTH subpage
+
+
+
 ### Scrollbar (Phase 4d — post 4e patch)
 - `main`: `overflow-x: hidden` to contain layout
 - `#paths-section`: `overflow: hidden` to clip child overflow
