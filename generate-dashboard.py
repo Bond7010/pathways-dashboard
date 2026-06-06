@@ -20,6 +20,14 @@ LEVEL_SORT = {
     'LEVEL FIVE: Demonstrating Expertise':   4,
 }
 
+# Overrides for statuses missing or wrong in the spreadsheet.
+# Key: (path, level, project) — all stripped, level in original LEVEL_SORT form.
+BOND_STATUS = {
+    ("Team Collaboration",   "LEVEL THREE: Increasing Knowledge", "Active Listening"):                  "IN PROGRESS",
+    ("Engaging Humor",       "LEVEL THREE: Increasing Knowledge", "Active Listening"):                  "IN PROGRESS",
+    ("Persuasive Influence", "LEVEL THREE: Increasing Knowledge", "Make Connections Through Networking"): "IN PROGRESS",
+}
+
 CSS = """\
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Source+Sans+3:wght@400;600&display=swap');
 
@@ -231,6 +239,11 @@ main { padding: 0.75rem 1rem 1rem; overflow-x: hidden; }
 .ach-current { background: var(--blue); }
 .ach-legacy  { background: var(--maroon); }
 .ach-vintage { background: var(--purple); }
+.pill-dtm    { background: var(--yellow); color: #000; }
+
+.ach-rows { display: flex; flex-direction: column; gap: 0.35rem; }
+.ach-row  { display: flex; align-items: center; gap: 0.5rem; }
+.ach-label { font-size: 0.8rem; flex: 1; }
 
 /* ── Footer ─────────────────────────────────────────────── */
 footer {
@@ -273,14 +286,21 @@ def load():
             continue
         if project in ('Current Path', 'Legacy Path', 'Vintage Path', 'Active Path'):
             continue
+        path_s    = path.strip()
+        level_s   = level.strip() if level else ''
+        project_s = project.strip()
+        status_s  = status.strip().upper() if status else None
+        override  = BOND_STATUS.get((path_s, level_s, project_s))
+        if override and not status_s:
+            status_s = override
         rows.append(dict(
-            path    = path.strip(),
+            path    = path_s,
             cat     = cat.strip().lower(),
-            level   = level.strip() if level else '',
-            project = project.strip(),
+            level   = level_s,
+            project = project_s,
             kind    = kind.strip() if kind else '',
             is_enh  = (kind or '').strip() in ('Meeting Role', 'Ed Series'),
-            status  = status.strip().upper() if status else None,
+            status  = status_s,
         ))
     return rows
 
@@ -427,23 +447,33 @@ def render_path_col(name, pdata):
     )
 
 
+STANDALONE_ACHIEVEMENTS = [
+    ("Story Collection",         "complete"),
+    ("Distinguished Toastmaster","dtm"),
+    ("Club Coach Program",       "complete"),
+]
+
+
 def render(paths_sorted):
     today = date.today().isoformat()
-    cols  = ''.join(render_path_col(n, d) for n, d in paths_sorted)
+    active = [(n, d) for n, d in paths_sorted if path_status(d) != 'NOT STARTED']
+    cols   = ''.join(render_path_col(n, d) for n, d in active)
 
-    achievements = [(n, d['cat']) for n, d in paths_sorted if path_status(d) == 'COMPLETE']
-    ach_html = ''
-    if achievements:
-        pills = ''.join(
-            f'<span class="ach-pill ach-{cat}">{escape(name)}</span>'
-            for name, cat in achievements
+    ach_rows_html = ''
+    for ach_name, ach_type in STANDALONE_ACHIEVEMENTS:
+        pill_cls = 'pill-dtm' if ach_type == 'dtm' else 'pill-complete'
+        ach_rows_html += (
+            f'<div class="ach-row">'
+            f'<span class="ach-label">{escape(ach_name)}</span>'
+            f'<span class="pill {pill_cls}">COMPLETE</span>'
+            f'</div>\n'
         )
-        ach_html = (
-            f'<section class="ach-section">'
-            f'<h2>Paths Completed <span class="ach-count">{len(achievements)}</span></h2>'
-            f'<div class="ach-pills">{pills}</div>'
-            f'</section>\n'
-        )
+    ach_html = (
+        f'<section class="ach-section">'
+        f'<h2>Achievements</h2>'
+        f'<div class="ach-rows">{ach_rows_html}</div>'
+        f'</section>\n'
+    )
 
     return (
         f'<style>\n{CSS}\n</style>\n\n'
