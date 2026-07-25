@@ -2,9 +2,21 @@
 _Written: 2026-06-05_
 
 ## Last Stable Commit
-Phase 4e — header consolidation, single scrollbar, achievement pill brand fix
+Phase 5 — add Engaging Humor 2nd path, two-section layout (active/completed)
 
 ## What Was Done
+
+### Phase 5 — Two-section layout + Engaging Humor (2nd) path (2026-07-24)
+- Added new `engaging-humor-2` entry to `PATHS_DATA`: same levels/projects as `engaging-humor`, `defaultStatus: '—'`, `isNew: true`, all electives `e(name, false)` — nothing added to `initDefaults()`, so it renders fully blank/not-started
+- Split the single `#paths-scroll` row into two sections under `#paths-section`:
+  - `#active-paths-scroll` ("Active Paths" heading) — non-scrolling `.paths-row` (wraps), holds Engaging Humor (2nd) then Basic Training for Toastmasters
+  - `#completed-paths-scroll` ("Completed Paths" heading) — `.paths-row.scrollable`, holds the 5 completed paths: Engaging Humor (1st), Presentation Mastery, Persuasive Influence, Team Collaboration, Innovative Planning
+  - Section membership + order is explicit via `ACTIVE_PATH_IDS` / `COMPLETED_PATH_IDS` arrays + `pathsById()`, not inferred from array position
+- `renderPath()` now has a third badge state: `isNew` → badge class `new` ("NEW" text, `#001f3f` background/white text) and header gets `.path-col-header.new-path` (`#001f3f` solid, distinct from the existing `--blue-grad` used for in-progress/completed headers)
+- Renumbered the `PATHS_DATA` block comments (1–7) to keep them sequential after inserting the new path
+- Click-delegation listener moved from `#paths-scroll` (removed) to `#paths-section` (parent of both new rows) so one listener still covers both sections
+
+## Earlier Phases
 
 ### Strategy B Phase 1 — Excel-to-static-HTML generator (2026-06-05)
 - `generate-dashboard.py`: reads `pathway-record-master.xlsx` (MY RECORD sheet via `wb.sheetnames[2]`) using openpyxl
@@ -62,11 +74,12 @@ Phase 4e — header consolidation, single scrollbar, achievement pill brand fix
 - Phase 3: path data + dashboard structure
 
 ## Next Step
-Phase 5: deploy to GitHub Pages and share with club
+GitHub Pages is live at bond7010.github.io/pathways-dashboard/pathways-dashboard.html. FTH embedding is abandoned — pathways-dashboard.html is the canonical file. Next: verify the new two-section layout renders correctly in a real browser (not yet visually confirmed) and share the link with the club.
 
 ## Danger Zones
 - `renderLevel` takes `(path, levelIdx, level)` — path object needed for type/defaultStatus
-- Pill click handler attached once in DOMContentLoaded (event delegation on `#paths-scroll`) — do NOT re-attach on renderAll
+- Pill click handler attached once in DOMContentLoaded (event delegation on `#paths-section`, covers both `#active-paths-scroll` and `#completed-paths-scroll`) — do NOT re-attach on renderAll
+- Active/Completed section membership is explicit (`ACTIVE_PATH_IDS` / `COMPLETED_PATH_IDS`), not inferred — adding a path to `PATHS_DATA` without adding its `id` to one of these arrays means it won't render anywhere
 - `initDefaults()` must run AFTER `loadStore()` and BEFORE `renderAll()`
 - Elective key format is slug-based: `{pathId}.L{n}.elec.{slug}` — numeric elec keys are stale
 - CSS `:has()` selector used for elec-badge coloring — requires Chrome 105+, Firefox 121+, Safari 15.4+

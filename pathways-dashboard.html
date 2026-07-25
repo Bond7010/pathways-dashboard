@@ -79,27 +79,31 @@
     color: var(--text-muted);
     letter-spacing: 0;
   }
-  #paths-scroll {
+  .paths-row {
     display: flex;
     gap: 1rem;
-    overflow-x: scroll;
-    -webkit-overflow-scrolling: touch;
+    flex-wrap: wrap;
     padding-bottom: 1rem;
     width: 100%;
     min-width: 0;
   }
-  #paths-scroll::-webkit-scrollbar {
+  .paths-row.scrollable {
+    flex-wrap: nowrap;
+    overflow-x: scroll;
+    -webkit-overflow-scrolling: touch;
+  }
+  .paths-row.scrollable::-webkit-scrollbar {
     height: 8px;
   }
-  #paths-scroll::-webkit-scrollbar-track {
+  .paths-row.scrollable::-webkit-scrollbar-track {
     background: #e0e0e0;
     border-radius: 4px;
   }
-  #paths-scroll::-webkit-scrollbar-thumb {
+  .paths-row.scrollable::-webkit-scrollbar-thumb {
     background: #004165;
     border-radius: 4px;
   }
-  #paths-scroll::-webkit-scrollbar-thumb:hover {
+  .paths-row.scrollable::-webkit-scrollbar-thumb:hover {
     background: #772432;
   }
   .path-col {
@@ -117,6 +121,9 @@
     display: flex;
     align-items: flex-start;
     gap: 0.5rem;
+  }
+  .path-col-header.new-path {
+    background: #001f3f;
   }
   .path-col-body {
     padding: 0.75rem 1rem 1rem;
@@ -137,6 +144,7 @@
   }
   .path-badge.completed   { background: var(--maroon); color: #fff; }
   .path-badge.in-progress { background: var(--yellow); color: #333; }
+  .path-badge.new         { background: #001f3f; color: #fff; }
   .path-type-label {
     font-size: 0.82rem;
     color: #888;
@@ -289,7 +297,7 @@
       print-color-adjust: exact;
     }
     header { position: static !important; }
-    #paths-scroll {
+    .paths-row {
       overflow: visible !important;
       display: flex !important;
       flex-wrap: nowrap !important;
@@ -307,8 +315,11 @@
 <main>
 
 <section id="paths-section">
-  <h2>Active &amp; Completed Paths <span class="section-note">(Click Enhancement to view additional requirements — applies only to current paths completed after Oct 2025)</span></h2>
-  <div id="paths-scroll"></div>
+  <h2>Active Paths</h2>
+  <div id="active-paths-scroll" class="paths-row"></div>
+
+  <h2>Completed Paths <span class="section-note">(Click Enhancement to view additional requirements — applies only to current paths completed after Oct 2025)</span></h2>
+  <div id="completed-paths-scroll" class="paths-row scrollable"></div>
 </section>
 
 <section id="achievements-section">
@@ -399,7 +410,79 @@ const PATHS_DATA = [
     completion: 'What Did You Get Out of It?',
   },
 
-  // ── 2. ENGAGING HUMOR (current, Complete, pre-Oct 2025) ───────────────────
+  // ── 2. ENGAGING HUMOR (2nd) (current, brand new, not started) ─────────────
+  {
+    id: 'engaging-humor-2',
+    name: 'Engaging Humor (2nd)',
+    type: 'current',
+    defaultStatus: '—',
+    isNew: true,
+    levels: [
+      {
+        name: LN[0],
+        required: ['Ice Breaker', 'Writing a Speech with Purpose', 'Introduction to Vocal Variety and Body Language', 'Evaluation and Feedback'],
+        electiveItems: [],
+        meetingRoles: L1_ROLES, edSeries: null,
+      },
+      {
+        name: LN[1],
+        required: ['Know Your Sense of Humor', 'Connect with Your Audience', 'Introduction to Toastmasters Mentoring'],
+        electiveItems: [],
+        meetingRoles: L2_ROLES, edSeries: null,
+      },
+      {
+        name: LN[2],
+        required: ['Engage Your Audience with Humor'],
+        electiveItems: [
+          e('Effective Body Language', false),
+          e('Focus on the Positive', false),
+          e('Inspire Your Audience', false),
+          e('Using Presentation Software', false),
+          e('Active Listening', false),
+          e('Connect with Storytelling', false),
+          e('Creating Effective Visual Aids', false),
+          e('Deliver Social Speeches', false),
+          e('Make Connections Through Networking', false),
+          e('Prepare for an Interview', false),
+          e('Researching and Presenting', false),
+          e('Understanding Vocal Variety', false),
+          e('Using Descriptive Language', false),
+        ],
+        meetingRoles: L3_ROLES, edSeries: L3_ED,
+      },
+      {
+        name: LN[3],
+        required: ['The Power of Humor in an Impromptu Speech'],
+        electiveItems: [
+          e('Question-and-Answer Session', false),
+          e('Building a Social Media Presence', false),
+          e('Create a Podcast', false),
+          e('Manage Online Meetings', false),
+          e('Manage Projects Successfully', false),
+          e('Managing a Difficult Audience', false),
+          e('Public Relations Strategies', false),
+          e('Write a Compelling Blog', false),
+        ],
+        meetingRoles: L4_ROLES, edSeries: L4_ED,
+      },
+      {
+        name: LN[4],
+        required: ['Deliver Your Message with Humor'],
+        electiveItems: [
+          e('Leading in Your Volunteer Organization', false),
+          e('Ethical Leadership', false),
+          e('High Performance Leadership', false),
+          e('Lessons Learned', false),
+          e('Moderate a Panel Discussion', false),
+          e('Prepare to Speak Professionally', false),
+        ],
+        meetingRoles: L5_ROLES, edSeries: L5_ED,
+      },
+    ],
+    completion: 'Reflect on Your Path',
+  },
+
+  // ── 3. ENGAGING HUMOR (1st) (current, Complete, pre-Oct 2025) ─────────────
   {
     id: 'engaging-humor',
     name: 'Engaging Humor',
@@ -470,7 +553,7 @@ const PATHS_DATA = [
     completion: 'Reflect on Your Path',
   },
 
-  // ── 3. PRESENTATION MASTERY (current, Complete, pre-Oct 2025) ─────────────
+  // ── 4. PRESENTATION MASTERY (current, Complete, pre-Oct 2025) ─────────────
   {
     id: 'presentation-mastery',
     name: 'Presentation Mastery',
@@ -540,7 +623,7 @@ const PATHS_DATA = [
     completion: 'Reflect on Your Path',
   },
 
-  // ── 4. PERSUASIVE INFLUENCE (current, Complete, pre-Oct 2025) ─────────────
+  // ── 5. PERSUASIVE INFLUENCE (current, Complete, pre-Oct 2025) ─────────────
   {
     id: 'persuasive-influence',
     name: 'Persuasive Influence',
@@ -611,7 +694,7 @@ const PATHS_DATA = [
     completion: 'Reflect on Your Path',
   },
 
-  // ── 5. TEAM COLLABORATION (legacy, Complete) ──────────────────────────────
+  // ── 6. TEAM COLLABORATION (legacy, Complete) ──────────────────────────────
   {
     id: 'team-collaboration',
     name: 'Team Collaboration',
@@ -684,7 +767,7 @@ const PATHS_DATA = [
     completion: 'Reflect on Your Path',
   },
 
-  // ── 6. INNOVATIVE PLANNING (legacy, Complete) ─────────────────────────────
+  // ── 7. INNOVATIVE PLANNING (legacy, Complete) ─────────────────────────────
   {
     id: 'innovative-planning',
     name: 'Innovative Planning',
@@ -890,12 +973,13 @@ function renderLevel(path, levelIdx, level) {
 
 function renderPath(path) {
   const isCompleted = path.defaultStatus === 'Complete';
-  const badgeClass = isCompleted ? 'completed' : 'in-progress';
-  const badgeText  = isCompleted ? 'Completed' : 'In Progress';
+  const isNew = !!path.isNew;
+  const badgeClass = isNew ? 'new' : (isCompleted ? 'completed' : 'in-progress');
+  const badgeText  = isNew ? 'NEW' : (isCompleted ? 'Completed' : 'In Progress');
   const typeLabel  = path.type.charAt(0).toUpperCase() + path.type.slice(1) + ' path';
 
   let html = `<div class="path-col">`;
-  html += `<div class="path-col-header">
+  html += `<div class="path-col-header${isNew ? ' new-path' : ''}">
     <span class="path-name">${path.name}</span>
     <span class="path-badge ${badgeClass}">${badgeText}</span>
   </div>`;
@@ -923,8 +1007,16 @@ function renderPath(path) {
   return html;
 }
 
+const ACTIVE_PATH_IDS = ['engaging-humor-2', 'basic-training'];
+const COMPLETED_PATH_IDS = ['engaging-humor', 'presentation-mastery', 'persuasive-influence', 'team-collaboration', 'innovative-planning'];
+
+function pathsById(ids) {
+  return ids.map(id => PATHS_DATA.find(p => p.id === id));
+}
+
 function renderAll() {
-  document.getElementById('paths-scroll').innerHTML = PATHS_DATA.map(renderPath).join('');
+  document.getElementById('active-paths-scroll').innerHTML = pathsById(ACTIVE_PATH_IDS).map(renderPath).join('');
+  document.getElementById('completed-paths-scroll').innerHTML = pathsById(COMPLETED_PATH_IDS).map(renderPath).join('');
 }
 
 // ── Boot ───────────────────────────────────────────────────────────────────
@@ -934,8 +1026,8 @@ document.addEventListener('DOMContentLoaded', function () {
   initDefaults();
   renderAll();
 
-  // Pill toggle (event delegation — attached once)
-  document.getElementById('paths-scroll').addEventListener('click', function (e) {
+  // Pill toggle (event delegation — attached once, covers both path rows)
+  document.getElementById('paths-section').addEventListener('click', function (e) {
     const pill = e.target.closest('.status-pill');
     if (!pill) return;
     const key     = pill.dataset.key;
