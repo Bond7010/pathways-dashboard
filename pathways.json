@@ -1,0 +1,3039 @@
+[
+    {
+        "name": "Effective Coaching",
+        "type": "legacy",
+        "description": "This path helps you build your skills as a positive communicator and leader. The projects on this path focus on understanding and building consensus, contributing to the development of others by coaching and establishing strong public speaking skills. Each project emphasizes the importance of effective interpersonal communication. This path culminates in a “High Performance Leadership” project of your design.",
+        "levels": [
+            {
+                "level": 1,
+                "name": "LEVEL ONE: Mastering Fundamentals",
+                "requiredProjects": [
+                    {
+                        "name": "Ice breaker",
+                        "description": "This foundational project is designed to introduce you to your club and the skills you need to begin your Toastmasters journey."
+                    },
+                    {
+                        "name": "Evaluation and feedback",
+                        "description": "This project addresses the skills needed to give and receive feedback. You will learn about giving, receiving and applying feedback."
+                    },
+                    {
+                        "name": "Researching and presenting",
+                        "description": "This project addresses topic selection strategies, suggestions for research and methods for producing a wellorganized speech."
+                    }
+                ],
+                "totalProjectsRequired": 3
+            },
+            {
+                "level": 2,
+                "name": "LEVEL TWO: Learning Your Style",
+                "requiredProjects": [
+                    {
+                        "name": "Understanding your leadership style",
+                        "description": "This project is designed to introduce the different styles of leadership and help you identify your preferred style."
+                    },
+                    {
+                        "name": "Understanding your communication style",
+                        "description": "This project focuses on recognizing your preferred communication style and understanding how your style impacts your interactions with others."
+                    },
+                    {
+                        "name": "Introduction to toastmasters mentoring",
+                        "description": "This project introduces the value of mentorship and the Toastmasters view of mentors and protégés."
+                    }
+                ],
+                "totalProjectsRequired": 3
+            },
+            {
+                "level": 3,
+                "name": "LEVEL THREE: Increasing Knowledge",
+                "requiredProjects": [
+                    {
+                        "name": "Reaching consensus",
+                        "description": "This project focuses on reaching consensus and the importance of including all group members in the decision making process."
+                    }
+                ],
+                "totalProjectsRequired": 3,
+                "electiveInstruction": "ELECTIVES (choose 2)",
+                "electivesRequired": 2,
+                "electiveChoices": [
+                    {
+                        "name": "Deliver social speeches",
+                        "description": "This project addresses the skills needed to compose a speech for a social occasion including a toast, eulogy, an acceptance speech and a speech praising an individual or group."
+                    },
+                    {
+                        "name": "Using presentation software",
+                        "description": "This project addresses the use of presentation software—from identifying topics that benefit from the use of technology to effective slide design and presentation."
+                    },
+                    {
+                        "name": "Connect with storytelling",
+                        "description": "This project addresses storytelling techniques and descriptive skills to help make every speech relatable and interesting."
+                    },
+                    {
+                        "name": "Creating effective visual aids",
+                        "description": "This project addresses effective methods for choosing the best visual aid for your presentation along with the creation and use of each type."
+                    },
+                    {
+                        "name": "Using descriptive language",
+                        "description": "This project addresses the difference between literal and figurative language along with how to determine when to use each to create vivid descriptions."
+                    },
+                    {
+                        "name": "Connect with your audience",
+                        "description": "This project focuses on different audience types and how to address them effectively. "
+                    },
+                    {
+                        "name": "Make connections through networking",
+                        "description": "This project focuses on how to network effectively and understanding the importance of being a professional ally to people in your network."
+                    },
+                    {
+                        "name": "Focus on the positive",
+                        "description": "This project addresses strategies for improving your personal interactions by understanding the impact of your attitudes and thoughts on daily interactions."
+                    },
+                    {
+                        "name": "Inspire your audience",
+                        "description": "This project addresses how to present a speech in an enthusiastic and inspiring fashion to establish a strong rapport with your audience."
+                    },
+                    {
+                        "name": "Prepare for an interview",
+                        "description": "This project addresses the skills you need to identify and speak about personal strengths and present yourself well in an interview of any type."
+                    },
+                    {
+                        "name": "Understanding vocal variety",
+                        "description": "This project addresses the importance of vocal variety when giving a speech and provides activities to develop and nurture its use."
+                    },
+                    {
+                        "name": "Effective body language",
+                        "description": "This project focuses on how to recognize body language used when speaking publicly and how to use gestures to enhance speech content."
+                    },
+                    {
+                        "name": "Active listening",
+                        "description": "This project covers the difference between hearing and listening, and steps for exploring the ways listening helps build strong, lasting connections."
+                    },
+                    {
+                        "name": "Know your sense of humor",
+                        "description": "This project focuses on understanding what makes you laugh and how to share that with an audience."
+                    }
+                ]
+            },
+            {
+                "level": 4,
+                "name": "LEVEL FOUR: Building Skills",
+                "requiredProjects": [
+                    {
+                        "name": "Improvement through positive coaching",
+                        "description": "This project focuses on how your actions can positively affect others and how to nurture relationships and assist an individual in reaching a goal."
+                    }
+                ],
+                "totalProjectsRequired": 2,
+                "electiveInstruction": "ELECTIVES (choose 1)",
+                "electivesRequired": 1,
+                "electiveChoices": [
+                    {
+                        "name": "Create a podcast",
+                        "description": "This project addresses the skills you need to develop a podcast, create interesting content and organize a cohesive program. You will learn how to record and upload it to the internet."
+                    },
+                    {
+                        "name": "Building a social media presence",
+                        "description": "This project addresses how best to use different types of online communication. You will create and maintain an online profile to promote yourself or an organization."
+                    },
+                    {
+                        "name": "Managing a difficult audience",
+                        "description": "This project covers common behaviors of difficult audience members and how to address each behavior in a calm, effective and professional way."
+                    },
+                    {
+                        "name": "Write a compelling blog",
+                        "description": "This project addresses the basics of developing a compelling blog and successfully engaging a readership."
+                    },
+                    {
+                        "name": "Manage online meetings",
+                        "description": "This project addresses how to effectively conduct online meetings and webinars, prepare and organize necessary visual aids, and lead with confidence."
+                    },
+                    {
+                        "name": "Question and answer session",
+                        "description": "This project addresses how to prepare to answer questions and provide information clearly, concisely and with confidence."
+                    },
+                    {
+                        "name": "Public relations strategies",
+                        "description": "This project focuses on how to promote awareness of an organization, formulate a public relations strategy and use various public relations tactics."
+                    },
+                    {
+                        "name": "Manage projects successfully",
+                        "description": "This project focuses on skills needed to effectively manage a project, develop rapport with stakeholders and cultivate strong relationships with a team."
+                    }
+                ]
+            },
+            {
+                "level": 5,
+                "name": "LEVEL FIVE: Demonstrating Expertise",
+                "requiredProjects": [
+                    {
+                        "name": "High performance leadership",
+                        "description": "The focus of this project is to design and complete a project with well-defined goals, lead a team and be accountable to a guidance committee."
+                    },
+                    {
+                        "name": "Reflect on your path",
+                        "description": "This project is designed to give you an opportunity to share your experience at the end of your path."
+                    }
+                ],
+                "totalProjectsRequired": 3,
+                "electiveInstruction": "ELECTIVES (choose 1)",
+                "electivesRequired": 1,
+                "electiveChoices": [
+                    {
+                        "name": "Lessons learned",
+                        "description": "This project addresses how to identify the discussion points of a large group meeting, encourage a culture of contribution and voicing opinions, and facilitate productive discussion that yields results."
+                    },
+                    {
+                        "name": "Moderate a panel discussion",
+                        "description": "This project addresses the skills needed to successfully moderate a panel discussion and how to be an effective participant on a panel."
+                    },
+                    {
+                        "name": "Ethical leadership",
+                        "description": "This project addresses the importance of recognizing the effect of decisions that impact ethics, best practices for making ethical decisions and developing an ethical framework."
+                    },
+                    {
+                        "name": "Leading in your volunteer organization",
+                        "description": "This project focuses on the skills required to lead in a volunteer organization and the importance of recognition and reward in motivating volunteers."
+                    },
+                    {
+                        "name": "Prepare to speak professionally",
+                        "description": "This project is designed to help you define the attributes of professional speakers and apply that understanding to your own skills as a speaker."
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Dynamic Leadership",
+        "type": "current",
+        "description": "This path helps you build your skills as a strategic leader. The projects on this path focus on understanding leadership and communication styles, the effect of conflict on a group and the skills needed to defuse and direct conflict. These projects also emphasize the development of strategies to facilitate change in an organization or group, interpersonal communication and public speaking. This path culminates in a project focused on applying your leadership skills.",
+        "levels": [
+            {
+                "level": 1,
+                "name": "LEVEL ONE: Mastering Fundamentals",
+                "requiredProjects": [
+                    {
+                        "name": "Ice Breaker",
+                        "description": "This foundational project is designed to introduce you to your club and the skills you need to begin your Toastmasters journey."
+                    },
+                    {
+                        "name": "Writing a Speech with Purpose",
+                        "description": "This project addresses how to select a speech topic and write a speech with a clear purpose."
+                    },
+                    {
+                        "name": "Introduction to Vocal Variety and Body Language",
+                        "description": "This project introduces vocal variety and body language as foundational components of effective public speaking."
+                    },
+                    {
+                        "name": "Evaluation and Feedback",
+                        "description": "This project addresses the skills needed to give and receive feedback. You will learn about giving, receiving and applying feedback."
+                    }
+                ],
+                "totalProjectsRequired": 4,
+                "enhancements": {
+                    "required_after": "2025-10",
+                    "meeting_roles": [
+                        "Table Topics Speaker",
+                        "Evaluator",
+                        "Timer OR Ah-Counter"
+                    ],
+                    "ed_series": []
+                }
+            },
+            {
+                "level": 2,
+                "name": "LEVEL TWO: Learning Your Style",
+                "requiredProjects": [
+                    {
+                        "name": "Understanding your leadership style",
+                        "description": "This project is designed to introduce the different styles of leadership and help you identify your preferred style."
+                    },
+                    {
+                        "name": "Connect with your audience",
+                        "description": "This project focuses on different audience types and how to address them effectively."
+                    },
+                    {
+                        "name": "Introduction to toastmasters mentoring",
+                        "description": "This project introduces the value of mentorship and the Toastmasters view of mentors and protégés."
+                    }
+                ],
+                "totalProjectsRequired": 3,
+                "enhancements": {
+                    "required_after": "2025-10",
+                    "meeting_roles": [
+                        "Grammarian",
+                        "Topicsmaster",
+                        "Evaluator",
+                        "Toastmaster OR Timer OR Ah-Counter"
+                    ],
+                    "ed_series": []
+                }
+            },
+            {
+                "level": 3,
+                "name": "LEVEL THREE: Increasing Knowledge",
+                "requiredProjects": [
+                    {
+                        "name": "Negotiate the Best Outcome",
+                        "description": "This project focuses on identifying negotiation styles, engaging in mutually beneficial discussions, and finding and building common ground."
+                    }
+                ],
+                "totalProjectsRequired": 3,
+                "electiveInstruction": "ELECTIVES (choose 2)",
+                "electivesRequired": 2,
+                "electiveChoices": [
+                    {
+                        "name": "Deliver social speeches",
+                        "description": "This project addresses the skills needed to compose a speech for a social occasion including a toast, eulogy, an acceptance speech and a speech praising an individual or group."
+                    },
+                    {
+                        "name": "Using presentation software",
+                        "description": "This project addresses the use of presentation software—from identifying topics that benefit from the use of technology to effective slide design and presentation."
+                    },
+                    {
+                        "name": "Connect with storytelling",
+                        "description": "This project addresses storytelling techniques and descriptive skills to help make every speech relatable and interesting."
+                    },
+                    {
+                        "name": "Creating effective visual aids",
+                        "description": "This project addresses effective methods for choosing the best visual aid for your presentation along with the creation and use of each type."
+                    },
+                    {
+                        "name": "Using descriptive language",
+                        "description": "This project addresses the difference between literal and figurative language along with how to determine when to use each to create vivid descriptions."
+                    },
+                    {
+                        "name": "Make connections through networking",
+                        "description": "This project focuses on how to network effectively and understanding the importance of being a professional ally to people in your network."
+                    },
+                    {
+                        "name": "Focus on the positive",
+                        "description": "This project addresses strategies for improving your personal interactions by understanding the impact of your attitudes and thoughts on daily interactions."
+                    },
+                    {
+                        "name": "Inspire your audience",
+                        "description": "This project addresses how to present a speech in an enthusiastic and inspiring fashion to establish a strong rapport with your audience."
+                    },
+                    {
+                        "name": "Prepare for an interview",
+                        "description": "This project addresses the skills you need to identify and speak about personal strengths and present yourself well in an interview of any type."
+                    },
+                    {
+                        "name": "Understanding vocal variety",
+                        "description": "This project addresses the importance of vocal variety when giving a speech and provides activities to develop and nurture its use."
+                    },
+                    {
+                        "name": "Effective body language",
+                        "description": "This project focuses on how to recognize body language used when speaking publicly and how to use gestures to enhance speech content."
+                    },
+                    {
+                        "name": "Active listening",
+                        "description": "This project covers the difference between hearing and listening, and steps for exploring the ways listening helps build strong, lasting connections."
+                    },
+                    {
+                        "name": "Know your sense of humor",
+                        "description": "This project focuses on understanding what makes you laugh and how to share that with an audience."
+                    },
+                    {
+                        "name": "Researching and Presenting",
+                        "description": "This project addresses topic selection strategies, suggestions for research and methods for producing a well-organized speech."
+                    }
+                ],
+                "enhancements": {
+                    "required_after": "2025-10",
+                    "meeting_roles": [
+                        "Toastmaster",
+                        "Evaluator",
+                        "Topicsmaster OR Table Topics Speaker OR Introductory Mentor"
+                    ],
+                    "ed_series": [
+                        {
+                            "series": "Successful Club Series",
+                            "choose": 1,
+                            "options": [
+                                "Creating the Best Club Climate",
+                                "Meeting Roles and Responsibilities",
+                                "Keeping the Commitment",
+                                "Going Beyond Our Club"
+                            ]
+                        }
+                    ]
+                }
+            },
+            {
+                "level": 4,
+                "name": "LEVEL FOUR: Building Skills",
+                "requiredProjects": [
+                    {
+                        "name": "Manage change",
+                        "description": "This project focuses on how to plan for change, develop a communication plan, and identify obstacles to success."
+                    }
+                ],
+                "totalProjectsRequired": 2,
+                "electiveInstruction": "ELECTIVES (choose 1)",
+                "electivesRequired": 1,
+                "electiveChoices": [
+                    {
+                        "name": "Create a podcast",
+                        "description": "This project addresses the skills you need to develop a podcast, create interesting content and organize a cohesive program. You will learn how to record and upload it to the internet."
+                    },
+                    {
+                        "name": "Building a social media presence",
+                        "description": "This project addresses how best to use different types of online communication. You will create and maintain an online profile to promote yourself or an organization."
+                    },
+                    {
+                        "name": "Managing a difficult audience",
+                        "description": "This project covers common behaviors of difficult audience members and how to address each behavior in a calm, effective and professional way."
+                    },
+                    {
+                        "name": "Write a compelling blog",
+                        "description": "This project addresses the basics of developing a compelling blog and successfully engaging a readership."
+                    },
+                    {
+                        "name": "Manage online meetings",
+                        "description": "This project addresses how to effectively conduct online meetings and webinars, prepare and organize necessary visual aids, and lead with confidence."
+                    },
+                    {
+                        "name": "Question and answer session",
+                        "description": "This project addresses how to prepare to answer questions and provide information clearly, concisely and with confidence."
+                    },
+                    {
+                        "name": "Public relations strategies",
+                        "description": "This project focuses on how to promote awareness of an organization, formulate a public relations strategy and use various public relations tactics."
+                    },
+                    {
+                        "name": "Manage projects successfully",
+                        "description": "This project focuses on skills needed to effectively manage a project, develop rapport with stakeholders and cultivate strong relationships with a team."
+                    }
+                ],
+                "enhancements": {
+                    "required_after": "2025-10",
+                    "meeting_roles": [
+                        "Toastmaster",
+                        "General Evaluator",
+                        "Evaluator",
+                        "Table Topics Speaker OR Topicsmaster OR Specialized Role OR repeat"
+                    ],
+                    "ed_series": [
+                        {
+                            "series": "Successful Club Series",
+                            "choose": 1,
+                            "options": [
+                                "Finding New Members",
+                                "Closing the Sale",
+                                "How to Be a Distinguished Club",
+                                "Toastmasters Educational Program"
+                            ]
+                        },
+                        {
+                            "series": "Better Speaker Series",
+                            "choose": 1,
+                            "options": [
+                                "Beginning Your Speech",
+                                "Concluding Your Speech",
+                                "Controlling Your Fear",
+                                "Impromptu Speaking",
+                                "Selecting Your Topic",
+                                "Know Your Audience",
+                                "Organizing Your Speech",
+                                "Creating an Introduction",
+                                "Preparation and Practice",
+                                "Using Body Language"
+                            ]
+                        }
+                    ]
+                }
+            },
+            {
+                "level": 5,
+                "name": "LEVEL FIVE: Demonstrating Expertise",
+                "requiredProjects": [
+                    {
+                        "name": "Lead in any situation",
+                        "description": "This project focuses on leadership and recognizing the need to adapt your style based on the situation and the people you lead."
+                    },
+                    {
+                        "name": "Reflect on your path",
+                        "description": "This project is designed to give you an opportunity to share your experience at the end of your path."
+                    }
+                ],
+                "totalProjectsRequired": 3,
+                "electiveInstruction": "ELECTIVES (choose 1)",
+                "electivesRequired": 1,
+                "electiveChoices": [
+                    {
+                        "name": "Lessons learned",
+                        "description": "This project addresses how to identify the discussion points of a large group meeting, encourage a culture of contribution and voicing opinions, and facilitate productive discussion that yields results."
+                    },
+                    {
+                        "name": "Moderate a panel discussion",
+                        "description": "This project addresses the skills needed to successfully moderate a panel discussion and how to be an effective participant on a panel."
+                    },
+                    {
+                        "name": "Ethical leadership",
+                        "description": "This project addresses the importance of recognizing the effect of decisions that impact ethics, best practices for making ethical decisions and developing an ethical framework."
+                    },
+                    {
+                        "name": "Leading in your volunteer organization",
+                        "description": "This project focuses on the skills required to lead in a volunteer organization and the importance of recognition and reward in motivating volunteers."
+                    },
+                    {
+                        "name": "Prepare to speak professionally",
+                        "description": "This project is designed to help you define the attributes of professional speakers and apply that understanding to your own skills as a speaker."
+                    },
+                    {
+                        "name": "High performance leadership",
+                        "description": "The focus of this project is to design and complete a project with well-defined goals, lead a team and be accountable to a guidance committee."
+                    }
+                ],
+                "enhancements": {
+                    "required_after": "2025-10",
+                    "meeting_roles": [
+                        "General Evaluator (x2)",
+                        "Toastmaster (x2)",
+                        "Evaluator (x2)",
+                        "Table Topics Speaker OR Topicsmaster OR Ah-Counter OR Timer OR Grammarian OR Club Mentor OR Specialized Role OR repeat"
+                    ],
+                    "ed_series": [
+                        {
+                            "series": "Successful Club Series",
+                            "choose": 1,
+                            "options": [
+                                "Moments of Truth",
+                                "Evaluate to Motivate",
+                                "Mentoring"
+                            ]
+                        },
+                        {
+                            "series": "Leadership Excellence Series",
+                            "choose": 1,
+                            "options": [
+                                "Service and Leadership",
+                                "The Leader as a Coach",
+                                "Developing a Mission",
+                                "Motivating People",
+                                "Building a Team",
+                                "Delegate to Empower",
+                                "Resolving Conflict",
+                                "Visionary Leader",
+                                "Values and Leadership",
+                                "Goal Setting and Planning",
+                                "Giving Effective Feedback"
+                            ]
+                        }
+                    ]
+                }
+            }
+        ]
+    },
+    {
+        "name": "Innovative Planning",
+        "type": "legacy",
+        "description": "This path helps you build your skills as a public speaker and leader. The projects on this path focus on developing a strong connection with audience members when you present, speech writing and speech delivery. The projects contribute to building an understanding of the steps to manage a project, as well as creating innovative solutions. This path culminates in a “High Performance Leadership” project of your design.",
+        "levels": [
+            {
+                "level": 1,
+                "name": "LEVEL ONE: Mastering Fundamentals",
+                "requiredProjects": [
+                    {
+                        "name": "Ice breaker",
+                        "description": "This foundational project is designed to introduce you to your club and the skills you need to begin your Toastmasters journey."
+                    },
+                    {
+                        "name": "Evaluation and feedback",
+                        "description": "This project addresses the skills needed to give and receive feedback. You will learn about giving, receiving and applying feedback."
+                    },
+                    {
+                        "name": "Researching and presenting",
+                        "description": "This project addresses topic selection strategies, suggestions for research and methods for producing a wellorganized speech."
+                    }
+                ],
+                "totalProjectsRequired": 3
+            },
+            {
+                "level": 2,
+                "name": "LEVEL TWO: Learning Your Style",
+                "requiredProjects": [
+                    {
+                        "name": "Understanding your leadership style",
+                        "description": "This project is designed to introduce the different styles of leadership and help you identify your preferred style."
+                    },
+                    {
+                        "name": "Connect with your audience",
+                        "description": "This project focuses on different audience types and how to address them effectively."
+                    },
+                    {
+                        "name": "Introduction to toastmasters mentoring",
+                        "description": "This project introduces the value of mentorship and the Toastmasters view of mentors and protégés."
+                    }
+                ],
+                "totalProjectsRequired": 3
+            },
+            {
+                "level": 3,
+                "name": "LEVEL THREE: Increasing Knowledge",
+                "requiredProjects": [
+                    {
+                        "name": "Present a proposal",
+                        "description": "This project introduces how to select key information to present in a proposal to build a case with supporting evidence and realistic solutions."
+                    }
+                ],
+                "totalProjectsRequired": 3,
+                "electiveInstruction": "ELECTIVES (choose 2)",
+                "electivesRequired": 2,
+                "electiveChoices": [
+                    {
+                        "name": "Deliver social speeches",
+                        "description": "This project addresses the skills needed to compose a speech for a social occasion including a toast, eulogy, an acceptance speech and a speech praising an individual or group."
+                    },
+                    {
+                        "name": "Using presentation software",
+                        "description": "This project addresses the use of presentation software—from identifying topics that benefit from the use of technology to effective slide design and presentation."
+                    },
+                    {
+                        "name": "Connect with storytelling",
+                        "description": "This project addresses storytelling techniques and descriptive skills to help make every speech relatable and interesting."
+                    },
+                    {
+                        "name": "Creating effective visual aids",
+                        "description": "This project addresses effective methods for choosing the best visual aid for your presentation along with the creation and use of each type."
+                    },
+                    {
+                        "name": "Using descriptive language",
+                        "description": "This project addresses the difference between literal and figurative language along with how to determine when to use each to create vivid descriptions."
+                    },
+                    {
+                        "name": "Make connections through networking",
+                        "description": "This project focuses on how to network effectively and understanding the importance of being a professional ally to people in your network."
+                    },
+                    {
+                        "name": "Focus on the positive",
+                        "description": "This project addresses strategies for improving your personal interactions by understanding the impact of your attitudes and thoughts on daily interactions."
+                    },
+                    {
+                        "name": "Inspire your audience",
+                        "description": "This project addresses how to present a speech in an enthusiastic and inspiring fashion to establish a strong rapport with your audience."
+                    },
+                    {
+                        "name": "Prepare for an interview",
+                        "description": "This project addresses the skills you need to identify and speak about personal strengths and present yourself well in an interview of any type."
+                    },
+                    {
+                        "name": "Understanding vocal variety",
+                        "description": "This project addresses the importance of vocal variety when giving a speech and provides activities to develop and nurture its use."
+                    },
+                    {
+                        "name": "Effective body language",
+                        "description": "This project focuses on how to recognize body language used when speaking publicly and how to use gestures to enhance speech content."
+                    },
+                    {
+                        "name": "Active listening",
+                        "description": "This project covers the difference between hearing and listening, and steps for exploring the ways listening helps build strong, lasting connections."
+                    },
+                    {
+                        "name": "Know your sense of humor",
+                        "description": "This project focuses on understanding what makes you laugh and how to share that with an audience."
+                    }
+                ]
+            },
+            {
+                "level": 4,
+                "name": "LEVEL FOUR: Building Skills",
+                "requiredProjects": [
+                    {
+                        "name": "Manage projects successfully",
+                        "description": "This project focuses on skills needed to effectively manage a project, develop rapport with stakeholders and cultivate strong relationships with a team."
+                    }
+                ],
+                "totalProjectsRequired": 2,
+                "electiveInstruction": "ELECTIVES (choose 1)",
+                "electivesRequired": 1,
+                "electiveChoices": [
+                    {
+                        "name": "Create a podcast",
+                        "description": "This project addresses the skills you need to develop a podcast, create interesting content and organize a cohesive program. You will learn how to record and upload it to the internet."
+                    },
+                    {
+                        "name": "Building a social media presence",
+                        "description": "This project addresses how best to use different types of online communication. You will create and maintain an online profile to promote yourself or an organization."
+                    },
+                    {
+                        "name": "Managing a difficult audience",
+                        "description": "This project covers common behaviors of difficult audience members and how to address each behavior in a calm, effective and professional way."
+                    },
+                    {
+                        "name": "Write a compelling blog",
+                        "description": "This project addresses the basics of developing a compelling blog and successfully engaging a readership."
+                    },
+                    {
+                        "name": "Manage online meetings",
+                        "description": "This project addresses how to effectively conduct online meetings and webinars, prepare and organize necessary visual aids, and lead with confidence."
+                    },
+                    {
+                        "name": "Question and answer session",
+                        "description": "This project addresses how to prepare to answer questions and provide information clearly, concisely and with confidence."
+                    },
+                    {
+                        "name": "Public relations strategies",
+                        "description": "This project focuses on how to promote awareness of an organization, formulate a public relations strategy and use various public relations tactics."
+                    }
+                ]
+            },
+            {
+                "level": 5,
+                "name": "LEVEL FIVE: Demonstrating Expertise",
+                "requiredProjects": [
+                    {
+                        "name": "High performance leadership",
+                        "description": "The focus of this project is to design and complete a project with well-defined goals, lead a team and be accountable to a guidance committee."
+                    },
+                    {
+                        "name": "Reflect on your path",
+                        "description": "This project is designed to give you an opportunity to share your experience at the end of your path."
+                    }
+                ],
+                "totalProjectsRequired": 3,
+                "electiveInstruction": "ELECTIVES (choose 1)",
+                "electivesRequired": 1,
+                "electiveChoices": [
+                    {
+                        "name": "Lessons learned",
+                        "description": "This project addresses how to identify the discussion points of a large group meeting, encourage a culture of contribution and voicing opinions, and facilitate productive discussion that yields results."
+                    },
+                    {
+                        "name": "Moderate a panel discussion",
+                        "description": "This project addresses the skills needed to successfully moderate a panel discussion and how to be an effective participant on a panel."
+                    },
+                    {
+                        "name": "Ethical leadership",
+                        "description": "This project addresses the importance of recognizing the effect of decisions that impact ethics, best practices for making ethical decisions and developing an ethical framework."
+                    },
+                    {
+                        "name": "Leading in your volunteer organization",
+                        "description": "This project focuses on the skills required to lead in a volunteer organization and the importance of recognition and reward in motivating volunteers."
+                    },
+                    {
+                        "name": "Prepare to speak professionally",
+                        "description": "This project is designed to help you define the attributes of professional speakers and apply that understanding to your own skills as a speaker."
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Leadership Development",
+        "type": "legacy",
+        "description": "This path helps you build your skills as an effective communicator and leader. The projects on this path focus on learning how to manage time, as well as how to develop and implement a plan. Public speaking and leading a team are emphasized in all projects. This path culminates in the planning and execution of an event that will allow you to apply everything you learned.",
+        "levels": [
+            {
+                "level": 1,
+                "name": "LEVEL ONE: Mastering Fundamentals",
+                "requiredProjects": [
+                    {
+                        "name": "Ice breaker",
+                        "description": "This foundational project is designed to introduce you to your club and the skills you need to begin your Toastmasters journey."
+                    },
+                    {
+                        "name": "Evaluation and feedback",
+                        "description": "This project addresses the skills needed to give and receive feedback. You will learn about giving, receiving and applying feedback."
+                    },
+                    {
+                        "name": "Researching and presenting",
+                        "description": "This project addresses topic selection strategies, suggestions for research and methods for producing a wellorganized speech."
+                    }
+                ],
+                "totalProjectsRequired": 3
+            },
+            {
+                "level": 2,
+                "name": "LEVEL TWO: Learning Your Style",
+                "requiredProjects": [
+                    {
+                        "name": "Managing time",
+                        "description": "This project is designed to help you manage your time, discover time management techniques, and employ them in your speeches and daily life."
+                    },
+                    {
+                        "name": "Understanding your leadership style",
+                        "description": "This project is designed to introduce the different styles of leadership and help you identify your preferred style."
+                    },
+                    {
+                        "name": "Introduction to toastmasters mentoring",
+                        "description": "This project introduces the value of mentorship and the Toastmasters view of mentors and protégés."
+                    }
+                ],
+                "totalProjectsRequired": 3
+            },
+            {
+                "level": 3,
+                "name": "LEVEL THREE: Increasing Knowledge",
+                "requiredProjects": [
+                    {
+                        "name": "Planning and implementing",
+                        "description": "This project is designed to help you develop realistic plans to meet your objectives and to successfully monitor a project to completion."
+                    }
+                ],
+                "totalProjectsRequired": 3,
+                "electiveInstruction": "ELECTIVES (choose 2)",
+                "electivesRequired": 2,
+                "electiveChoices": [
+                    {
+                        "name": "Deliver social speeches",
+                        "description": "This project addresses the skills needed to compose a speech for a social occasion including a toast, eulogy, an acceptance speech and a speech praising an individual or group."
+                    },
+                    {
+                        "name": "Connect with your audience",
+                        "description": "This project focuses on different audience types and how to address them effectively. "
+                    },
+                    {
+                        "name": "Using presentation software",
+                        "description": "This project addresses the use of presentation software—from identifying topics that benefit from the use of technology to effective slide design and presentation."
+                    },
+                    {
+                        "name": "Connect with storytelling",
+                        "description": "This project addresses storytelling techniques and descriptive skills to help make every speech relatable and interesting."
+                    },
+                    {
+                        "name": "Creating effective visual aids",
+                        "description": "This project addresses effective methods for choosing the best visual aid for your presentation along with the creation and use of each type."
+                    },
+                    {
+                        "name": "Using descriptive language",
+                        "description": "This project addresses the difference between literal and figurative language along with how to determine when to use each to create vivid descriptions."
+                    },
+                    {
+                        "name": "Make connections through networking",
+                        "description": "This project focuses on how to network effectively and understanding the importance of being a professional ally to people in your network."
+                    },
+                    {
+                        "name": "Focus on the positive",
+                        "description": "This project addresses strategies for improving your personal interactions by understanding the impact of your attitudes and thoughts on daily interactions."
+                    },
+                    {
+                        "name": "Inspire your audience",
+                        "description": "This project addresses how to present a speech in an enthusiastic and inspiring fashion to establish a strong rapport with your audience."
+                    },
+                    {
+                        "name": "Prepare for an interview",
+                        "description": "This project addresses the skills you need to identify and speak about personal strengths and present yourself well in an interview of any type."
+                    },
+                    {
+                        "name": "Understanding vocal variety",
+                        "description": "This project addresses the importance of vocal variety when giving a speech and provides activities to develop and nurture its use."
+                    },
+                    {
+                        "name": "Effective body language",
+                        "description": "This project focuses on how to recognize body language used when speaking publicly and how to use gestures to enhance speech content."
+                    },
+                    {
+                        "name": "Active listening",
+                        "description": "This project covers the difference between hearing and listening, and steps for exploring the ways listening helps build strong, lasting connections."
+                    },
+                    {
+                        "name": "Know your sense of humor",
+                        "description": "This project focuses on understanding what makes you laugh and how to share that with an audience."
+                    }
+                ]
+            },
+            {
+                "level": 4,
+                "name": "LEVEL FOUR: Building Skills",
+                "requiredProjects": [
+                    {
+                        "name": "Leading your team",
+                        "description": "This project is designed to help you accomplish a task while leading a small group and give you the opportunity to practice basic skills of leadership."
+                    }
+                ],
+                "totalProjectsRequired": 2,
+                "electiveInstruction": "ELECTIVES (choose 1)",
+                "electivesRequired": 1,
+                "electiveChoices": [
+                    {
+                        "name": "Create a podcast",
+                        "description": "This project addresses the skills you need to develop a podcast, create interesting content and organize a cohesive program. You will learn how to record and upload it to the internet."
+                    },
+                    {
+                        "name": "Building a social media presence",
+                        "description": "This project addresses how best to use different types of online communication. You will create and maintain an online profile to promote yourself or an organization."
+                    },
+                    {
+                        "name": "Managing a difficult audience",
+                        "description": "This project covers common behaviors of difficult audience members and how to address each behavior in a calm, effective and professional way."
+                    },
+                    {
+                        "name": "Write a compelling blog",
+                        "description": "This project addresses the basics of developing a compelling blog and successfully engaging a readership."
+                    },
+                    {
+                        "name": "Manage online meetings",
+                        "description": "This project addresses how to effectively conduct online meetings and webinars, prepare and organize necessary visual aids, and lead with confidence."
+                    },
+                    {
+                        "name": "Question and answer session",
+                        "description": "This project addresses how to prepare to answer questions and provide information clearly, concisely and with confidence."
+                    },
+                    {
+                        "name": "Public relations strategies",
+                        "description": "This project focuses on how to promote awareness of an organization, formulate a public relations strategy and use various public relations tactics."
+                    },
+                    {
+                        "name": "Manage projects successfully",
+                        "description": "This project focuses on skills needed to effectively manage a project, develop rapport with stakeholders and cultivate strong relationships with a team."
+                    }
+                ]
+            },
+            {
+                "level": 5,
+                "name": "LEVEL FIVE: Demonstrating Expertise",
+                "requiredProjects": [
+                    {
+                        "name": "Manage successful events",
+                        "description": "This project is designed to give you tools to coordinate an event. It includes steps for managing the unexpected, leading a team and creating positive outcomes."
+                    },
+                    {
+                        "name": "Reflect on your path",
+                        "description": "This project is designed to give you an opportunity to share your experience at the end of your path."
+                    }
+                ],
+                "totalProjectsRequired": 3,
+                "electiveInstruction": "ELECTIVES (choose 1)",
+                "electivesRequired": 1,
+                "electiveChoices": [
+                    {
+                        "name": "Lessons learned",
+                        "description": "This project addresses how to identify the discussion points of a large group meeting, encourage a culture of contribution and voicing opinions, and facilitate productive discussion that yields results."
+                    },
+                    {
+                        "name": "Moderate a panel discussion",
+                        "description": "This project addresses the skills needed to successfully moderate a panel discussion and how to be an effective participant on a panel."
+                    },
+                    {
+                        "name": "Ethical leadership",
+                        "description": "This project addresses the importance of recognizing the effect of decisions that impact ethics, best practices for making ethical decisions and developing an ethical framework."
+                    },
+                    {
+                        "name": "Leading in your volunteer organization",
+                        "description": "This project focuses on the skills required to lead in a volunteer organization and the importance of recognition and reward in motivating volunteers."
+                    },
+                    {
+                        "name": "Prepare to speak professionally",
+                        "description": "This project is designed to help you define the attributes of professional speakers and apply that understanding to your own skills as a speaker."
+                    },
+                    {
+                        "name": "High performance leadership",
+                        "description": "The focus of this project is to design and complete a project with well-defined goals, lead a team and be accountable to a guidance committee."
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Motivational Strategies",
+        "type": "current",
+        "description": "This path helps you build your skills as a powerful and effective communicator. The projects focus on learning strategies for building connections with the people around you, understanding motivation and successfully leading small groups to accomplish tasks. This path culminates in a comprehensive team-building project that brings all of your skills together—including public speaking.",
+        "levels": [
+            {
+                "level": 1,
+                "name": "LEVEL ONE: Mastering Fundamentals",
+                "requiredProjects": [
+                    {
+                        "name": "Ice Breaker",
+                        "description": "This foundational project is designed to introduce you to your club and the skills you need to begin your Toastmasters journey."
+                    },
+                    {
+                        "name": "Writing a Speech with Purpose",
+                        "description": "This project addresses how to select a speech topic and write a speech with a clear purpose."
+                    },
+                    {
+                        "name": "Introduction to Vocal Variety and Body Language",
+                        "description": "This project introduces vocal variety and body language as foundational components of effective public speaking."
+                    },
+                    {
+                        "name": "Evaluation and Feedback",
+                        "description": "This project addresses the skills needed to give and receive feedback. You will learn about giving, receiving and applying feedback."
+                    }
+                ],
+                "totalProjectsRequired": 4,
+                "enhancements": {
+                    "required_after": "2025-10",
+                    "meeting_roles": [
+                        "Table Topics Speaker",
+                        "Evaluator",
+                        "Timer OR Ah-Counter"
+                    ],
+                    "ed_series": []
+                }
+            },
+            {
+                "level": 2,
+                "name": "LEVEL TWO: Learning Your Style",
+                "requiredProjects": [
+                    {
+                        "name": "Understanding your communication style",
+                        "description": "This project focuses on recognizing your preferred communication style and understanding how your style impacts your interactions with others."
+                    },
+                    {
+                        "name": "Active listening",
+                        "description": "This project covers the difference between hearing and listening, and steps for exploring the ways listening helps build strong, lasting connections."
+                    },
+                    {
+                        "name": "Introduction to toastmasters mentoring",
+                        "description": "This project introduces the value of mentorship and the Toastmasters view of mentors and protégés."
+                    }
+                ],
+                "totalProjectsRequired": 3,
+                "enhancements": {
+                    "required_after": "2025-10",
+                    "meeting_roles": [
+                        "Grammarian",
+                        "Topicsmaster",
+                        "Evaluator",
+                        "Toastmaster OR Timer OR Ah-Counter"
+                    ],
+                    "ed_series": []
+                }
+            },
+            {
+                "level": 3,
+                "name": "LEVEL THREE: Increasing Knowledge",
+                "requiredProjects": [
+                    {
+                        "name": "Understanding emotional intelligence",
+                        "description": "This project addresses elements of emotional intelligence. It is designed to help you understand your own emotions and the emotions of others."
+                    }
+                ],
+                "totalProjectsRequired": 3,
+                "electiveInstruction": "ELECTIVES (choose 2)",
+                "electivesRequired": 2,
+                "electiveChoices": [
+                    {
+                        "name": "Deliver social speeches",
+                        "description": "This project addresses the skills needed to compose a speech for a social occasion including a toast, eulogy, an acceptance speech and a speech praising an individual or group."
+                    },
+                    {
+                        "name": "Connect with your audience",
+                        "description": "This project focuses on different audience types and how to address them effectively. "
+                    },
+                    {
+                        "name": "Using presentation software",
+                        "description": "This project addresses the use of presentation software—from identifying topics that benefit from the use of technology to effective slide design and presentation."
+                    },
+                    {
+                        "name": "Connect with storytelling",
+                        "description": "This project addresses storytelling techniques and descriptive skills to help make every speech relatable and interesting."
+                    },
+                    {
+                        "name": "Creating effective visual aids",
+                        "description": "This project addresses effective methods for choosing the best visual aid for your presentation along with the creation and use of each type."
+                    },
+                    {
+                        "name": "Using descriptive language",
+                        "description": "This project addresses the difference between literal and figurative language along with how to determine when to use each to create vivid descriptions."
+                    },
+                    {
+                        "name": "Make connections through networking",
+                        "description": "This project focuses on how to network effectively and understanding the importance of being a professional ally to people in your network."
+                    },
+                    {
+                        "name": "Focus on the positive",
+                        "description": "This project addresses strategies for improving your personal interactions by understanding the impact of your attitudes and thoughts on daily interactions."
+                    },
+                    {
+                        "name": "Inspire your audience",
+                        "description": "This project addresses how to present a speech in an enthusiastic and inspiring fashion to establish a strong rapport with your audience."
+                    },
+                    {
+                        "name": "Prepare for an interview",
+                        "description": "This project addresses the skills you need to identify and speak about personal strengths and present yourself well in an interview of any type."
+                    },
+                    {
+                        "name": "Understanding vocal variety",
+                        "description": "This project addresses the importance of vocal variety when giving a speech and provides activities to develop and nurture its use."
+                    },
+                    {
+                        "name": "Effective body language",
+                        "description": "This project focuses on how to recognize body language used when speaking publicly and how to use gestures to enhance speech content."
+                    },
+                    {
+                        "name": "Know your sense of humor",
+                        "description": "This project focuses on understanding what makes you laugh and how to share that with an audience."
+                    },
+                    {
+                        "name": "Researching and Presenting",
+                        "description": "This project addresses topic selection strategies, suggestions for research and methods for producing a well-organized speech."
+                    }
+                ],
+                "enhancements": {
+                    "required_after": "2025-10",
+                    "meeting_roles": [
+                        "Toastmaster",
+                        "Evaluator",
+                        "Topicsmaster OR Table Topics Speaker OR Introductory Mentor"
+                    ],
+                    "ed_series": [
+                        {
+                            "series": "Successful Club Series",
+                            "choose": 1,
+                            "options": [
+                                "Creating the Best Club Climate",
+                                "Meeting Roles and Responsibilities",
+                                "Keeping the Commitment",
+                                "Going Beyond Our Club"
+                            ]
+                        }
+                    ]
+                }
+            },
+            {
+                "level": 4,
+                "name": "LEVEL FOUR: Building Skills",
+                "requiredProjects": [
+                    {
+                        "name": "Motivate others",
+                        "description": "This project focuses on how people are motivated. It is designed to help you build your leadership skills by effectively motivating team members."
+                    }
+                ],
+                "totalProjectsRequired": 2,
+                "electiveInstruction": "ELECTIVES (choose 1)",
+                "electivesRequired": 1,
+                "electiveChoices": [
+                    {
+                        "name": "Create a podcast",
+                        "description": "This project addresses the skills you need to develop a podcast, create interesting content and organize a cohesive program. You will learn how to record and upload it to the internet."
+                    },
+                    {
+                        "name": "Building a social media presence",
+                        "description": "This project addresses how best to use different types of online communication. You will create and maintain an online profile to promote yourself or an organization."
+                    },
+                    {
+                        "name": "Managing a difficult audience",
+                        "description": "This project covers common behaviors of difficult audience members and how to address each behavior in a calm, effective and professional way."
+                    },
+                    {
+                        "name": "Write a compelling blog",
+                        "description": "This project addresses the basics of developing a compelling blog and successfully engaging a readership."
+                    },
+                    {
+                        "name": "Manage online meetings",
+                        "description": "This project addresses how to effectively conduct online meetings and webinars, prepare and organize necessary visual aids, and lead with confidence."
+                    },
+                    {
+                        "name": "Question and answer session",
+                        "description": "This project addresses how to prepare to answer questions and provide information clearly, concisely and with confidence."
+                    },
+                    {
+                        "name": "Public relations strategies",
+                        "description": "This project focuses on how to promote awareness of an organization, formulate a public relations strategy and use various public relations tactics."
+                    },
+                    {
+                        "name": "Manage projects successfully",
+                        "description": "This project focuses on skills needed to effectively manage a project, develop rapport with stakeholders and cultivate strong relationships with a team."
+                    }
+                ],
+                "enhancements": {
+                    "required_after": "2025-10",
+                    "meeting_roles": [
+                        "Toastmaster",
+                        "General Evaluator",
+                        "Evaluator",
+                        "Table Topics Speaker OR Topicsmaster OR Specialized Role OR repeat"
+                    ],
+                    "ed_series": [
+                        {
+                            "series": "Successful Club Series",
+                            "choose": 1,
+                            "options": [
+                                "Finding New Members",
+                                "Closing the Sale",
+                                "How to Be a Distinguished Club",
+                                "Toastmasters Educational Program"
+                            ]
+                        },
+                        {
+                            "series": "Better Speaker Series",
+                            "choose": 1,
+                            "options": [
+                                "Beginning Your Speech",
+                                "Concluding Your Speech",
+                                "Controlling Your Fear",
+                                "Impromptu Speaking",
+                                "Selecting Your Topic",
+                                "Know Your Audience",
+                                "Organizing Your Speech",
+                                "Creating an Introduction",
+                                "Preparation and Practice",
+                                "Using Body Language"
+                            ]
+                        }
+                    ]
+                }
+            },
+            {
+                "level": 5,
+                "name": "LEVEL FIVE: Demonstrating Expertise",
+                "requiredProjects": [
+                    {
+                        "name": "Team building",
+                        "description": "This project addresses the benefits of team building. It is designed to help you build a sense of collaboration and trust within a team completing a project."
+                    },
+                    {
+                        "name": "Reflect on your path",
+                        "description": "This project is designed to give you an opportunity to share your experience at the end of your path."
+                    }
+                ],
+                "totalProjectsRequired": 3,
+                "electiveInstruction": "ELECTIVES (choose 1)",
+                "electivesRequired": 1,
+                "electiveChoices": [
+                    {
+                        "name": "Lessons learned",
+                        "description": "This project addresses how to identify the discussion points of a large group meeting, encourage a culture of contribution and voicing opinions, and facilitate productive discussion that yields results."
+                    },
+                    {
+                        "name": "Moderate a panel discussion",
+                        "description": "This project addresses the skills needed to successfully moderate a panel discussion and how to be an effective participant on a panel."
+                    },
+                    {
+                        "name": "Ethical leadership",
+                        "description": "This project addresses the importance of recognizing the effect of decisions that impact ethics, best practices for making ethical decisions and developing an ethical framework."
+                    },
+                    {
+                        "name": "Leading in your volunteer organization",
+                        "description": "This project focuses on the skills required to lead in a volunteer organization and the importance of recognition and reward in motivating volunteers."
+                    },
+                    {
+                        "name": "Prepare to speak professionally",
+                        "description": "This project is designed to help you define the attributes of professional speakers and apply that understanding to your own skills as a speaker."
+                    },
+                    {
+                        "name": "High performance leadership",
+                        "description": "The focus of this project is to design and complete a project with well-defined goals, lead a team and be accountable to a guidance committee."
+                    }
+                ],
+                "enhancements": {
+                    "required_after": "2025-10",
+                    "meeting_roles": [
+                        "General Evaluator (x2)",
+                        "Toastmaster (x2)",
+                        "Evaluator (x2)",
+                        "Table Topics Speaker OR Topicsmaster OR Ah-Counter OR Timer OR Grammarian OR Club Mentor OR Specialized Role OR repeat"
+                    ],
+                    "ed_series": [
+                        {
+                            "series": "Successful Club Series",
+                            "choose": 1,
+                            "options": [
+                                "Moments of Truth",
+                                "Evaluate to Motivate",
+                                "Mentoring"
+                            ]
+                        },
+                        {
+                            "series": "Leadership Excellence Series",
+                            "choose": 1,
+                            "options": [
+                                "Service and Leadership",
+                                "The Leader as a Coach",
+                                "Developing a Mission",
+                                "Motivating People",
+                                "Building a Team",
+                                "Delegate to Empower",
+                                "Resolving Conflict",
+                                "Visionary Leader",
+                                "Values and Leadership",
+                                "Goal Setting and Planning",
+                                "Giving Effective Feedback"
+                            ]
+                        }
+                    ]
+                }
+            }
+        ]
+    },
+    {
+        "name": "Persuasive Influence",
+        "type": "current",
+        "description": "This path helps you build your skills as an innovative communicator and leader. The projects on this path focus on how to negotiate a positive outcome together with building strong interpersonal communication and public speaking skills. Each project emphasizes developing leadership skills to use in complex situations, as well as creating innovative solutions to challenges. This path culminates in a “High Performance Leadership” project of your design. ",
+        "levels": [
+            {
+                "level": 1,
+                "name": "LEVEL ONE: Mastering Fundamentals",
+                "requiredProjects": [
+                    {
+                        "name": "Ice Breaker",
+                        "description": "This foundational project is designed to introduce you to your club and the skills you need to begin your Toastmasters journey."
+                    },
+                    {
+                        "name": "Writing a Speech with Purpose",
+                        "description": "This project addresses how to select a speech topic and write a speech with a clear purpose."
+                    },
+                    {
+                        "name": "Introduction to Vocal Variety and Body Language",
+                        "description": "This project introduces vocal variety and body language as foundational components of effective public speaking."
+                    },
+                    {
+                        "name": "Evaluation and Feedback",
+                        "description": "This project addresses the skills needed to give and receive feedback. You will learn about giving, receiving and applying feedback."
+                    }
+                ],
+                "totalProjectsRequired": 4,
+                "enhancements": {
+                    "required_after": "2025-10",
+                    "meeting_roles": [
+                        "Table Topics Speaker",
+                        "Evaluator",
+                        "Timer OR Ah-Counter"
+                    ],
+                    "ed_series": []
+                }
+            },
+            {
+                "level": 2,
+                "name": "LEVEL TWO: Learning Your Style",
+                "requiredProjects": [
+                    {
+                        "name": "Understanding your leadership style",
+                        "description": "This project is designed to introduce the different styles of leadership and help you identify your preferred style."
+                    },
+                    {
+                        "name": "Active listening",
+                        "description": "This project covers the difference between hearing and listening, and steps for exploring the ways listening helps build strong, lasting connections."
+                    },
+                    {
+                        "name": "Introduction to toastmasters mentoring",
+                        "description": "This project introduces the value of mentorship and the Toastmasters view of mentors and protégés."
+                    }
+                ],
+                "totalProjectsRequired": 3,
+                "enhancements": {
+                    "required_after": "2025-10",
+                    "meeting_roles": [
+                        "Grammarian",
+                        "Topicsmaster",
+                        "Evaluator",
+                        "Toastmaster OR Timer OR Ah-Counter"
+                    ],
+                    "ed_series": []
+                }
+            },
+            {
+                "level": 3,
+                "name": "LEVEL THREE: Increasing Knowledge",
+                "requiredProjects": [
+                    {
+                        "name": "Understanding conflict resolution",
+                        "description": "This project is designed to introduce conflict resolution strategies and provide an opportunity to resolve a conflict scenario within an interactive activity."
+                    }
+                ],
+                "totalProjectsRequired": 3,
+                "electiveInstruction": "ELECTIVES (choose 2)",
+                "electivesRequired": 2,
+                "electiveChoices": [
+                    {
+                        "name": "Deliver social speeches",
+                        "description": "This project addresses the skills needed to compose a speech for a social occasion including a toast, eulogy, an acceptance speech and a speech praising an individual or group."
+                    },
+                    {
+                        "name": "Using presentation software",
+                        "description": "This project addresses the use of presentation software—from identifying topics that benefit from the use of technology to effective slide design and presentation."
+                    },
+                    {
+                        "name": "Connect with storytelling",
+                        "description": "This project addresses storytelling techniques and descriptive skills to help make every speech relatable and interesting."
+                    },
+                    {
+                        "name": "Creating effective visual aids",
+                        "description": "This project addresses effective methods for choosing the best visual aid for your presentation along with the creation and use of each type."
+                    },
+                    {
+                        "name": "Using descriptive language",
+                        "description": "This project addresses the difference between literal and figurative language along with how to determine when to use each to create vivid descriptions."
+                    },
+                    {
+                        "name": "Connect with your audience",
+                        "description": "This project focuses on different audience types and how to address them effectively. "
+                    },
+                    {
+                        "name": "Make connections through networking",
+                        "description": "This project focuses on how to network effectively and understanding the importance of being a professional ally to people in your network."
+                    },
+                    {
+                        "name": "Focus on the positive",
+                        "description": "This project addresses strategies for improving your personal interactions by understanding the impact of your attitudes and thoughts on daily interactions."
+                    },
+                    {
+                        "name": "Inspire your audience",
+                        "description": "This project addresses how to present a speech in an enthusiastic and inspiring fashion to establish a strong rapport with your audience."
+                    },
+                    {
+                        "name": "Prepare for an interview",
+                        "description": "This project addresses the skills you need to identify and speak about personal strengths and present yourself well in an interview of any type."
+                    },
+                    {
+                        "name": "Understanding vocal variety",
+                        "description": "This project addresses the importance of vocal variety when giving a speech and provides activities to develop and nurture its use."
+                    },
+                    {
+                        "name": "Effective body language",
+                        "description": "This project focuses on how to recognize body language used when speaking publicly and how to use gestures to enhance speech content."
+                    },
+                    {
+                        "name": "Know your sense of humor",
+                        "description": "This project focuses on understanding what makes you laugh and how to share that with an audience."
+                    },
+                    {
+                        "name": "Researching and Presenting",
+                        "description": "This project addresses topic selection strategies, suggestions for research and methods for producing a well-organized speech."
+                    }
+                ],
+                "enhancements": {
+                    "required_after": "2025-10",
+                    "meeting_roles": [
+                        "Toastmaster",
+                        "Evaluator",
+                        "Topicsmaster OR Table Topics Speaker OR Introductory Mentor"
+                    ],
+                    "ed_series": [
+                        {
+                            "series": "Successful Club Series",
+                            "choose": 1,
+                            "options": [
+                                "Creating the Best Club Climate",
+                                "Meeting Roles and Responsibilities",
+                                "Keeping the Commitment",
+                                "Going Beyond Our Club"
+                            ]
+                        }
+                    ]
+                }
+            },
+            {
+                "level": 4,
+                "name": "LEVEL FOUR: Building Skills",
+                "requiredProjects": [
+                    {
+                        "name": "Leading in difficult situations",
+                        "description": "This project focuses on the fundamentals of managing challenges, analyzing difficult situations and identifying best strategies for overcoming adversity."
+                    }
+                ],
+                "totalProjectsRequired": 2,
+                "electiveInstruction": "ELECTIVES (choose 1)",
+                "electivesRequired": 1,
+                "electiveChoices": [
+                    {
+                        "name": "Create a podcast",
+                        "description": "This project addresses the skills you need to develop a podcast, create interesting content and organize a cohesive program. You will learn how to record and upload it to the internet."
+                    },
+                    {
+                        "name": "Building a social media presence",
+                        "description": "This project addresses how best to use different types of online communication. You will create and maintain an online profile to promote yourself or an organization."
+                    },
+                    {
+                        "name": "Managing a difficult audience",
+                        "description": "This project covers common behaviors of difficult audience members and how to address each behavior in a calm, effective and professional way."
+                    },
+                    {
+                        "name": "Write a compelling blog",
+                        "description": "This project addresses the basics of developing a compelling blog and successfully engaging a readership."
+                    },
+                    {
+                        "name": "Manage online meetings",
+                        "description": "This project addresses how to effectively conduct online meetings and webinars, prepare and organize necessary visual aids, and lead with confidence."
+                    },
+                    {
+                        "name": "Question and answer session",
+                        "description": "This project addresses how to prepare to answer questions and provide information clearly, concisely and with confidence."
+                    },
+                    {
+                        "name": "Public relations strategies",
+                        "description": "This project focuses on how to promote awareness of an organization, formulate a public relations strategy and use various public relations tactics."
+                    },
+                    {
+                        "name": "Manage projects successfully",
+                        "description": "This project focuses on skills needed to effectively manage a project, develop rapport with stakeholders and cultivate strong relationships with a team."
+                    }
+                ],
+                "enhancements": {
+                    "required_after": "2025-10",
+                    "meeting_roles": [
+                        "Toastmaster",
+                        "General Evaluator",
+                        "Evaluator",
+                        "Table Topics Speaker OR Topicsmaster OR Specialized Role OR repeat"
+                    ],
+                    "ed_series": [
+                        {
+                            "series": "Successful Club Series",
+                            "choose": 1,
+                            "options": [
+                                "Finding New Members",
+                                "Closing the Sale",
+                                "How to Be a Distinguished Club",
+                                "Toastmasters Educational Program"
+                            ]
+                        },
+                        {
+                            "series": "Better Speaker Series",
+                            "choose": 1,
+                            "options": [
+                                "Beginning Your Speech",
+                                "Concluding Your Speech",
+                                "Controlling Your Fear",
+                                "Impromptu Speaking",
+                                "Selecting Your Topic",
+                                "Know Your Audience",
+                                "Organizing Your Speech",
+                                "Creating an Introduction",
+                                "Preparation and Practice",
+                                "Using Body Language"
+                            ]
+                        }
+                    ]
+                }
+            },
+            {
+                "level": 5,
+                "name": "LEVEL FIVE: Demonstrating Expertise",
+                "requiredProjects": [
+                    {
+                        "name": "High performance leadership",
+                        "description": "The focus of this project is to design and complete a project with well-defined goals, lead a team and be accountable to a guidance committee."
+                    },
+                    {
+                        "name": "Reflect on your path",
+                        "description": "This project is designed to give you an opportunity to share your experience at the end of your path."
+                    }
+                ],
+                "totalProjectsRequired": 3,
+                "electiveInstruction": "ELECTIVES (choose 1)",
+                "electivesRequired": 1,
+                "electiveChoices": [
+                    {
+                        "name": "Lessons learned",
+                        "description": "This project addresses how to identify the discussion points of a large group meeting, encourage a culture of contribution and voicing opinions, and facilitate productive discussion that yields results."
+                    },
+                    {
+                        "name": "Moderate a panel discussion",
+                        "description": "This project addresses the skills needed to successfully moderate a panel discussion and how to be an effective participant on a panel."
+                    },
+                    {
+                        "name": "Ethical leadership",
+                        "description": "This project addresses the importance of recognizing the effect of decisions that impact ethics, best practices for making ethical decisions and developing an ethical framework."
+                    },
+                    {
+                        "name": "Leading in your volunteer organization",
+                        "description": "This project focuses on the skills required to lead in a volunteer organization and the importance of recognition and reward in motivating volunteers."
+                    },
+                    {
+                        "name": "Prepare to speak professionally",
+                        "description": "This project is designed to help you define the attributes of professional speakers and apply that understanding to your own skills as a speaker."
+                    }
+                ],
+                "enhancements": {
+                    "required_after": "2025-10",
+                    "meeting_roles": [
+                        "General Evaluator (x2)",
+                        "Toastmaster (x2)",
+                        "Evaluator (x2)",
+                        "Table Topics Speaker OR Topicsmaster OR Ah-Counter OR Timer OR Grammarian OR Club Mentor OR Specialized Role OR repeat"
+                    ],
+                    "ed_series": [
+                        {
+                            "series": "Successful Club Series",
+                            "choose": 1,
+                            "options": [
+                                "Moments of Truth",
+                                "Evaluate to Motivate",
+                                "Mentoring"
+                            ]
+                        },
+                        {
+                            "series": "Leadership Excellence Series",
+                            "choose": 1,
+                            "options": [
+                                "Service and Leadership",
+                                "The Leader as a Coach",
+                                "Developing a Mission",
+                                "Motivating People",
+                                "Building a Team",
+                                "Delegate to Empower",
+                                "Resolving Conflict",
+                                "Visionary Leader",
+                                "Values and Leadership",
+                                "Goal Setting and Planning",
+                                "Giving Effective Feedback"
+                            ]
+                        }
+                    ]
+                }
+            }
+        ]
+    },
+    {
+        "name": "Presentation Mastery",
+        "type": "current",
+        "description": "This path helps you build your skills as an accomplished public speaker. The projects on this path focus on learning how an audience responds to you and improving your connection with audience members. The projects contribute to developing an understanding of effective public speaking technique, including speech writing and speech delivery. This path culminates in an extended speech that will allow you to apply what you learned.",
+        "levels": [
+            {
+                "level": 1,
+                "name": "LEVEL ONE: Mastering Fundamentals",
+                "requiredProjects": [
+                    {
+                        "name": "Ice Breaker",
+                        "description": "This foundational project is designed to introduce you to your club and the skills you need to begin your Toastmasters journey."
+                    },
+                    {
+                        "name": "Writing a Speech with Purpose",
+                        "description": "This project addresses how to select a speech topic and write a speech with a clear purpose."
+                    },
+                    {
+                        "name": "Introduction to Vocal Variety and Body Language",
+                        "description": "This project introduces vocal variety and body language as foundational components of effective public speaking."
+                    },
+                    {
+                        "name": "Evaluation and Feedback",
+                        "description": "This project addresses the skills needed to give and receive feedback. You will learn about giving, receiving and applying feedback."
+                    }
+                ],
+                "totalProjectsRequired": 4,
+                "enhancements": {
+                    "required_after": "2025-10",
+                    "meeting_roles": [
+                        "Table Topics Speaker",
+                        "Evaluator",
+                        "Timer OR Ah-Counter"
+                    ],
+                    "ed_series": []
+                }
+            },
+            {
+                "level": 2,
+                "name": "LEVEL TWO: Learning Your Style",
+                "requiredProjects": [
+                    {
+                        "name": "Understanding your communication style",
+                        "description": "This project focuses on recognizing your preferred communication style and understanding how your style impacts your interactions with others."
+                    },
+                    {
+                        "name": "Effective body language",
+                        "description": "This project focuses on how to recognize body language used when speaking publicly and how to use gestures to enhance speech content."
+                    },
+                    {
+                        "name": "Introduction to toastmasters mentoring",
+                        "description": "This project introduces the value of mentorship and the Toastmasters view of mentors and protégés."
+                    }
+                ],
+                "totalProjectsRequired": 3,
+                "enhancements": {
+                    "required_after": "2025-10",
+                    "meeting_roles": [
+                        "Grammarian",
+                        "Topicsmaster",
+                        "Evaluator",
+                        "Toastmaster OR Timer OR Ah-Counter"
+                    ],
+                    "ed_series": []
+                }
+            },
+            {
+                "level": 3,
+                "name": "LEVEL THREE: Increasing Knowledge",
+                "requiredProjects": [
+                    {
+                        "name": "Persuasive speaking",
+                        "description": "This project focuses on helping you to develop and support a viewpoint, and identify the most appropriate type of persuasive speech for your topic."
+                    }
+                ],
+                "totalProjectsRequired": 3,
+                "electiveInstruction": "ELECTIVES (choose 2)",
+                "electivesRequired": 2,
+                "electiveChoices": [
+                    {
+                        "name": "Deliver social speeches",
+                        "description": "This project addresses the skills needed to compose a speech for a social occasion including a toast, eulogy, an acceptance speech and a speech praising an individual or group."
+                    },
+                    {
+                        "name": "Using presentation software",
+                        "description": "This project addresses the use of presentation software—from identifying topics that benefit from the use of technology to effective slide design and presentation."
+                    },
+                    {
+                        "name": "Connect with storytelling",
+                        "description": "This project addresses storytelling techniques and descriptive skills to help make every speech relatable and interesting."
+                    },
+                    {
+                        "name": "Creating effective visual aids",
+                        "description": "This project addresses effective methods for choosing the best visual aid for your presentation along with the creation and use of each type."
+                    },
+                    {
+                        "name": "Using descriptive language",
+                        "description": "This project addresses the difference between literal and figurative language along with how to determine when to use each to create vivid descriptions."
+                    },
+                    {
+                        "name": "Connect with your audience",
+                        "description": "This project focuses on different audience types and how to address them effectively. "
+                    },
+                    {
+                        "name": "Focus on the positive",
+                        "description": "This project addresses strategies for improving your personal interactions by understanding the impact of your attitudes and thoughts on daily interactions."
+                    },
+                    {
+                        "name": "Inspire your audience",
+                        "description": "This project addresses how to present a speech in an enthusiastic and inspiring fashion to establish a strong rapport with your audience."
+                    },
+                    {
+                        "name": "Making connections through networking",
+                        "description": "This project focuses on how to network effectively and understanding the importance of being a professional ally to people in your network."
+                    },
+                    {
+                        "name": "Prepare for an interview",
+                        "description": "This project addresses the skills you need to identify and speak about personal strengths and present yourself well in an interview of any type."
+                    },
+                    {
+                        "name": "Understanding vocal variety",
+                        "description": "This project addresses the importance of vocal variety when giving a speech and provides activities to develop and nurture its use."
+                    },
+                    {
+                        "name": "Active listening",
+                        "description": "This project covers the difference between hearing and listening, and steps for exploring the ways listening helps build strong, lasting connections."
+                    },
+                    {
+                        "name": "Know your sense of humor",
+                        "description": "This project focuses on understanding what makes you laugh and how to share that with an audience."
+                    },
+                    {
+                        "name": "Researching and Presenting",
+                        "description": "This project addresses topic selection strategies, suggestions for research and methods for producing a well-organized speech."
+                    }
+                ],
+                "enhancements": {
+                    "required_after": "2025-10",
+                    "meeting_roles": [
+                        "Toastmaster",
+                        "Evaluator",
+                        "Topicsmaster OR Table Topics Speaker OR Introductory Mentor"
+                    ],
+                    "ed_series": [
+                        {
+                            "series": "Successful Club Series",
+                            "choose": 1,
+                            "options": [
+                                "Creating the Best Club Climate",
+                                "Meeting Roles and Responsibilities",
+                                "Keeping the Commitment",
+                                "Going Beyond Our Club"
+                            ]
+                        }
+                    ]
+                }
+            },
+            {
+                "level": 4,
+                "name": "LEVEL FOUR: Building Skills",
+                "requiredProjects": [
+                    {
+                        "name": "Managing a difficult audience",
+                        "description": "This project covers common behaviors of difficult audience members and how to address each behavior in a calm, effective and professional way."
+                    }
+                ],
+                "totalProjectsRequired": 2,
+                "electiveInstruction": "ELECTIVES (choose 1)",
+                "electivesRequired": 1,
+                "electiveChoices": [
+                    {
+                        "name": "Create a podcast",
+                        "description": "This project addresses the skills you need to develop a podcast, create interesting content and organize a cohesive program. You will learn how to record and upload it to the internet."
+                    },
+                    {
+                        "name": "Building a social media presence",
+                        "description": "This project addresses how best to use different types of online communication. You will create and maintain an online profile to promote yourself or an organization."
+                    },
+                    {
+                        "name": "Write a compelling blog",
+                        "description": "This project addresses the basics of developing a compelling blog and successfully engaging a readership."
+                    },
+                    {
+                        "name": "Manage online meetings",
+                        "description": "This project addresses how to effectively conduct online meetings and webinars, prepare and organize necessary visual aids, and lead with confidence."
+                    },
+                    {
+                        "name": "Question and answer session",
+                        "description": "This project addresses how to prepare to answer questions and provide information clearly, concisely and with confidence."
+                    },
+                    {
+                        "name": "Public relations strategies",
+                        "description": "This project focuses on how to promote awareness of an organization, formulate a public relations strategy and use various public relations tactics."
+                    },
+                    {
+                        "name": "Manage projects successfully",
+                        "description": "This project focuses on skills needed to effectively manage a project, develop rapport with stakeholders and cultivate strong relationships with a team."
+                    }
+                ],
+                "enhancements": {
+                    "required_after": "2025-10",
+                    "meeting_roles": [
+                        "Toastmaster",
+                        "General Evaluator",
+                        "Evaluator",
+                        "Table Topics Speaker OR Topicsmaster OR Specialized Role OR repeat"
+                    ],
+                    "ed_series": [
+                        {
+                            "series": "Successful Club Series",
+                            "choose": 1,
+                            "options": [
+                                "Finding New Members",
+                                "Closing the Sale",
+                                "How to Be a Distinguished Club",
+                                "Toastmasters Educational Program"
+                            ]
+                        },
+                        {
+                            "series": "Better Speaker Series",
+                            "choose": 1,
+                            "options": [
+                                "Beginning Your Speech",
+                                "Concluding Your Speech",
+                                "Controlling Your Fear",
+                                "Impromptu Speaking",
+                                "Selecting Your Topic",
+                                "Know Your Audience",
+                                "Organizing Your Speech",
+                                "Creating an Introduction",
+                                "Preparation and Practice",
+                                "Using Body Language"
+                            ]
+                        }
+                    ]
+                }
+            },
+            {
+                "level": 5,
+                "name": "LEVEL FIVE: Demonstrating Expertise",
+                "requiredProjects": [
+                    {
+                        "name": "Prepare to speak professionally",
+                        "description": "This project is designed to help you define the attributes of professional speakers and apply that understanding to your own skills as a speaker."
+                    },
+                    {
+                        "name": "Reflect on your path",
+                        "description": "This project is designed to give you an opportunity to share your experience at the end of your path."
+                    }
+                ],
+                "totalProjectsRequired": 3,
+                "electiveInstruction": "ELECTIVES (choose 1)",
+                "electivesRequired": 1,
+                "electiveChoices": [
+                    {
+                        "name": "Lessons learned",
+                        "description": "This project addresses how to identify the discussion points of a large group meeting, encourage a culture of contribution and voicing opinions, and facilitate productive discussion that yields results."
+                    },
+                    {
+                        "name": "Moderate a panel discussion",
+                        "description": "This project addresses the skills needed to successfully moderate a panel discussion and how to be an effective participant on a panel."
+                    },
+                    {
+                        "name": "Ethical leadership",
+                        "description": "This project addresses the importance of recognizing the effect of decisions that impact ethics, best practices for making ethical decisions and developing an ethical framework."
+                    },
+                    {
+                        "name": "Leading in your volunteer organization",
+                        "description": "This project focuses on the skills required to lead in a volunteer organization and the importance of recognition and reward in motivating volunteers."
+                    },
+                    {
+                        "name": "High performance leadership",
+                        "description": "The focus of this project is to design and complete a project with well-defined goals, lead a team and be accountable to a guidance committee."
+                    }
+                ],
+                "enhancements": {
+                    "required_after": "2025-10",
+                    "meeting_roles": [
+                        "General Evaluator (x2)",
+                        "Toastmaster (x2)",
+                        "Evaluator (x2)",
+                        "Table Topics Speaker OR Topicsmaster OR Ah-Counter OR Timer OR Grammarian OR Club Mentor OR Specialized Role OR repeat"
+                    ],
+                    "ed_series": [
+                        {
+                            "series": "Successful Club Series",
+                            "choose": 1,
+                            "options": [
+                                "Moments of Truth",
+                                "Evaluate to Motivate",
+                                "Mentoring"
+                            ]
+                        },
+                        {
+                            "series": "Leadership Excellence Series",
+                            "choose": 1,
+                            "options": [
+                                "Service and Leadership",
+                                "The Leader as a Coach",
+                                "Developing a Mission",
+                                "Motivating People",
+                                "Building a Team",
+                                "Delegate to Empower",
+                                "Resolving Conflict",
+                                "Visionary Leader",
+                                "Values and Leadership",
+                                "Goal Setting and Planning",
+                                "Giving Effective Feedback"
+                            ]
+                        }
+                    ]
+                }
+            }
+        ]
+    },
+    {
+        "name": "Strategic Relationships",
+        "type": "legacy",
+        "description": "This path helps you build your skills as a leader in communication. The projects on this path focus on understanding diversity, building personal and/or professional connections with a variety of people and developing a public relations strategy. Communicating well interpersonally and as a public speaker is emphasized in each project. The path culminates in a project to apply your skills as a leader in a volunteer organization.",
+        "levels": [
+            {
+                "level": 1,
+                "name": "LEVEL ONE: Mastering Fundamentals",
+                "requiredProjects": [
+                    {
+                        "name": "Ice breaker",
+                        "description": "This foundational project is designed to introduce you to your club and the skills you need to begin your Toastmasters journey."
+                    },
+                    {
+                        "name": "Evaluation and feedback",
+                        "description": "This project addresses the skills needed to give and receive feedback. You will learn about giving, receiving and applying feedback."
+                    },
+                    {
+                        "name": "Researching and presenting",
+                        "description": "This project addresses topic selection strategies, suggestions for research and methods for producing a wellorganized speech."
+                    }
+                ],
+                "totalProjectsRequired": 3
+            },
+            {
+                "level": 2,
+                "name": "LEVEL TWO: Learning Your Style",
+                "requiredProjects": [
+                    {
+                        "name": "Understanding your leadership style",
+                        "description": "This project is designed to introduce the different styles of leadership and help you identify your preferred style."
+                    },
+                    {
+                        "name": "Cross cultural understanding",
+                        "description": "This project focuses on understanding the cultures with which you identify and the impact of stereotypes associated with your cultures and others.",
+                        "note": "Removed from SR path as of Oct 2024"
+                    },
+                    {
+                        "name": "Introduction to toastmasters mentoring",
+                        "description": "This project introduces the value of mentorship and the Toastmasters view of mentors and protégés."
+                    }
+                ],
+                "totalProjectsRequired": 3
+            },
+            {
+                "level": 3,
+                "name": "LEVEL THREE: Increasing Knowledge",
+                "requiredProjects": [
+                    {
+                        "name": "Making connections through networking",
+                        "description": "This project focuses on how to network effectively and understanding the importance of being a professional ally to people in your network."
+                    }
+                ],
+                "totalProjectsRequired": 3,
+                "electiveInstruction": "ELECTIVES (choose 2)",
+                "electivesRequired": 2,
+                "electiveChoices": [
+                    {
+                        "name": "Deliver social speeches",
+                        "description": "This project addresses the skills needed to compose a speech for a social occasion including a toast, eulogy, an acceptance speech and a speech praising an individual or group."
+                    },
+                    {
+                        "name": "Using presentation software",
+                        "description": "This project addresses the use of presentation software—from identifying topics that benefit from the use of technology to effective slide design and presentation."
+                    },
+                    {
+                        "name": "Connect with storytelling",
+                        "description": "This project addresses storytelling techniques and descriptive skills to help make every speech relatable and interesting."
+                    },
+                    {
+                        "name": "Creating effective visual aids",
+                        "description": "This project addresses effective methods for choosing the best visual aid for your presentation along with the creation and use of each type."
+                    },
+                    {
+                        "name": "Using descriptive language",
+                        "description": "This project addresses the difference between literal and figurative language along with how to determine when to use each to create vivid descriptions."
+                    },
+                    {
+                        "name": "Connect with your audience",
+                        "description": "This project focuses on different audience types and how to address them effectively. "
+                    },
+                    {
+                        "name": "Focus on the positive",
+                        "description": "This project addresses strategies for improving your personal interactions by understanding the impact of your attitudes and thoughts on daily interactions."
+                    },
+                    {
+                        "name": "Inspire your audience",
+                        "description": "This project addresses how to present a speech in an enthusiastic and inspiring fashion to establish a strong rapport with your audience."
+                    },
+                    {
+                        "name": "Prepare for an interview",
+                        "description": "This project addresses the skills you need to identify and speak about personal strengths and present yourself well in an interview of any type."
+                    },
+                    {
+                        "name": "Understanding vocal variety",
+                        "description": "This project addresses the importance of vocal variety when giving a speech and provides activities to develop and nurture its use."
+                    },
+                    {
+                        "name": "Effective body language",
+                        "description": "This project focuses on how to recognize body language used when speaking publicly and how to use gestures to enhance speech content."
+                    },
+                    {
+                        "name": "Active listening",
+                        "description": "This project covers the difference between hearing and listening, and steps for exploring the ways listening helps build strong, lasting connections."
+                    },
+                    {
+                        "name": "Know your sense of humor",
+                        "description": "This project focuses on understanding what makes you laugh and how to share that with an audience."
+                    }
+                ]
+            },
+            {
+                "level": 4,
+                "name": "LEVEL FOUR: Building Skills",
+                "requiredProjects": [
+                    {
+                        "name": "Public relations strategies",
+                        "description": "This project focuses on how to promote awareness of an organization, formulate a public relations strategy and use various public relations tactics."
+                    }
+                ],
+                "totalProjectsRequired": 2,
+                "electiveInstruction": "ELECTIVES (choose 1)",
+                "electivesRequired": 1,
+                "electiveChoices": [
+                    {
+                        "name": "Create a podcast",
+                        "description": "This project addresses the skills you need to develop a podcast, create interesting content and organize a cohesive program. You will learn how to record and upload it to the internet."
+                    },
+                    {
+                        "name": "Building a social media presence",
+                        "description": "This project addresses how best to use different types of online communication. You will create and maintain an online profile to promote yourself or an organization."
+                    },
+                    {
+                        "name": "Managing a difficult audience",
+                        "description": "This project covers common behaviors of difficult audience members and how to address each behavior in a calm, effective and professional way."
+                    },
+                    {
+                        "name": "Write a compelling blog",
+                        "description": "This project addresses the basics of developing a compelling blog and successfully engaging a readership."
+                    },
+                    {
+                        "name": "Manage online meetings",
+                        "description": "This project addresses how to effectively conduct online meetings and webinars, prepare and organize necessary visual aids, and lead with confidence."
+                    },
+                    {
+                        "name": "Question and answer session",
+                        "description": "This project addresses how to prepare to answer questions and provide information clearly, concisely and with confidence."
+                    },
+                    {
+                        "name": "Manage projects successfully",
+                        "description": "This project focuses on skills needed to effectively manage a project, develop rapport with stakeholders and cultivate strong relationships with a team."
+                    }
+                ]
+            },
+            {
+                "level": 5,
+                "name": "LEVEL FIVE: Demonstrating Expertise",
+                "requiredProjects": [
+                    {
+                        "name": "Leading in your volunteer organization",
+                        "description": "This project focuses on the skills required to lead in a volunteer organization and the importance of recognition and reward in motivating volunteers."
+                    },
+                    {
+                        "name": "Reflect on your path",
+                        "description": "This project is designed to give you an opportunity to share your experience at the end of your path."
+                    }
+                ],
+                "totalProjectsRequired": 3,
+                "electiveInstruction": "ELECTIVES (choose 1)",
+                "electivesRequired": 1,
+                "electiveChoices": [
+                    {
+                        "name": "Lessons learned",
+                        "description": "This project addresses how to identify the discussion points of a large group meeting, encourage a culture of contribution and voicing opinions, and facilitate productive discussion that yields results."
+                    },
+                    {
+                        "name": "Moderate a panel discussion",
+                        "description": "This project addresses the skills needed to successfully moderate a panel discussion and how to be an effective participant on a panel."
+                    },
+                    {
+                        "name": "Ethical leadership",
+                        "description": "This project addresses the importance of recognizing the effect of decisions that impact ethics, best practices for making ethical decisions and developing an ethical framework."
+                    },
+                    {
+                        "name": "Prepare to speak professionally",
+                        "description": "This project is designed to help you define the attributes of professional speakers and apply that understanding to your own skills as a speaker."
+                    },
+                    {
+                        "name": "High performance leadership",
+                        "description": "The focus of this project is to design and complete a project with well-defined goals, lead a team and be accountable to a guidance committee."
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Team Collaboration",
+        "type": "legacy",
+        "description": "This path helps you build your skills as a powerful and effective communicator. The projects focus on learning strategies for building connections with the people around you, understanding motivation and successfully leading small groups to accomplish tasks. This path culminates in a comprehensive team-building project that brings all of your skills together—including public speaking.",
+        "levels": [
+            {
+                "level": 1,
+                "name": "LEVEL ONE: Mastering Fundamentals",
+                "requiredProjects": [
+                    {
+                        "name": "Ice breaker",
+                        "description": "This foundational project is designed to introduce you to your club and the skills you need to begin your Toastmasters journey."
+                    },
+                    {
+                        "name": "Evaluation and feedback",
+                        "description": "This project addresses the skills needed to give and receive feedback. You will learn about giving, receiving and applying feedback."
+                    },
+                    {
+                        "name": "Researching and presenting",
+                        "description": "This project addresses topic selection strategies, suggestions for research and methods for producing a wellorganized speech."
+                    }
+                ],
+                "totalProjectsRequired": 3
+            },
+            {
+                "level": 2,
+                "name": "LEVEL TWO: Learning Your Style",
+                "requiredProjects": [
+                    {
+                        "name": "Understanding your communication style",
+                        "description": "This project focuses on recognizing your preferred communication style and understanding how your style impacts your interactions with others."
+                    },
+                    {
+                        "name": "Active listening",
+                        "description": "This project covers the difference between hearing and listening, and steps for exploring the ways listening helps build strong, lasting connections."
+                    },
+                    {
+                        "name": "Introduction to toastmasters mentoring",
+                        "description": "This project introduces the value of mentorship and the Toastmasters view of mentors and protégés."
+                    }
+                ],
+                "totalProjectsRequired": 3
+            },
+            {
+                "level": 3,
+                "name": "LEVEL THREE: Increasing Knowledge",
+                "requiredProjects": [
+                    {
+                        "name": "Successful collaboration",
+                        "description": "The focus of this project is the benefit of collaboration, building an environment of trust, and encouraging creative debate within a group."
+                    }
+                ],
+                "totalProjectsRequired": 3,
+                "electiveInstruction": "ELECTIVES (choose 2)",
+                "electivesRequired": 2,
+                "electiveChoices": [
+                    {
+                        "name": "Deliver social speeches",
+                        "description": "This project addresses the skills needed to compose a speech for a social occasion including a toast, eulogy, an acceptance speech and a speech praising an individual or group."
+                    },
+                    {
+                        "name": "Using presentation software",
+                        "description": "This project addresses the use of presentation software—from identifying topics that benefit from the use of technology to effective slide design and presentation."
+                    },
+                    {
+                        "name": "Connect with storytelling",
+                        "description": "This project addresses storytelling techniques and descriptive skills to help make every speech relatable and interesting."
+                    },
+                    {
+                        "name": "Creating effective visual aids",
+                        "description": "This project addresses effective methods for choosing the best visual aid for your presentation along with the creation and use of each type."
+                    },
+                    {
+                        "name": "Using descriptive language",
+                        "description": "This project addresses the difference between literal and figurative language along with how to determine when to use each to create vivid descriptions."
+                    },
+                    {
+                        "name": "Connect with your audience",
+                        "description": "This project focuses on different audience types and how to address them effectively. "
+                    },
+                    {
+                        "name": "Make connections through networking",
+                        "description": "This project focuses on how to network effectively and understanding the importance of being a professional ally to people in your network."
+                    },
+                    {
+                        "name": "Focus on the positive",
+                        "description": "This project addresses strategies for improving your personal interactions by understanding the impact of your attitudes and thoughts on daily interactions."
+                    },
+                    {
+                        "name": "Inspire your audience",
+                        "description": "This project addresses how to present a speech in an enthusiastic and inspiring fashion to establish a strong rapport with your audience."
+                    },
+                    {
+                        "name": "Prepare for an interview",
+                        "description": "This project addresses the skills you need to identify and speak about personal strengths and present yourself well in an interview of any type."
+                    },
+                    {
+                        "name": "Understanding vocal variety",
+                        "description": "This project addresses the importance of vocal variety when giving a speech and provides activities to develop and nurture its use."
+                    },
+                    {
+                        "name": "Effective body language",
+                        "description": "This project focuses on how to recognize body language used when speaking publicly and how to use gestures to enhance speech content."
+                    },
+                    {
+                        "name": "Know your sense of humor",
+                        "description": "This project focuses on understanding what makes you laugh and how to share that with an audience."
+                    }
+                ]
+            },
+            {
+                "level": 4,
+                "name": "LEVEL FOUR: Building Skills",
+                "requiredProjects": [
+                    {
+                        "name": "Motivate others",
+                        "description": "This project focuses on how people are motivated. It is designed to help you build your leadership skills by effectively motivating team members."
+                    }
+                ],
+                "totalProjectsRequired": 2,
+                "electiveInstruction": "ELECTIVES (choose 1)",
+                "electivesRequired": 1,
+                "electiveChoices": [
+                    {
+                        "name": "Create a podcast",
+                        "description": "This project addresses the skills you need to develop a podcast, create interesting content and organize a cohesive program. You will learn how to record and upload it to the internet."
+                    },
+                    {
+                        "name": "Building a social media presence",
+                        "description": "This project addresses how best to use different types of online communication. You will create and maintain an online profile to promote yourself or an organization."
+                    },
+                    {
+                        "name": "Managing a difficult audience",
+                        "description": "This project covers common behaviors of difficult audience members and how to address each behavior in a calm, effective and professional way."
+                    },
+                    {
+                        "name": "Write a compelling blog",
+                        "description": "This project addresses the basics of developing a compelling blog and successfully engaging a readership."
+                    },
+                    {
+                        "name": "Manage online meetings",
+                        "description": "This project addresses how to effectively conduct online meetings and webinars, prepare and organize necessary visual aids, and lead with confidence."
+                    },
+                    {
+                        "name": "Question and answer session",
+                        "description": "This project addresses how to prepare to answer questions and provide information clearly, concisely and with confidence."
+                    },
+                    {
+                        "name": "Public relations strategies",
+                        "description": "This project focuses on how to promote awareness of an organization, formulate a public relations strategy and use various public relations tactics."
+                    },
+                    {
+                        "name": "Manage projects successfully",
+                        "description": "This project focuses on skills needed to effectively manage a project, develop rapport with stakeholders and cultivate strong relationships with a team."
+                    }
+                ]
+            },
+            {
+                "level": 5,
+                "name": "LEVEL FIVE: Demonstrating Expertise",
+                "requiredProjects": [
+                    {
+                        "name": "Lead in any situation",
+                        "description": "This project focuses on leadership and recognizing the need to adapt your style based on the situation and the people you lead."
+                    },
+                    {
+                        "name": "Reflect on your path",
+                        "description": "This project is designed to give you an opportunity to share your experience at the end of your path."
+                    }
+                ],
+                "totalProjectsRequired": 3,
+                "electiveInstruction": "ELECTIVES (choose 1)",
+                "electivesRequired": 1,
+                "electiveChoices": [
+                    {
+                        "name": "Lessons learned",
+                        "description": "This project addresses how to identify the discussion points of a large group meeting, encourage a culture of contribution and voicing opinions, and facilitate productive discussion that yields results."
+                    },
+                    {
+                        "name": "Moderate a panel discussion",
+                        "description": "This project addresses the skills needed to successfully moderate a panel discussion and how to be an effective participant on a panel."
+                    },
+                    {
+                        "name": "Ethical leadership",
+                        "description": "This project addresses the importance of recognizing the effect of decisions that impact ethics, best practices for making ethical decisions and developing an ethical framework."
+                    },
+                    {
+                        "name": "Leading in your volunteer organization",
+                        "description": "This project focuses on the skills required to lead in a volunteer organization and the importance of recognition and reward in motivating volunteers."
+                    },
+                    {
+                        "name": "Prepare to speak professionally",
+                        "description": "This project is designed to help you define the attributes of professional speakers and apply that understanding to your own skills as a speaker."
+                    },
+                    {
+                        "name": "High performance leadership",
+                        "description": "The focus of this project is to design and complete a project with well-defined goals, lead a team and be accountable to a guidance committee."
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Visionary Communication",
+        "type": "current",
+        "description": "This path helps you build your skills as a strategic communicator and leader. The projects on this path focus on developing your skills for sharing information with a group, planning communications and creating innovative solutions. Speech writing and speech delivery are emphasized in each project. This path culminates in the development and launch of a long-term personal or professional vision.",
+        "levels": [
+            {
+                "level": 1,
+                "name": "LEVEL ONE: Mastering Fundamentals",
+                "requiredProjects": [
+                    {
+                        "name": "Ice Breaker",
+                        "description": "This foundational project is designed to introduce you to your club and the skills you need to begin your Toastmasters journey."
+                    },
+                    {
+                        "name": "Writing a Speech with Purpose",
+                        "description": "This project addresses how to select a speech topic and write a speech with a clear purpose."
+                    },
+                    {
+                        "name": "Introduction to Vocal Variety and Body Language",
+                        "description": "This project introduces vocal variety and body language as foundational components of effective public speaking."
+                    },
+                    {
+                        "name": "Evaluation and Feedback",
+                        "description": "This project addresses the skills needed to give and receive feedback. You will learn about giving, receiving and applying feedback."
+                    }
+                ],
+                "totalProjectsRequired": 4,
+                "enhancements": {
+                    "required_after": "2025-10",
+                    "meeting_roles": [
+                        "Table Topics Speaker",
+                        "Evaluator",
+                        "Timer OR Ah-Counter"
+                    ],
+                    "ed_series": []
+                }
+            },
+            {
+                "level": 2,
+                "name": "LEVEL TWO: Learning Your Style",
+                "requiredProjects": [
+                    {
+                        "name": "Understanding your leadership style",
+                        "description": "This project is designed to introduce the different styles of leadership and help you identify your preferred style."
+                    },
+                    {
+                        "name": "Understanding your communication style",
+                        "description": "This project focuses on recognizing your preferred communication style and understanding how your style impacts your interactions with others."
+                    },
+                    {
+                        "name": "Introduction to toastmasters mentoring",
+                        "description": "This project introduces the value of mentorship and the Toastmasters view of mentors and protégés."
+                    }
+                ],
+                "totalProjectsRequired": 3,
+                "enhancements": {
+                    "required_after": "2025-10",
+                    "meeting_roles": [
+                        "Grammarian",
+                        "Topicsmaster",
+                        "Evaluator",
+                        "Toastmaster OR Timer OR Ah-Counter"
+                    ],
+                    "ed_series": []
+                }
+            },
+            {
+                "level": 3,
+                "name": "LEVEL THREE: Increasing Knowledge",
+                "requiredProjects": [
+                    {
+                        "name": "Develop a communication plan",
+                        "description": "This project focuses on how to formulate a central message and develop a communication plan for a target audience."
+                    }
+                ],
+                "totalProjectsRequired": 3,
+                "electiveInstruction": "ELECTIVES (choose 2)",
+                "electivesRequired": 2,
+                "electiveChoices": [
+                    {
+                        "name": "Deliver social speeches",
+                        "description": "This project addresses the skills needed to compose a speech for a social occasion including a toast, eulogy, an acceptance speech and a speech praising an individual or group."
+                    },
+                    {
+                        "name": "Using presentation software",
+                        "description": "This project addresses the use of presentation software—from identifying topics that benefit from the use of technology to effective slide design and presentation."
+                    },
+                    {
+                        "name": "Connect with storytelling",
+                        "description": "This project addresses storytelling techniques and descriptive skills to help make every speech relatable and interesting."
+                    },
+                    {
+                        "name": "Creating effective visual aids",
+                        "description": "This project addresses effective methods for choosing the best visual aid for your presentation along with the creation and use of each type."
+                    },
+                    {
+                        "name": "Using descriptive language",
+                        "description": "This project addresses the difference between literal and figurative language along with how to determine when to use each to create vivid descriptions."
+                    },
+                    {
+                        "name": "Connect with your audience",
+                        "description": "This project focuses on different audience types and how to address them effectively. "
+                    },
+                    {
+                        "name": "Making connections through networking",
+                        "description": "This project focuses on how to network effectively and understanding the importance of being a professional ally to people in your network."
+                    },
+                    {
+                        "name": "Focus on the positive",
+                        "description": "This project addresses strategies for improving your personal interactions by understanding the impact of your attitudes and thoughts on daily interactions."
+                    },
+                    {
+                        "name": "Inspire your audience",
+                        "description": "This project addresses how to present a speech in an enthusiastic and inspiring fashion to establish a strong rapport with your audience."
+                    },
+                    {
+                        "name": "Prepare for an interview",
+                        "description": "This project addresses the skills you need to identify and speak about personal strengths and present yourself well in an interview of any type."
+                    },
+                    {
+                        "name": "Understanding vocal variety",
+                        "description": "This project addresses the importance of vocal variety when giving a speech and provides activities to develop and nurture its use."
+                    },
+                    {
+                        "name": "Effective body language",
+                        "description": "This project focuses on how to recognize body language used when speaking publicly and how to use gestures to enhance speech content."
+                    },
+                    {
+                        "name": "Active listening",
+                        "description": "This project covers the difference between hearing and listening, and steps for exploring the ways listening helps build strong, lasting connections."
+                    },
+                    {
+                        "name": "Know your sense of humor",
+                        "description": "This project focuses on understanding what makes you laugh and how to share that with an audience."
+                    },
+                    {
+                        "name": "Researching and Presenting",
+                        "description": "This project addresses topic selection strategies, suggestions for research and methods for producing a well-organized speech."
+                    }
+                ],
+                "enhancements": {
+                    "required_after": "2025-10",
+                    "meeting_roles": [
+                        "Toastmaster",
+                        "Evaluator",
+                        "Topicsmaster OR Table Topics Speaker OR Introductory Mentor"
+                    ],
+                    "ed_series": [
+                        {
+                            "series": "Successful Club Series",
+                            "choose": 1,
+                            "options": [
+                                "Creating the Best Club Climate",
+                                "Meeting Roles and Responsibilities",
+                                "Keeping the Commitment",
+                                "Going Beyond Our Club"
+                            ]
+                        }
+                    ]
+                }
+            },
+            {
+                "level": 4,
+                "name": "LEVEL FOUR: Building Skills",
+                "requiredProjects": [
+                    {
+                        "name": "Communicate change",
+                        "description": "This project focuses on creating a communication plan by gathering evidence to support the need for change and communicating change with your audience."
+                    }
+                ],
+                "totalProjectsRequired": 2,
+                "electiveInstruction": "ELECTIVES (choose 1)",
+                "electivesRequired": 1,
+                "electiveChoices": [
+                    {
+                        "name": "Create a podcast",
+                        "description": "This project addresses the skills you need to develop a podcast, create interesting content and organize a cohesive program. You will learn how to record and upload it to the internet."
+                    },
+                    {
+                        "name": "Building a social media presence",
+                        "description": "This project addresses how best to use different types of online communication. You will create and maintain an online profile to promote yourself or an organization."
+                    },
+                    {
+                        "name": "Managing a difficult audience",
+                        "description": "This project covers common behaviors of difficult audience members and how to address each behavior in a calm, effective and professional way."
+                    },
+                    {
+                        "name": "Write a compelling blog",
+                        "description": "This project addresses the basics of developing a compelling blog and successfully engaging a readership."
+                    },
+                    {
+                        "name": "Manage online meetings",
+                        "description": "This project addresses how to effectively conduct online meetings and webinars, prepare and organize necessary visual aids, and lead with confidence."
+                    },
+                    {
+                        "name": "Question and answer session",
+                        "description": "This project addresses how to prepare to answer questions and provide information clearly, concisely and with confidence."
+                    },
+                    {
+                        "name": "Public relations strategies",
+                        "description": "This project focuses on how to promote awareness of an organization, formulate a public relations strategy and use various public relations tactics."
+                    },
+                    {
+                        "name": "Manage projects successfully",
+                        "description": "This project focuses on skills needed to effectively manage a project, develop rapport with stakeholders and cultivate strong relationships with a team."
+                    }
+                ],
+                "enhancements": {
+                    "required_after": "2025-10",
+                    "meeting_roles": [
+                        "Toastmaster",
+                        "General Evaluator",
+                        "Evaluator",
+                        "Table Topics Speaker OR Topicsmaster OR Specialized Role OR repeat"
+                    ],
+                    "ed_series": [
+                        {
+                            "series": "Successful Club Series",
+                            "choose": 1,
+                            "options": [
+                                "Finding New Members",
+                                "Closing the Sale",
+                                "How to Be a Distinguished Club",
+                                "Toastmasters Educational Program"
+                            ]
+                        },
+                        {
+                            "series": "Better Speaker Series",
+                            "choose": 1,
+                            "options": [
+                                "Beginning Your Speech",
+                                "Concluding Your Speech",
+                                "Controlling Your Fear",
+                                "Impromptu Speaking",
+                                "Selecting Your Topic",
+                                "Know Your Audience",
+                                "Organizing Your Speech",
+                                "Creating an Introduction",
+                                "Preparation and Practice",
+                                "Using Body Language"
+                            ]
+                        }
+                    ]
+                }
+            },
+            {
+                "level": 5,
+                "name": "LEVEL FIVE: Demonstrating Expertise",
+                "requiredProjects": [
+                    {
+                        "name": "Develop your vision",
+                        "description": "This project focuses on developing a vision for your work or personal life."
+                    },
+                    {
+                        "name": "Reflect on your path",
+                        "description": "This project is designed to give you an opportunity to share your experience at the end of your path."
+                    }
+                ],
+                "totalProjectsRequired": 3,
+                "electiveInstruction": "ELECTIVES (choose 1)",
+                "electivesRequired": 1,
+                "electiveChoices": [
+                    {
+                        "name": "Lessons learned",
+                        "description": "This project addresses how to identify the discussion points of a large group meeting, encourage a culture of contribution and voicing opinions, and facilitate productive discussion that yields results."
+                    },
+                    {
+                        "name": "Moderate a panel discussion",
+                        "description": "This project addresses the skills needed to successfully moderate a panel discussion and how to be an effective participant on a panel."
+                    },
+                    {
+                        "name": "Ethical leadership",
+                        "description": "This project addresses the importance of recognizing the effect of decisions that impact ethics, best practices for making ethical decisions and developing an ethical framework."
+                    },
+                    {
+                        "name": "High performance leadership",
+                        "description": "The focus of this project is to design and complete a project with well-defined goals, lead a team and be accountable to a guidance committee."
+                    },
+                    {
+                        "name": "Leading in your volunteer organization",
+                        "description": "This project focuses on the skills required to lead in a volunteer organization and the importance of recognition and reward in motivating volunteers."
+                    },
+                    {
+                        "name": "Prepare to speak professionally",
+                        "description": "This project is designed to help you define the attributes of professional speakers and apply that understanding to your own skills as a speaker."
+                    }
+                ],
+                "enhancements": {
+                    "required_after": "2025-10",
+                    "meeting_roles": [
+                        "General Evaluator (x2)",
+                        "Toastmaster (x2)",
+                        "Evaluator (x2)",
+                        "Table Topics Speaker OR Topicsmaster OR Ah-Counter OR Timer OR Grammarian OR Club Mentor OR Specialized Role OR repeat"
+                    ],
+                    "ed_series": [
+                        {
+                            "series": "Successful Club Series",
+                            "choose": 1,
+                            "options": [
+                                "Moments of Truth",
+                                "Evaluate to Motivate",
+                                "Mentoring"
+                            ]
+                        },
+                        {
+                            "series": "Leadership Excellence Series",
+                            "choose": 1,
+                            "options": [
+                                "Service and Leadership",
+                                "The Leader as a Coach",
+                                "Developing a Mission",
+                                "Motivating People",
+                                "Building a Team",
+                                "Delegate to Empower",
+                                "Resolving Conflict",
+                                "Visionary Leader",
+                                "Values and Leadership",
+                                "Goal Setting and Planning",
+                                "Giving Effective Feedback"
+                            ]
+                        }
+                    ]
+                }
+            }
+        ]
+    },
+    {
+        "name": "Engaging Humor",
+        "type": "current",
+        "description": "This path is designed to help you build your skills as a humorous and engaging public speaker. The projects on this path focus on understanding your sense of humor and how that sense of humor translates to engaging audience members. The projects contribute to developing an understanding of how to effectively use humor in a speech, including challenging situations and impromptu speeches. This path culminates in an extended humorous speech that will allow you to apply what you learned.",
+        "levels": [
+            {
+                "level": 1,
+                "name": "LEVEL ONE: Mastering Fundamentals",
+                "requiredProjects": [
+                    {
+                        "name": "Ice Breaker",
+                        "description": "This foundational project is designed to introduce you to your club and the skills you need to begin your Toastmasters journey."
+                    },
+                    {
+                        "name": "Writing a Speech with Purpose",
+                        "description": "This project addresses how to select a speech topic and write a speech with a clear purpose."
+                    },
+                    {
+                        "name": "Introduction to Vocal Variety and Body Language",
+                        "description": "This project introduces vocal variety and body language as foundational components of effective public speaking."
+                    },
+                    {
+                        "name": "Evaluation and Feedback",
+                        "description": "This project addresses the skills needed to give and receive feedback. You will learn about giving, receiving and applying feedback."
+                    }
+                ],
+                "totalProjectsRequired": 4,
+                "enhancements": {
+                    "required_after": "2025-10",
+                    "meeting_roles": [
+                        "Table Topics Speaker",
+                        "Evaluator",
+                        "Timer OR Ah-Counter"
+                    ],
+                    "ed_series": []
+                }
+            },
+            {
+                "level": 2,
+                "name": "LEVEL TWO: Learning Your Style",
+                "requiredProjects": [
+                    {
+                        "name": "Know your sense of humor",
+                        "description": "This project focuses on understanding what makes you laugh and how to share that with an audience."
+                    },
+                    {
+                        "name": "Connect with your audience",
+                        "description": "This project focuses on different audience types and how to address them effectively."
+                    },
+                    {
+                        "name": "Introduction to toastmasters mentoring",
+                        "description": "This project introduces the value of mentorship and the Toastmasters view of mentors and protégés."
+                    }
+                ],
+                "totalProjectsRequired": 3,
+                "enhancements": {
+                    "required_after": "2025-10",
+                    "meeting_roles": [
+                        "Grammarian",
+                        "Topicsmaster",
+                        "Evaluator",
+                        "Toastmaster OR Timer OR Ah-Counter"
+                    ],
+                    "ed_series": []
+                }
+            },
+            {
+                "level": 3,
+                "name": "LEVEL THREE: Increasing Knowledge",
+                "requiredProjects": [
+                    {
+                        "name": "Engage your audience with humor",
+                        "description": "This project focuses on using humor to enhance the message you deliver in your speech. "
+                    }
+                ],
+                "totalProjectsRequired": 3,
+                "electiveInstruction": "ELECTIVES (choose 2)",
+                "electivesRequired": 2,
+                "electiveChoices": [
+                    {
+                        "name": "Active listening",
+                        "description": "This project covers the difference between hearing and listening, and steps for exploring the ways listening helps build strong, lasting connections."
+                    },
+                    {
+                        "name": "Connect with storytelling",
+                        "description": "This project addresses storytelling techniques and descriptive skills to help make every speech relatable and interesting."
+                    },
+                    {
+                        "name": "Connect with your audience",
+                        "description": "This project focuses on different audience types and how to address them effectively. "
+                    },
+                    {
+                        "name": "Creating effective visual aids",
+                        "description": "This project addresses effective methods for choosing the best visual aid for your presentation along with the creation and use of each type."
+                    },
+                    {
+                        "name": "Deliver social speeches",
+                        "description": "This project addresses the skills needed to compose a speech for a social occasion including a toast, eulogy, an acceptance speech and a speech praising an individual or group."
+                    },
+                    {
+                        "name": "Effective body language",
+                        "description": "This project focuses on how to recognize body language used when speaking publicly and how to use gestures to enhance speech content."
+                    },
+                    {
+                        "name": "Focus on the positive",
+                        "description": "This project addresses strategies for improving your personal interactions by understanding the impact of your attitudes and thoughts on daily interactions."
+                    },
+                    {
+                        "name": "Inspire your audience",
+                        "description": "This project addresses how to present a speech in an enthusiastic and inspiring fashion to establish a strong rapport with your audience."
+                    },
+                    {
+                        "name": "Making connections through networking",
+                        "description": "This project focuses on how to network effectively and understanding the importance of being a professional ally to people in your network."
+                    },
+                    {
+                        "name": "Prepare for an interview",
+                        "description": "This project addresses the skills you need to identify and speak about personal strengths and present yourself well in an interview of any type."
+                    },
+                    {
+                        "name": "Understanding vocal variety",
+                        "description": "This project addresses the importance of vocal variety when giving a speech and provides activities to develop and nurture its use."
+                    },
+                    {
+                        "name": "Using descriptive language",
+                        "description": "This project addresses the difference between literal and figurative language along with how to determine when to use each to create vivid descriptions."
+                    },
+                    {
+                        "name": "Using presentation software",
+                        "description": "This project addresses the use of presentation software—from identifying topics that benefit from the use of technology to effective slide design and presentation."
+                    },
+                    {
+                        "name": "Researching and Presenting",
+                        "description": "This project addresses topic selection strategies, suggestions for research and methods for producing a well-organized speech."
+                    }
+                ],
+                "enhancements": {
+                    "required_after": "2025-10",
+                    "meeting_roles": [
+                        "Toastmaster",
+                        "Evaluator",
+                        "Topicsmaster OR Table Topics Speaker OR Introductory Mentor"
+                    ],
+                    "ed_series": [
+                        {
+                            "series": "Successful Club Series",
+                            "choose": 1,
+                            "options": [
+                                "Creating the Best Club Climate",
+                                "Meeting Roles and Responsibilities",
+                                "Keeping the Commitment",
+                                "Going Beyond Our Club"
+                            ]
+                        }
+                    ]
+                }
+            },
+            {
+                "level": 4,
+                "name": "LEVEL FOUR: Building Skills",
+                "requiredProjects": [
+                    {
+                        "name": "Power of humor in an impromptu speech",
+                        "description": "This project focuses on developing strategies for adding humor to any speech, especially impromptu speeches."
+                    }
+                ],
+                "totalProjectsRequired": 2,
+                "electiveInstruction": "ELECTIVES (choose 1)",
+                "electivesRequired": 1,
+                "electiveChoices": [
+                    {
+                        "name": "Building a social media presence",
+                        "description": "This project addresses how best to use different types of online communication. You will create and maintain an online profile to promote yourself or an organization."
+                    },
+                    {
+                        "name": "Create a podcast",
+                        "description": "This project addresses the skills you need to develop a podcast, create interesting content and organize a cohesive program. You will learn how to record and upload it to the internet."
+                    },
+                    {
+                        "name": "Manage online meetings",
+                        "description": "This project addresses how to effectively conduct online meetings and webinars, prepare and organize necessary visual aids, and lead with confidence."
+                    },
+                    {
+                        "name": "Manage projects successfully",
+                        "description": "This project focuses on skills needed to effectively manage a project, develop rapport with stakeholders and cultivate strong relationships with a team."
+                    },
+                    {
+                        "name": "Managing a difficult audience",
+                        "description": "This project covers common behaviors of difficult audience members and how to address each behavior in a calm, effective and professional way."
+                    },
+                    {
+                        "name": "Public relations strategies",
+                        "description": "This project focuses on how to promote awareness of an organization, formulate a public relations strategy and use various public relations tactics."
+                    },
+                    {
+                        "name": "Question and answer session",
+                        "description": "This project addresses how to prepare to answer questions and provide information clearly, concisely and with confidence."
+                    },
+                    {
+                        "name": "Write a compelling blog",
+                        "description": "This project addresses the basics of developing a compelling blog and successfully engaging a readership."
+                    }
+                ],
+                "enhancements": {
+                    "required_after": "2025-10",
+                    "meeting_roles": [
+                        "Toastmaster",
+                        "General Evaluator",
+                        "Evaluator",
+                        "Table Topics Speaker OR Topicsmaster OR Specialized Role OR repeat"
+                    ],
+                    "ed_series": [
+                        {
+                            "series": "Successful Club Series",
+                            "choose": 1,
+                            "options": [
+                                "Finding New Members",
+                                "Closing the Sale",
+                                "How to Be a Distinguished Club",
+                                "Toastmasters Educational Program"
+                            ]
+                        },
+                        {
+                            "series": "Better Speaker Series",
+                            "choose": 1,
+                            "options": [
+                                "Beginning Your Speech",
+                                "Concluding Your Speech",
+                                "Controlling Your Fear",
+                                "Impromptu Speaking",
+                                "Selecting Your Topic",
+                                "Know Your Audience",
+                                "Organizing Your Speech",
+                                "Creating an Introduction",
+                                "Preparation and Practice",
+                                "Using Body Language"
+                            ]
+                        }
+                    ]
+                }
+            },
+            {
+                "level": 5,
+                "name": "LEVEL FIVE: Demonstrating Expertise",
+                "requiredProjects": [
+                    {
+                        "name": "Deliver your message with humor",
+                        "description": "This project focuses on creating a keynote-length speech that effectively delivers a message and humor to an audience."
+                    },
+                    {
+                        "name": "Reflect on your path",
+                        "description": "This project is designed to give you an opportunity to share your experience at the end of your path."
+                    }
+                ],
+                "totalProjectsRequired": 3,
+                "electiveInstruction": "ELECTIVES (choose 1)",
+                "electivesRequired": 1,
+                "electiveChoices": [
+                    {
+                        "name": "Ethical leadership",
+                        "description": "This project addresses the importance of recognizing the effect of decisions that impact ethics, best practices for making ethical decisions and developing an ethical framework."
+                    },
+                    {
+                        "name": "High performance leadership",
+                        "description": "The focus of this project is to design and complete a project with well-defined goals, lead a team and be accountable to a guidance committee."
+                    },
+                    {
+                        "name": "Leading in your volunteer organization",
+                        "description": "This project focuses on the skills required to lead in a volunteer organization and the importance of recognition and reward in motivating volunteers."
+                    },
+                    {
+                        "name": "Lessons learned",
+                        "description": "This project addresses how to identify the discussion points of a large group meeting, encourage a culture of contribution and voicing opinions, and facilitate productive discussion that yields results."
+                    },
+                    {
+                        "name": "Moderate a panel discussion",
+                        "description": "This project addresses the skills needed to successfully moderate a panel discussion and how to be an effective participant on a panel."
+                    },
+                    {
+                        "name": "Prepare to speak professionally",
+                        "description": "This project is designed to help you define the attributes of professional speakers and apply that understanding to your own skills as a speaker."
+                    }
+                ],
+                "enhancements": {
+                    "required_after": "2025-10",
+                    "meeting_roles": [
+                        "General Evaluator (x2)",
+                        "Toastmaster (x2)",
+                        "Evaluator (x2)",
+                        "Table Topics Speaker OR Topicsmaster OR Ah-Counter OR Timer OR Grammarian OR Club Mentor OR Specialized Role OR repeat"
+                    ],
+                    "ed_series": [
+                        {
+                            "series": "Successful Club Series",
+                            "choose": 1,
+                            "options": [
+                                "Moments of Truth",
+                                "Evaluate to Motivate",
+                                "Mentoring"
+                            ]
+                        },
+                        {
+                            "series": "Leadership Excellence Series",
+                            "choose": 1,
+                            "options": [
+                                "Service and Leadership",
+                                "The Leader as a Coach",
+                                "Developing a Mission",
+                                "Motivating People",
+                                "Building a Team",
+                                "Delegate to Empower",
+                                "Resolving Conflict",
+                                "Visionary Leader",
+                                "Values and Leadership",
+                                "Goal Setting and Planning",
+                                "Giving Effective Feedback"
+                            ]
+                        }
+                    ]
+                }
+            }
+        ]
+    },
+    {
+        "name": "Basic Training for Toastmasters",
+        "type": "vintage",
+        "completion": "What Did You Get Out of It?",
+        "levels": [
+            {
+                "level": 1,
+                "name": "Introduction to Basic Training",
+                "required": [
+                    "Speech 1: The Ice Breaker",
+                    "Speech 2: Be in Earnest",
+                    "When You Are Table Topic Chairperson"
+                ]
+            },
+            {
+                "level": 2,
+                "required": [
+                    "When You Are Toastmaster of the Evening",
+                    "Speech 3: Building a Speech",
+                    "Speech 4: Hands Up"
+                ]
+            },
+            {
+                "level": 3,
+                "required": [
+                    "Speech 5: Vocal Variety",
+                    "Speech 6: Speech Building",
+                    "When You Are a Critic or Evaluator",
+                    "Take Your Measure Again"
+                ]
+            },
+            {
+                "level": 4,
+                "required": [
+                    "Speech 7: Reading the Speech",
+                    "Speech 8: Illuminate the Speech",
+                    "Speech 9: Working With Words"
+                ]
+            },
+            {
+                "level": 5,
+                "required": [
+                    "Speech 10: Special Types of Speech",
+                    "Speech 11: Organizing the Speech",
+                    "Speech 12: Carrying On"
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Communication Series: Entertaining Speaker + Storytelling",
+        "type": "vintage",
+        "completion": "Reflect on Your Path",
+        "levels": [
+            {
+                "level": 1,
+                "name": "Introduction to Competent Communication",
+                "required": [
+                    "Project 1: The Ice Breaker",
+                    "Project 2: Organize Your Speech",
+                    "Project 3: Get to the Point"
+                ]
+            },
+            {
+                "level": 2,
+                "required": [
+                    "Project 4: How to Say It",
+                    "Project 5: Your Body Speaks",
+                    "Evaluate Your Progress Part 1",
+                    "Project 6: Vocal Variety"
+                ]
+            },
+            {
+                "level": 3,
+                "required": [
+                    "Project 7: Research Your Topic",
+                    "Project 8: Get Comfortable with Visual Aids",
+                    "Project 9: Persuade with Power",
+                    "Project 10: Inspire Your Audience",
+                    "Evaluate Your Progress Part 2"
+                ]
+            },
+            {
+                "level": 4,
+                "name": "The Entertaining Speaker",
+                "required": [
+                    "Introduction to The Entertaining Speaker",
+                    "Project 1: The Entertaining Speech",
+                    "Project 2: Resources for Entertainment",
+                    "Project 3: Make Them Laugh",
+                    "Project 4: A Dramatic Talk",
+                    "Project 5: Speaking After Dinner"
+                ]
+            },
+            {
+                "level": 5,
+                "name": "Storytelling",
+                "required": [
+                    "Introduction to Storytelling",
+                    "Project 1: The Folk Tale",
+                    "Project 2: Let's Get Personal",
+                    "Project 3: The Moral of the Story",
+                    "Project 4: The Touching Story",
+                    "Project 5: Bringing History to Life"
+                ]
+            }
+        ]
+    }
+]
