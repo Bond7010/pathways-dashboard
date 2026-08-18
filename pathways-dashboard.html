@@ -68,7 +68,9 @@
     font-family: 'Montserrat', sans-serif;
     color: var(--blue);
     border-bottom: 2px solid var(--gray);
+    border-left: 4px solid var(--maroon);
     padding-bottom: 0.25rem;
+    padding-left: 0.6rem;
     font-size: 1.15rem;
     font-weight: 600;
     margin-top: 1rem;
@@ -169,7 +171,8 @@
   .empty-message {
     font-size: 0.85rem;
     font-style: italic;
-    color: var(--text-muted);
+    color: var(--gray);
+    text-align: center;
     padding: 0.5rem 0 1rem;
   }
   .path-col {
@@ -227,15 +230,16 @@
     font-weight: 600;
     padding: 0.25rem 0.65rem;
     border-radius: 999px;
-    border: 1.5px solid rgba(255,255,255,0.6);
-    background: transparent;
-    color: #fff;
+    border: 1.5px solid #c0392b;
+    background: #fff;
+    color: #c0392b;
     cursor: pointer;
     white-space: nowrap;
     flex-shrink: 0;
-    transition: background 0.15s;
+    margin-left: auto;
+    transition: background 0.15s, color 0.15s;
   }
-  .card-remove-btn:hover { background: rgba(255,255,255,0.18); }
+  .card-remove-btn:hover { background: #c0392b; color: #fff; }
   .level-scroll-row {
     display: flex;
     gap: 0.85rem;
@@ -263,6 +267,30 @@
     border: 1px solid transparent;
   }
   .eval-form-btn:hover { border-color: var(--blue); background: rgba(0,65,101,0.08); }
+  .eval-form-btn { color: var(--blue); }
+  .path-card-header--current  { background: #004165; }
+  .path-card-header--legacy   { background: #772432; }
+  .path-card-header--vintage  { background: #6b7280; }
+  .group-note {
+    font-size: 0.72rem;
+    font-style: italic;
+    color: var(--text-muted);
+    margin: -0.25rem 0 0.6rem;
+  }
+  .project-item--multi-eval { flex-wrap: wrap; }
+  .eval-form-btn-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+    width: 100%;
+    margin-top: 0.15rem;
+  }
+  .eval-form-btn-labeled {
+    font-size: 0.62rem;
+    font-family: 'Source Sans 3', sans-serif;
+    padding: 0.12rem 0.4rem;
+    border-radius: 4px;
+  }
   .path-type-label {
     font-size: 0.82rem;
     color: #888;
@@ -2079,6 +2107,25 @@ const PATH_CATALOG = {
   },
 };
 
+// STEP 2 fix: "Evaluation and Feedback" (Level 1, shared across every
+// current/legacy path) covers three separate speech evaluations that each
+// have their own PDF in the Navigator repo — no single form applies, so it
+// renders three labeled buttons instead of the usual single icon button.
+const EVALUATION_AND_FEEDBACK_FORMS = [
+  { label: 'First Speech', url: 'https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Evaluation-and-Feedback-First-Speech.pdf' },
+  { label: 'Second Speech', url: 'https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Evaluation-and-Feedback-Second-Speech.pdf' },
+  { label: 'Evaluator Speech', url: 'https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Evaluation-and-Feedback-Evaluator-Speech.pdf' },
+];
+Object.values(PATH_CATALOG).forEach(function (pathData) {
+  pathData.levels.forEach(function (level) {
+    level.projects.forEach(function (project) {
+      if (project.projectName.toLowerCase() === 'evaluation and feedback') {
+        project.evalForms = EVALUATION_AND_FEEDBACK_FORMS;
+      }
+    });
+  });
+});
+
 // ── Pick Your Path (Section 1) ───────────────────────────────────────────────
 
 const PICKER_GROUP_ORDER = [
@@ -2099,8 +2146,12 @@ function renderPickerRow(entry) {
 
 function renderPickerGroup(group) {
   const entries = Object.values(PATH_CATALOG).filter(p => p.category === group.key);
+  const note = group.key === 'legacy'
+    ? '<p class="group-note">Legacy paths are no longer available for new purchase on Base Camp</p>'
+    : '';
   return `<div class="picker-group" data-group="${group.key}">
     <h3>${group.label}</h3>
+    ${note}
     <div class="card-grid">${entries.map(renderPickerRow).join('')}</div>
   </div>`;
 }
@@ -2132,16 +2183,35 @@ function makeInstanceId(pathId) {
   return `${pathId}-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 6)}`;
 }
 
-function addPathInstance(bucket, pathId) {
-  v6Store[bucket].push({ pathId, instanceId: makeInstanceId(pathId) });
+function addPathInstance(bucket, pathId, pathName) {
+  v6Store[bucket].push({ pathId, instanceId: makeInstanceId(pathId), pathName });
   saveV6Store();
   renderV6Sections();
 }
 
+// STEP 3c: removing an instance also purges every pill-state key that
+// instance ever wrote under STORAGE_KEY, not just its v6Store entry.
 function removePathInstance(bucket, instanceId) {
-  v6Store[bucket] = v6Store[bucket].filter(inst => inst.instanceId !== instanceId);
+  const inst = v6Store[bucket].find(i => i.instanceId === instanceId);
+  v6Store[bucket] = v6Store[bucket].filter(i => i.instanceId !== instanceId);
   saveV6Store();
+  if (inst) {
+    const prefix = `v6_${inst.pathId}_${instanceId}_`;
+    Object.keys(store).forEach(function (k) {
+      if (k.startsWith(prefix)) delete store[k];
+    });
+    saveStore();
+  }
   renderV6Sections();
+}
+
+// STEP 4f: an instance is "brand-new" if none of its pill keys have ever
+// been advanced past the blank default.
+function instanceIsUntouched(pathId, instanceId) {
+  const prefix = `v6_${pathId}_${instanceId}_`;
+  return !Object.keys(store).some(function (k) {
+    return k.startsWith(prefix) && store[k] && store[k] !== '—';
+  });
 }
 
 // STEP 5: first instance of a path shows its bare name; later instances in
@@ -2161,6 +2231,18 @@ function levelProjectPillKey(pathId, instanceId, levelIndex, projectIndex) {
 function renderCardProject(pathId, instanceId, levelIndex, projectIndex, project) {
   const key = levelProjectPillKey(pathId, instanceId, levelIndex, projectIndex);
   const elecBadge = project.elective ? '<span class="elec-badge">E</span>' : '';
+
+  if (project.evalForms) {
+    const btnGroup = `<div class="eval-form-btn-group">${project.evalForms.map(f =>
+      `<a class="eval-form-btn eval-form-btn-labeled" href="${f.url}" target="_blank" rel="noopener" title="Download evaluation form">📄 ${f.label}</a>`
+    ).join('')}</div>`;
+    return `<li class="project-item project-item--multi-eval">
+      <span class="project-name">${elecBadge}${project.projectName}</span>
+      ${renderPill(key, '—')}
+      ${btnGroup}
+    </li>`;
+  }
+
   const evalBtn = project.evalFormUrl
     ? `<a class="eval-form-btn" href="${project.evalFormUrl}" target="_blank" rel="noopener" title="Download evaluation form">📄</a>`
     : '';
@@ -2193,10 +2275,12 @@ function renderPathCard(pathId, instanceId, section) {
   const pathData = PATH_CATALOG[pathId];
   if (!pathData) return '';
   const displayName = instanceDisplayName(section, pathId, instanceId);
+  const isBrandNew = instanceIsUntouched(pathId, instanceId);
   let html = `<div class="path-card" data-instance-id="${instanceId}" data-path-id="${pathId}" data-section="${section}">`;
-  html += `<div class="path-col-header">
+  html += `<div class="path-col-header path-card-header--${pathData.category}">
     <span class="path-name">${displayName}</span>
     <span class="path-badge ${pathData.category}">${pathData.category}</span>
+    ${isBrandNew ? '<span class="path-badge new">NEW</span>' : ''}
     <button class="card-remove-btn" type="button">Remove</button>
   </div>`;
   html += `<div class="path-col-body">`;
@@ -2254,6 +2338,24 @@ document.addEventListener('DOMContentLoaded', function () {
       saveStore();
       pill.textContent = next;
       pill.className   = pillClass(next);
+
+      // Keep the NEW badge in sync without a full card re-render.
+      if (key.startsWith('v6_')) {
+        const cardEl = pill.closest('.path-card');
+        if (cardEl) {
+          const header = cardEl.querySelector('.path-col-header');
+          const badge  = header.querySelector('.path-badge.new');
+          const shouldBeNew = instanceIsUntouched(cardEl.dataset.pathId, cardEl.dataset.instanceId);
+          if (shouldBeNew && !badge) {
+            const newBadge = document.createElement('span');
+            newBadge.className = 'path-badge new';
+            newBadge.textContent = 'NEW';
+            header.insertBefore(newBadge, header.querySelector('.card-remove-btn'));
+          } else if (!shouldBeNew && badge) {
+            badge.remove();
+          }
+        }
+      }
     });
   });
 
@@ -2269,7 +2371,7 @@ document.addEventListener('DOMContentLoaded', function () {
       ? `Add ${pathName} as an Active Path?`
       : `Add ${pathName} as a Completed Path?`;
     if (!confirm(message)) return;
-    addPathInstance(isActive ? 'active' : 'completed', pathId);
+    addPathInstance(isActive ? 'active' : 'completed', pathId, pathName);
   });
 
   // Enhancement toggle
