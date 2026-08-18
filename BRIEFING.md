@@ -12,7 +12,7 @@ Data: reuse all 8 paths from Bond7010/toastmasters-pathways-app
 Canonical: pathways-dashboard.html on GitHub Pages. FTH embedding abandoned.
 
 ## Active Task
-Phase 5: two-row layout, Engaging Humor 2nd path added
+Phase 6 Prompt 1 complete: three-section scaffold + Pick Your Path built
 
 ## Key Files
 - `pathways-dashboard.html` — the app

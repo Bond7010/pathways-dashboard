@@ -61,7 +61,9 @@
     color: #fff;
   }
   main { padding: 0.5rem 1.5rem 1.5rem; overflow-x: hidden; }
-  #paths-section { padding: 0; overflow: hidden; }
+  #pick-path-section,
+  #active-paths-section,
+  #completed-paths-section { padding: 0; overflow: hidden; }
   h2 {
     font-family: 'Montserrat', sans-serif;
     color: var(--blue);
@@ -105,6 +107,50 @@
   }
   .paths-row.scrollable::-webkit-scrollbar-thumb:hover {
     background: #772432;
+  }
+  .picker-group { margin-bottom: 1.25rem; }
+  .picker-group:last-child { margin-bottom: 0; }
+  .picker-group h3 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--blue);
+    margin: 0 0 0.5rem;
+  }
+  .picker-list { display: flex; flex-direction: column; gap: 0.4rem; }
+  .picker-path-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding: 0.55rem 0.85rem;
+    background: #fff;
+    border: 1px solid var(--gray);
+    border-radius: 6px;
+  }
+  .picker-path-name { font-size: 0.88rem; color: #333; flex: 1; }
+  .picker-actions { display: flex; gap: 0.5rem; flex-shrink: 0; }
+  .picker-btn {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    padding: 0.32rem 0.75rem;
+    border-radius: 999px;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: opacity 0.15s;
+  }
+  .picker-btn:hover { opacity: 0.85; }
+  .picker-btn-active { background: var(--blue); }
+  .picker-btn-completed { background: var(--maroon); }
+  .empty-message {
+    font-size: 0.85rem;
+    font-style: italic;
+    color: var(--text-muted);
+    padding: 0.5rem 0 1rem;
   }
   .path-col {
     flex: 0 0 280px;
@@ -297,6 +343,7 @@
       print-color-adjust: exact;
     }
     header { position: static !important; }
+    #pick-path-section { display: none !important; }
     .paths-row {
       overflow: visible !important;
       display: flex !important;
@@ -314,12 +361,19 @@
 </header>
 <main>
 
-<section id="paths-section">
-  <h2>Active Paths</h2>
-  <div id="active-paths-scroll" class="paths-row"></div>
+<section id="pick-path-section">
+  <h2>Pick Your Path</h2>
+  <div id="pick-path-list"></div>
+</section>
 
+<section id="active-paths-section">
+  <h2>Active Paths</h2>
+  <div id="active-paths-container"></div>
+</section>
+
+<section id="completed-paths-section">
   <h2>Completed Paths <span class="section-note">(Click Enhancement to view additional requirements — applies only to current paths completed after Oct 2025)</span></h2>
-  <div id="completed-paths-scroll" class="paths-row scrollable"></div>
+  <div id="completed-paths-container"></div>
 </section>
 
 <section id="achievements-section">
@@ -893,7 +947,7 @@ function resetBasicTraining() {
   delete store['basic-training.L1.req.0'];
   delete store['basic-training.L1.req.1'];
   saveStore();
-  renderAll();
+  renderV6Sections();
 }
 
 function getStatus(key, defaultStatus) {
@@ -1007,16 +1061,99 @@ function renderPath(path) {
   return html;
 }
 
-const ACTIVE_PATH_IDS = ['engaging-humor-2', 'basic-training'];
-const COMPLETED_PATH_IDS = ['engaging-humor', 'presentation-mastery', 'persuasive-influence', 'team-collaboration', 'innovative-planning'];
+// ── Pick Your Path (Section 1) ───────────────────────────────────────────────
 
-function pathsById(ids) {
-  return ids.map(id => PATHS_DATA.find(p => p.id === id));
+const PICKER_GROUPS = [
+  {
+    label: 'Current Paths',
+    key: 'current',
+    paths: ['Engaging Humor', 'Presentation Mastery', 'Persuasive Influence', 'Dynamic Leadership', 'Innovative Planning', 'Team Collaboration'],
+  },
+  {
+    label: 'Vintage Paths',
+    key: 'vintage',
+    paths: ['Basic Training for Toastmasters', 'Communication and Leadership Series'],
+  },
+  {
+    label: 'Legacy Paths',
+    key: 'legacy',
+    paths: ['Competent Communicator', 'Advanced Communicator Bronze', 'Advanced Communicator Silver', 'Advanced Communicator Gold', 'Competent Leader'],
+  },
+];
+
+function renderPickerRow(name) {
+  const pathId = elecSlug(name);
+  return `<div class="picker-path-row" data-path-id="${pathId}" data-path-name="${name}">
+    <span class="picker-path-name">${name}</span>
+    <div class="picker-actions">
+      <button class="picker-btn picker-btn-active" type="button">+ Active</button>
+      <button class="picker-btn picker-btn-completed" type="button">+ Completed</button>
+    </div>
+  </div>`;
 }
 
-function renderAll() {
-  document.getElementById('active-paths-scroll').innerHTML = pathsById(ACTIVE_PATH_IDS).map(renderPath).join('');
-  document.getElementById('completed-paths-scroll').innerHTML = pathsById(COMPLETED_PATH_IDS).map(renderPath).join('');
+function renderPickerGroup(group) {
+  return `<div class="picker-group" data-group="${group.key}">
+    <h3>${group.label}</h3>
+    <div class="picker-list">${group.paths.map(renderPickerRow).join('')}</div>
+  </div>`;
+}
+
+function renderPicker() {
+  document.getElementById('pick-path-list').innerHTML = PICKER_GROUPS.map(renderPickerGroup).join('');
+}
+
+// ── Active / Completed Path Instances (Sections 2 & 3) ───────────────────────
+
+const V6_STORAGE_KEY = 'pathwaysDashboardV6';
+let v6Store = { active: [], completed: [] };
+
+function loadV6Store() {
+  const raw = localStorage.getItem(V6_STORAGE_KEY);
+  let parsed = null;
+  try { parsed = raw ? JSON.parse(raw) : null; } catch (err) { parsed = null; }
+  v6Store = {
+    active: (parsed && parsed.active) || [],
+    completed: (parsed && parsed.completed) || [],
+  };
+}
+
+function saveV6Store() {
+  localStorage.setItem(V6_STORAGE_KEY, JSON.stringify(v6Store));
+}
+
+function makeInstanceId(pathId) {
+  return `${pathId}-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 6)}`;
+}
+
+function addPathInstance(bucket, pathId, pathName) {
+  v6Store[bucket].push({ pathId, pathName, instanceId: makeInstanceId(pathId) });
+  saveV6Store();
+  renderV6Sections();
+}
+
+function renderShellCard(instance) {
+  return `<div class="path-col" data-instance-id="${instance.instanceId}">
+    <div class="path-col-header">
+      <span class="path-name">${instance.pathName}</span>
+    </div>
+    <div class="path-col-body">
+      <p class="path-type-label">Details coming soon</p>
+    </div>
+  </div>`;
+}
+
+function renderV6Sections() {
+  const activeContainer = document.getElementById('active-paths-container');
+  const completedContainer = document.getElementById('completed-paths-container');
+
+  activeContainer.innerHTML = v6Store.active.length
+    ? v6Store.active.map(renderShellCard).join('')
+    : '<p class="empty-message">No active paths yet. Pick a path above to get started.</p>';
+
+  completedContainer.innerHTML = v6Store.completed.length
+    ? v6Store.completed.map(renderShellCard).join('')
+    : '<p class="empty-message">No completed paths yet.</p>';
 }
 
 // ── Boot ───────────────────────────────────────────────────────────────────
@@ -1024,20 +1161,39 @@ function renderAll() {
 document.addEventListener('DOMContentLoaded', function () {
   loadStore();
   initDefaults();
-  renderAll();
+  loadV6Store();
+  renderPicker();
+  renderV6Sections();
 
-  // Pill toggle (event delegation — attached once, covers both path rows)
-  document.getElementById('paths-section').addEventListener('click', function (e) {
-    const pill = e.target.closest('.status-pill');
-    if (!pill) return;
-    const key     = pill.dataset.key;
-    const def     = pill.dataset.default;
-    const current = getStatus(key, def);
-    const next    = cycleStatus(current);
-    store[key] = next;
-    saveStore();
-    pill.textContent = next;
-    pill.className   = pillClass(next);
+  // Pill toggle (event delegation — covers active/completed card containers)
+  ['active-paths-container', 'completed-paths-container'].forEach(function (id) {
+    document.getElementById(id).addEventListener('click', function (e) {
+      const pill = e.target.closest('.status-pill');
+      if (!pill) return;
+      const key     = pill.dataset.key;
+      const def     = pill.dataset.default;
+      const current = getStatus(key, def);
+      const next    = cycleStatus(current);
+      store[key] = next;
+      saveStore();
+      pill.textContent = next;
+      pill.className   = pillClass(next);
+    });
+  });
+
+  // Pick Your Path — add a path instance to Active or Completed
+  document.getElementById('pick-path-section').addEventListener('click', function (e) {
+    const btn = e.target.closest('.picker-btn');
+    if (!btn) return;
+    const row      = btn.closest('.picker-path-row');
+    const pathId   = row.dataset.pathId;
+    const pathName = row.dataset.pathName;
+    const isActive = btn.classList.contains('picker-btn-active');
+    const message  = isActive
+      ? `Add ${pathName} as an Active Path?`
+      : `Add ${pathName} as a Completed Path?`;
+    if (!confirm(message)) return;
+    addPathInstance(isActive ? 'active' : 'completed', pathId, pathName);
   });
 
   // Enhancement toggle
@@ -1045,7 +1201,6 @@ document.addEventListener('DOMContentLoaded', function () {
     showEnhancements = !showEnhancements;
     this.textContent = showEnhancements ? '− Enhancements' : '+ Enhancements';
     this.classList.toggle('active', showEnhancements);
-    renderAll();
   });
 });
 </script>
