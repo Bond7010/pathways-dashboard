@@ -188,8 +188,9 @@
     color: #fff;
     padding: 0.75rem 1rem;
     display: flex;
-    align-items: flex-start;
-    gap: 0.5rem;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 8px;
   }
   .path-col-header.new-path {
     background: #001f3f;
@@ -202,7 +203,7 @@
     font-weight: 700;
     font-size: 1rem;
     color: #fff;
-    flex: 1;
+    flex-shrink: 0;
   }
   .path-badge {
     font-size: 0.7rem;
@@ -236,7 +237,6 @@
     cursor: pointer;
     white-space: nowrap;
     flex-shrink: 0;
-    margin-left: auto;
     transition: background 0.15s, color 0.15s;
   }
   .card-remove-btn:hover { background: #c0392b; color: #fff; }
@@ -2304,7 +2304,9 @@ function renderPathCard(pathId, instanceId, section) {
   const pathData = PATH_CATALOG[pathId];
   if (!pathData) return '';
   const displayName = instanceDisplayName(section, pathId, instanceId);
-  const isBrandNew = instanceIsUntouched(pathId, instanceId);
+  // NEW only ever applies to active-section cards — a completed path is
+  // never "brand new" regardless of pill state.
+  const isBrandNew = section === 'active' && instanceIsUntouched(pathId, instanceId);
   let html = `<div class="path-card" data-instance-id="${instanceId}" data-path-id="${pathId}" data-section="${section}">`;
   html += `<div class="path-col-header path-card-header--${pathData.category}">
     <span class="path-name">${displayName}</span>
@@ -2380,7 +2382,8 @@ document.addEventListener('DOMContentLoaded', function () {
         if (cardEl) {
           const header = cardEl.querySelector('.path-col-header');
           const badge  = header.querySelector('.path-badge.new');
-          const shouldBeNew = instanceIsUntouched(cardEl.dataset.pathId, cardEl.dataset.instanceId);
+          const shouldBeNew = cardEl.dataset.section === 'active'
+            && instanceIsUntouched(cardEl.dataset.pathId, cardEl.dataset.instanceId);
           if (shouldBeNew && !badge) {
             const newBadge = document.createElement('span');
             newBadge.className = 'path-badge new';
