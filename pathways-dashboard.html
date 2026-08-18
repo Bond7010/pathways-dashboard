@@ -211,6 +211,58 @@
   .path-badge.completed   { background: var(--maroon); color: #fff; }
   .path-badge.in-progress { background: var(--yellow); color: #333; }
   .path-badge.new         { background: #001f3f; color: #fff; }
+  .path-badge.current     { background: var(--blue); color: #fff; }
+  .path-badge.legacy      { background: var(--maroon); color: #fff; }
+  .path-badge.vintage     { background: var(--gray); color: #333; }
+  .path-card {
+    width: 100%;
+    background: #fff;
+    border: 1px solid var(--gray);
+    border-radius: 6px;
+    margin-bottom: 1rem;
+  }
+  .card-remove-btn {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 600;
+    padding: 0.25rem 0.65rem;
+    border-radius: 999px;
+    border: 1.5px solid rgba(255,255,255,0.6);
+    background: transparent;
+    color: #fff;
+    cursor: pointer;
+    white-space: nowrap;
+    flex-shrink: 0;
+    transition: background 0.15s;
+  }
+  .card-remove-btn:hover { background: rgba(255,255,255,0.18); }
+  .level-scroll-row {
+    display: flex;
+    gap: 0.85rem;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .level-box {
+    flex: 0 0 230px;
+    min-width: 230px;
+    background: var(--gray-light);
+    border: 1px solid var(--gray);
+    border-radius: 6px;
+    padding: 0.65rem 0.75rem;
+  }
+  .eval-form-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    line-height: 1;
+    padding: 0.15rem 0.3rem;
+    border-radius: 4px;
+    text-decoration: none;
+    flex-shrink: 0;
+    border: 1px solid transparent;
+  }
+  .eval-form-btn:hover { border-color: var(--blue); background: rgba(0,65,101,0.08); }
   .path-type-label {
     font-size: 0.82rem;
     color: #888;
@@ -1081,23 +1133,953 @@ function renderPath(path) {
   return html;
 }
 
-// ── Pick Your Path (Section 1) ───────────────────────────────────────────────
+// ── Path Catalog (Phase 6 Prompt 2 — full level/project data) ───────────────
+// Sourced from pathways.json (Toastmasters-Pathways-JSON-Format) and matched
+// against the eval-forms filenames in toastmasters-pathways-app. Single
+// source of truth for both the picker (Section 1) and the active/completed
+// cards (Sections 2 & 3).
 
-const PICKER_PATHS = [
-  { id: 'dynamic-leadership', name: 'Dynamic Leadership', category: 'current' },
-  { id: 'engaging-humor', name: 'Engaging Humor', category: 'current' },
-  { id: 'motivational-strategies', name: 'Motivational Strategies', category: 'current' },
-  { id: 'persuasive-influence', name: 'Persuasive Influence', category: 'current' },
-  { id: 'presentation-mastery', name: 'Presentation Mastery', category: 'current' },
-  { id: 'visionary-communication', name: 'Visionary Communication', category: 'current' },
-  { id: 'effective-coaching', name: 'Effective Coaching', category: 'legacy' },
-  { id: 'innovative-planning', name: 'Innovative Planning', category: 'legacy' },
-  { id: 'leadership-development', name: 'Leadership Development', category: 'legacy' },
-  { id: 'strategic-relationships', name: 'Strategic Relationships', category: 'legacy' },
-  { id: 'team-collaboration', name: 'Team Collaboration', category: 'legacy' },
-  { id: 'basic-training', name: 'Basic Training for Toastmasters', category: 'vintage' },
-  { id: 'communication-series', name: 'Communication Series', category: 'vintage' },
-];
+const PATH_CATALOG = {
+  "dynamic-leadership": {
+    id: "dynamic-leadership",
+    name: "Dynamic Leadership",
+    category: "current",
+    levels: [
+    {
+      levelName: "LEVEL ONE: Mastering Fundamentals",
+      projects: [
+        { projectName: "Ice Breaker", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Ice-Breaker.pdf" },
+        { projectName: "Writing a Speech with Purpose", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Writing-a-Speech-With-Purpose.pdf" },
+        { projectName: "Introduction to Vocal Variety and Body Language", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Introduction-to-Vocal-Variety-and-Body-Language-1.pdf" },
+        { projectName: "Evaluation and Feedback", elective: false },
+      ],
+      enhancement: { meetingRoles: "Table Topics Speaker, Evaluator, Timer OR Ah-Counter", edSeries: null },
+    },
+    {
+      levelName: "LEVEL TWO: Learning Your Style",
+      projects: [
+        { projectName: "Understanding your leadership style", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Understanding-Your-Leadership-Style.pdf" },
+        { projectName: "Connect with your audience", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Connect-with-your-Audience.pdf" },
+        { projectName: "Introduction to toastmasters mentoring", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Introduction-to-Toastmasters-Mentoring.pdf" },
+      ],
+      enhancement: { meetingRoles: "Grammarian, Topicsmaster, Evaluator, Toastmaster OR Timer OR Ah-Counter", edSeries: null },
+    },
+    {
+      levelName: "LEVEL THREE: Increasing Knowledge",
+      projects: [
+        { projectName: "Negotiate the Best Outcome", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Negotiate-the-Best-Outcome.pdf" },
+        { projectName: "Deliver social speeches", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Deliver-Social-Speeches.pdf" },
+        { projectName: "Using presentation software", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Using-Presentation-Software.pdf" },
+        { projectName: "Connect with storytelling", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Connect-with-Storytelling.pdf" },
+        { projectName: "Creating effective visual aids", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Creating-Effective-Visual-Aids.pdf" },
+        { projectName: "Using descriptive language", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Using-Descriptive-Language.pdf" },
+        { projectName: "Make connections through networking", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Making-Connections-Through-Networking.pdf" },
+        { projectName: "Focus on the positive", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Focus-on-the-Positive.pdf" },
+        { projectName: "Inspire your audience", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Inspire-Your-Audience.pdf" },
+        { projectName: "Prepare for an interview", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Prepare-for-an-Interview.pdf" },
+        { projectName: "Understanding vocal variety", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Understanding-Vocal-Variety.pdf" },
+        { projectName: "Effective body language", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Effective-Body-Language.pdf" },
+        { projectName: "Active listening", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Active-Listening.pdf" },
+        { projectName: "Know your sense of humor", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Know-Your-Sense-of-Humor-1.pdf" },
+        { projectName: "Researching and Presenting", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Researching-and-Presenting.pdf" },
+      ],
+      enhancement: { meetingRoles: "Toastmaster, Evaluator, Topicsmaster OR Table Topics Speaker OR Introductory Mentor", edSeries: "Successful Club Series (choose 1): Creating the Best Club Climate, Meeting Roles and Responsibilities, Keeping the Commitment, Going Beyond Our Club" },
+    },
+    {
+      levelName: "LEVEL FOUR: Building Skills",
+      projects: [
+        { projectName: "Manage change", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Manage-Change.pdf" },
+        { projectName: "Create a podcast", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Create-a-Podcast.pdf" },
+        { projectName: "Building a social media presence", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Building-a-Social-Media-Presence.pdf" },
+        { projectName: "Managing a difficult audience", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Manage-a-Difficult-Audience.pdf" },
+        { projectName: "Write a compelling blog", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Write-a-Compelling-Blog.pdf" },
+        { projectName: "Manage online meetings", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Manage-Online-Meetings.pdf" },
+        { projectName: "Question and answer session", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Question-and-Answer-Session.pdf" },
+        { projectName: "Public relations strategies", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Public-Relations-Strategies.pdf" },
+        { projectName: "Manage projects successfully", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Manage-Projects-Successfully.pdf" },
+      ],
+      enhancement: { meetingRoles: "Toastmaster, General Evaluator, Evaluator, Table Topics Speaker OR Topicsmaster OR Specialized Role OR repeat", edSeries: "Successful Club Series (choose 1): Finding New Members, Closing the Sale, How to Be a Distinguished Club, Toastmasters Educational Program; Better Speaker Series (choose 1): Beginning Your Speech, Concluding Your Speech, Controlling Your Fear, Impromptu Speaking, Selecting Your Topic, Know Your Audience, Organizing Your Speech, Creating an Introduction, Preparation and Practice, Using Body Language" },
+    },
+    {
+      levelName: "LEVEL FIVE: Demonstrating Expertise",
+      projects: [
+        { projectName: "Lead in any situation", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Lead-in-Any-Situation.pdf" },
+        { projectName: "Reflect on your path", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Reflect-on-Your-Path.pdf" },
+        { projectName: "Lessons learned", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Lessons-Learned.pdf" },
+        { projectName: "Moderate a panel discussion", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Moderate-a-Panel-Discussion.pdf" },
+        { projectName: "Ethical leadership", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Ethical-Leadership.pdf" },
+        { projectName: "Leading in your volunteer organization", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Leading-in-Your-Volunteer-Organization.pdf" },
+        { projectName: "Prepare to speak professionally", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Prepare-to-Speak-Professionally.pdf" },
+        { projectName: "High performance leadership", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/High-Performance-Leadership.pdf" },
+      ],
+      enhancement: { meetingRoles: "General Evaluator (x2), Toastmaster (x2), Evaluator (x2), Table Topics Speaker OR Topicsmaster OR Ah-Counter OR Timer OR Grammarian OR Club Mentor OR Specialized Role OR repeat", edSeries: "Successful Club Series (choose 1): Moments of Truth, Evaluate to Motivate, Mentoring; Leadership Excellence Series (choose 1): Service and Leadership, The Leader as a Coach, Developing a Mission, Motivating People, Building a Team, Delegate to Empower, Resolving Conflict, Visionary Leader, Values and Leadership, Goal Setting and Planning, Giving Effective Feedback" },
+    },
+    ],
+  },
+  "engaging-humor": {
+    id: "engaging-humor",
+    name: "Engaging Humor",
+    category: "current",
+    levels: [
+    {
+      levelName: "LEVEL ONE: Mastering Fundamentals",
+      projects: [
+        { projectName: "Ice Breaker", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Ice-Breaker.pdf" },
+        { projectName: "Writing a Speech with Purpose", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Writing-a-Speech-With-Purpose.pdf" },
+        { projectName: "Introduction to Vocal Variety and Body Language", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Introduction-to-Vocal-Variety-and-Body-Language-1.pdf" },
+        { projectName: "Evaluation and Feedback", elective: false },
+      ],
+      enhancement: { meetingRoles: "Table Topics Speaker, Evaluator, Timer OR Ah-Counter", edSeries: null },
+    },
+    {
+      levelName: "LEVEL TWO: Learning Your Style",
+      projects: [
+        { projectName: "Know your sense of humor", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Know-Your-Sense-of-Humor-1.pdf" },
+        { projectName: "Connect with your audience", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Connect-with-your-Audience.pdf" },
+        { projectName: "Introduction to toastmasters mentoring", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Introduction-to-Toastmasters-Mentoring.pdf" },
+      ],
+      enhancement: { meetingRoles: "Grammarian, Topicsmaster, Evaluator, Toastmaster OR Timer OR Ah-Counter", edSeries: null },
+    },
+    {
+      levelName: "LEVEL THREE: Increasing Knowledge",
+      projects: [
+        { projectName: "Engage your audience with humor", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Engage-Your-Audience-with-Humor.pdf" },
+        { projectName: "Active listening", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Active-Listening.pdf" },
+        { projectName: "Connect with storytelling", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Connect-with-Storytelling.pdf" },
+        { projectName: "Connect with your audience", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Connect-with-your-Audience.pdf" },
+        { projectName: "Creating effective visual aids", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Creating-Effective-Visual-Aids.pdf" },
+        { projectName: "Deliver social speeches", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Deliver-Social-Speeches.pdf" },
+        { projectName: "Effective body language", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Effective-Body-Language.pdf" },
+        { projectName: "Focus on the positive", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Focus-on-the-Positive.pdf" },
+        { projectName: "Inspire your audience", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Inspire-Your-Audience.pdf" },
+        { projectName: "Making connections through networking", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Making-Connections-Through-Networking.pdf" },
+        { projectName: "Prepare for an interview", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Prepare-for-an-Interview.pdf" },
+        { projectName: "Understanding vocal variety", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Understanding-Vocal-Variety.pdf" },
+        { projectName: "Using descriptive language", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Using-Descriptive-Language.pdf" },
+        { projectName: "Using presentation software", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Using-Presentation-Software.pdf" },
+        { projectName: "Researching and Presenting", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Researching-and-Presenting.pdf" },
+      ],
+      enhancement: { meetingRoles: "Toastmaster, Evaluator, Topicsmaster OR Table Topics Speaker OR Introductory Mentor", edSeries: "Successful Club Series (choose 1): Creating the Best Club Climate, Meeting Roles and Responsibilities, Keeping the Commitment, Going Beyond Our Club" },
+    },
+    {
+      levelName: "LEVEL FOUR: Building Skills",
+      projects: [
+        { projectName: "Power of humor in an impromptu speech", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/The-Power-of-Humor-In-an-Impromptu-Speech.pdf" },
+        { projectName: "Building a social media presence", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Building-a-Social-Media-Presence.pdf" },
+        { projectName: "Create a podcast", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Create-a-Podcast.pdf" },
+        { projectName: "Manage online meetings", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Manage-Online-Meetings.pdf" },
+        { projectName: "Manage projects successfully", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Manage-Projects-Successfully.pdf" },
+        { projectName: "Managing a difficult audience", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Manage-a-Difficult-Audience.pdf" },
+        { projectName: "Public relations strategies", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Public-Relations-Strategies.pdf" },
+        { projectName: "Question and answer session", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Question-and-Answer-Session.pdf" },
+        { projectName: "Write a compelling blog", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Write-a-Compelling-Blog.pdf" },
+      ],
+      enhancement: { meetingRoles: "Toastmaster, General Evaluator, Evaluator, Table Topics Speaker OR Topicsmaster OR Specialized Role OR repeat", edSeries: "Successful Club Series (choose 1): Finding New Members, Closing the Sale, How to Be a Distinguished Club, Toastmasters Educational Program; Better Speaker Series (choose 1): Beginning Your Speech, Concluding Your Speech, Controlling Your Fear, Impromptu Speaking, Selecting Your Topic, Know Your Audience, Organizing Your Speech, Creating an Introduction, Preparation and Practice, Using Body Language" },
+    },
+    {
+      levelName: "LEVEL FIVE: Demonstrating Expertise",
+      projects: [
+        { projectName: "Deliver your message with humor", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Deliver-Your-Message-with-Humor.pdf" },
+        { projectName: "Reflect on your path", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Reflect-on-Your-Path.pdf" },
+        { projectName: "Ethical leadership", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Ethical-Leadership.pdf" },
+        { projectName: "High performance leadership", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/High-Performance-Leadership.pdf" },
+        { projectName: "Leading in your volunteer organization", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Leading-in-Your-Volunteer-Organization.pdf" },
+        { projectName: "Lessons learned", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Lessons-Learned.pdf" },
+        { projectName: "Moderate a panel discussion", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Moderate-a-Panel-Discussion.pdf" },
+        { projectName: "Prepare to speak professionally", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Prepare-to-Speak-Professionally.pdf" },
+      ],
+      enhancement: { meetingRoles: "General Evaluator (x2), Toastmaster (x2), Evaluator (x2), Table Topics Speaker OR Topicsmaster OR Ah-Counter OR Timer OR Grammarian OR Club Mentor OR Specialized Role OR repeat", edSeries: "Successful Club Series (choose 1): Moments of Truth, Evaluate to Motivate, Mentoring; Leadership Excellence Series (choose 1): Service and Leadership, The Leader as a Coach, Developing a Mission, Motivating People, Building a Team, Delegate to Empower, Resolving Conflict, Visionary Leader, Values and Leadership, Goal Setting and Planning, Giving Effective Feedback" },
+    },
+    ],
+  },
+  "motivational-strategies": {
+    id: "motivational-strategies",
+    name: "Motivational Strategies",
+    category: "current",
+    levels: [
+    {
+      levelName: "LEVEL ONE: Mastering Fundamentals",
+      projects: [
+        { projectName: "Ice Breaker", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Ice-Breaker.pdf" },
+        { projectName: "Writing a Speech with Purpose", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Writing-a-Speech-With-Purpose.pdf" },
+        { projectName: "Introduction to Vocal Variety and Body Language", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Introduction-to-Vocal-Variety-and-Body-Language-1.pdf" },
+        { projectName: "Evaluation and Feedback", elective: false },
+      ],
+      enhancement: { meetingRoles: "Table Topics Speaker, Evaluator, Timer OR Ah-Counter", edSeries: null },
+    },
+    {
+      levelName: "LEVEL TWO: Learning Your Style",
+      projects: [
+        { projectName: "Understanding your communication style", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Understanding-Your-Communication-Style.pdf" },
+        { projectName: "Active listening", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Active-Listening.pdf" },
+        { projectName: "Introduction to toastmasters mentoring", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Introduction-to-Toastmasters-Mentoring.pdf" },
+      ],
+      enhancement: { meetingRoles: "Grammarian, Topicsmaster, Evaluator, Toastmaster OR Timer OR Ah-Counter", edSeries: null },
+    },
+    {
+      levelName: "LEVEL THREE: Increasing Knowledge",
+      projects: [
+        { projectName: "Understanding emotional intelligence", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Understanding-Emotional-Intelligence.pdf" },
+        { projectName: "Deliver social speeches", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Deliver-Social-Speeches.pdf" },
+        { projectName: "Connect with your audience", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Connect-with-your-Audience.pdf" },
+        { projectName: "Using presentation software", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Using-Presentation-Software.pdf" },
+        { projectName: "Connect with storytelling", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Connect-with-Storytelling.pdf" },
+        { projectName: "Creating effective visual aids", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Creating-Effective-Visual-Aids.pdf" },
+        { projectName: "Using descriptive language", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Using-Descriptive-Language.pdf" },
+        { projectName: "Make connections through networking", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Making-Connections-Through-Networking.pdf" },
+        { projectName: "Focus on the positive", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Focus-on-the-Positive.pdf" },
+        { projectName: "Inspire your audience", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Inspire-Your-Audience.pdf" },
+        { projectName: "Prepare for an interview", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Prepare-for-an-Interview.pdf" },
+        { projectName: "Understanding vocal variety", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Understanding-Vocal-Variety.pdf" },
+        { projectName: "Effective body language", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Effective-Body-Language.pdf" },
+        { projectName: "Know your sense of humor", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Know-Your-Sense-of-Humor-1.pdf" },
+        { projectName: "Researching and Presenting", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Researching-and-Presenting.pdf" },
+      ],
+      enhancement: { meetingRoles: "Toastmaster, Evaluator, Topicsmaster OR Table Topics Speaker OR Introductory Mentor", edSeries: "Successful Club Series (choose 1): Creating the Best Club Climate, Meeting Roles and Responsibilities, Keeping the Commitment, Going Beyond Our Club" },
+    },
+    {
+      levelName: "LEVEL FOUR: Building Skills",
+      projects: [
+        { projectName: "Motivate others", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Motivate-Others.pdf" },
+        { projectName: "Create a podcast", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Create-a-Podcast.pdf" },
+        { projectName: "Building a social media presence", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Building-a-Social-Media-Presence.pdf" },
+        { projectName: "Managing a difficult audience", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Manage-a-Difficult-Audience.pdf" },
+        { projectName: "Write a compelling blog", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Write-a-Compelling-Blog.pdf" },
+        { projectName: "Manage online meetings", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Manage-Online-Meetings.pdf" },
+        { projectName: "Question and answer session", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Question-and-Answer-Session.pdf" },
+        { projectName: "Public relations strategies", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Public-Relations-Strategies.pdf" },
+        { projectName: "Manage projects successfully", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Manage-Projects-Successfully.pdf" },
+      ],
+      enhancement: { meetingRoles: "Toastmaster, General Evaluator, Evaluator, Table Topics Speaker OR Topicsmaster OR Specialized Role OR repeat", edSeries: "Successful Club Series (choose 1): Finding New Members, Closing the Sale, How to Be a Distinguished Club, Toastmasters Educational Program; Better Speaker Series (choose 1): Beginning Your Speech, Concluding Your Speech, Controlling Your Fear, Impromptu Speaking, Selecting Your Topic, Know Your Audience, Organizing Your Speech, Creating an Introduction, Preparation and Practice, Using Body Language" },
+    },
+    {
+      levelName: "LEVEL FIVE: Demonstrating Expertise",
+      projects: [
+        { projectName: "Team building", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Team-Building.pdf" },
+        { projectName: "Reflect on your path", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Reflect-on-Your-Path.pdf" },
+        { projectName: "Lessons learned", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Lessons-Learned.pdf" },
+        { projectName: "Moderate a panel discussion", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Moderate-a-Panel-Discussion.pdf" },
+        { projectName: "Ethical leadership", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Ethical-Leadership.pdf" },
+        { projectName: "Leading in your volunteer organization", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Leading-in-Your-Volunteer-Organization.pdf" },
+        { projectName: "Prepare to speak professionally", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Prepare-to-Speak-Professionally.pdf" },
+        { projectName: "High performance leadership", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/High-Performance-Leadership.pdf" },
+      ],
+      enhancement: { meetingRoles: "General Evaluator (x2), Toastmaster (x2), Evaluator (x2), Table Topics Speaker OR Topicsmaster OR Ah-Counter OR Timer OR Grammarian OR Club Mentor OR Specialized Role OR repeat", edSeries: "Successful Club Series (choose 1): Moments of Truth, Evaluate to Motivate, Mentoring; Leadership Excellence Series (choose 1): Service and Leadership, The Leader as a Coach, Developing a Mission, Motivating People, Building a Team, Delegate to Empower, Resolving Conflict, Visionary Leader, Values and Leadership, Goal Setting and Planning, Giving Effective Feedback" },
+    },
+    ],
+  },
+  "persuasive-influence": {
+    id: "persuasive-influence",
+    name: "Persuasive Influence",
+    category: "current",
+    levels: [
+    {
+      levelName: "LEVEL ONE: Mastering Fundamentals",
+      projects: [
+        { projectName: "Ice Breaker", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Ice-Breaker.pdf" },
+        { projectName: "Writing a Speech with Purpose", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Writing-a-Speech-With-Purpose.pdf" },
+        { projectName: "Introduction to Vocal Variety and Body Language", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Introduction-to-Vocal-Variety-and-Body-Language-1.pdf" },
+        { projectName: "Evaluation and Feedback", elective: false },
+      ],
+      enhancement: { meetingRoles: "Table Topics Speaker, Evaluator, Timer OR Ah-Counter", edSeries: null },
+    },
+    {
+      levelName: "LEVEL TWO: Learning Your Style",
+      projects: [
+        { projectName: "Understanding your leadership style", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Understanding-Your-Leadership-Style.pdf" },
+        { projectName: "Active listening", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Active-Listening.pdf" },
+        { projectName: "Introduction to toastmasters mentoring", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Introduction-to-Toastmasters-Mentoring.pdf" },
+      ],
+      enhancement: { meetingRoles: "Grammarian, Topicsmaster, Evaluator, Toastmaster OR Timer OR Ah-Counter", edSeries: null },
+    },
+    {
+      levelName: "LEVEL THREE: Increasing Knowledge",
+      projects: [
+        { projectName: "Understanding conflict resolution", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Understanding-Conflict-Resolution.pdf" },
+        { projectName: "Deliver social speeches", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Deliver-Social-Speeches.pdf" },
+        { projectName: "Using presentation software", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Using-Presentation-Software.pdf" },
+        { projectName: "Connect with storytelling", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Connect-with-Storytelling.pdf" },
+        { projectName: "Creating effective visual aids", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Creating-Effective-Visual-Aids.pdf" },
+        { projectName: "Using descriptive language", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Using-Descriptive-Language.pdf" },
+        { projectName: "Connect with your audience", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Connect-with-your-Audience.pdf" },
+        { projectName: "Make connections through networking", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Making-Connections-Through-Networking.pdf" },
+        { projectName: "Focus on the positive", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Focus-on-the-Positive.pdf" },
+        { projectName: "Inspire your audience", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Inspire-Your-Audience.pdf" },
+        { projectName: "Prepare for an interview", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Prepare-for-an-Interview.pdf" },
+        { projectName: "Understanding vocal variety", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Understanding-Vocal-Variety.pdf" },
+        { projectName: "Effective body language", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Effective-Body-Language.pdf" },
+        { projectName: "Know your sense of humor", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Know-Your-Sense-of-Humor-1.pdf" },
+        { projectName: "Researching and Presenting", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Researching-and-Presenting.pdf" },
+      ],
+      enhancement: { meetingRoles: "Toastmaster, Evaluator, Topicsmaster OR Table Topics Speaker OR Introductory Mentor", edSeries: "Successful Club Series (choose 1): Creating the Best Club Climate, Meeting Roles and Responsibilities, Keeping the Commitment, Going Beyond Our Club" },
+    },
+    {
+      levelName: "LEVEL FOUR: Building Skills",
+      projects: [
+        { projectName: "Leading in difficult situations", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Leading-in-Difficult-Situations.pdf" },
+        { projectName: "Create a podcast", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Create-a-Podcast.pdf" },
+        { projectName: "Building a social media presence", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Building-a-Social-Media-Presence.pdf" },
+        { projectName: "Managing a difficult audience", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Manage-a-Difficult-Audience.pdf" },
+        { projectName: "Write a compelling blog", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Write-a-Compelling-Blog.pdf" },
+        { projectName: "Manage online meetings", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Manage-Online-Meetings.pdf" },
+        { projectName: "Question and answer session", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Question-and-Answer-Session.pdf" },
+        { projectName: "Public relations strategies", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Public-Relations-Strategies.pdf" },
+        { projectName: "Manage projects successfully", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Manage-Projects-Successfully.pdf" },
+      ],
+      enhancement: { meetingRoles: "Toastmaster, General Evaluator, Evaluator, Table Topics Speaker OR Topicsmaster OR Specialized Role OR repeat", edSeries: "Successful Club Series (choose 1): Finding New Members, Closing the Sale, How to Be a Distinguished Club, Toastmasters Educational Program; Better Speaker Series (choose 1): Beginning Your Speech, Concluding Your Speech, Controlling Your Fear, Impromptu Speaking, Selecting Your Topic, Know Your Audience, Organizing Your Speech, Creating an Introduction, Preparation and Practice, Using Body Language" },
+    },
+    {
+      levelName: "LEVEL FIVE: Demonstrating Expertise",
+      projects: [
+        { projectName: "High performance leadership", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/High-Performance-Leadership.pdf" },
+        { projectName: "Reflect on your path", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Reflect-on-Your-Path.pdf" },
+        { projectName: "Lessons learned", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Lessons-Learned.pdf" },
+        { projectName: "Moderate a panel discussion", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Moderate-a-Panel-Discussion.pdf" },
+        { projectName: "Ethical leadership", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Ethical-Leadership.pdf" },
+        { projectName: "Leading in your volunteer organization", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Leading-in-Your-Volunteer-Organization.pdf" },
+        { projectName: "Prepare to speak professionally", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Prepare-to-Speak-Professionally.pdf" },
+      ],
+      enhancement: { meetingRoles: "General Evaluator (x2), Toastmaster (x2), Evaluator (x2), Table Topics Speaker OR Topicsmaster OR Ah-Counter OR Timer OR Grammarian OR Club Mentor OR Specialized Role OR repeat", edSeries: "Successful Club Series (choose 1): Moments of Truth, Evaluate to Motivate, Mentoring; Leadership Excellence Series (choose 1): Service and Leadership, The Leader as a Coach, Developing a Mission, Motivating People, Building a Team, Delegate to Empower, Resolving Conflict, Visionary Leader, Values and Leadership, Goal Setting and Planning, Giving Effective Feedback" },
+    },
+    ],
+  },
+  "presentation-mastery": {
+    id: "presentation-mastery",
+    name: "Presentation Mastery",
+    category: "current",
+    levels: [
+    {
+      levelName: "LEVEL ONE: Mastering Fundamentals",
+      projects: [
+        { projectName: "Ice Breaker", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Ice-Breaker.pdf" },
+        { projectName: "Writing a Speech with Purpose", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Writing-a-Speech-With-Purpose.pdf" },
+        { projectName: "Introduction to Vocal Variety and Body Language", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Introduction-to-Vocal-Variety-and-Body-Language-1.pdf" },
+        { projectName: "Evaluation and Feedback", elective: false },
+      ],
+      enhancement: { meetingRoles: "Table Topics Speaker, Evaluator, Timer OR Ah-Counter", edSeries: null },
+    },
+    {
+      levelName: "LEVEL TWO: Learning Your Style",
+      projects: [
+        { projectName: "Understanding your communication style", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Understanding-Your-Communication-Style.pdf" },
+        { projectName: "Effective body language", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Effective-Body-Language.pdf" },
+        { projectName: "Introduction to toastmasters mentoring", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Introduction-to-Toastmasters-Mentoring.pdf" },
+      ],
+      enhancement: { meetingRoles: "Grammarian, Topicsmaster, Evaluator, Toastmaster OR Timer OR Ah-Counter", edSeries: null },
+    },
+    {
+      levelName: "LEVEL THREE: Increasing Knowledge",
+      projects: [
+        { projectName: "Persuasive speaking", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Persuasive-Speaking.pdf" },
+        { projectName: "Deliver social speeches", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Deliver-Social-Speeches.pdf" },
+        { projectName: "Using presentation software", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Using-Presentation-Software.pdf" },
+        { projectName: "Connect with storytelling", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Connect-with-Storytelling.pdf" },
+        { projectName: "Creating effective visual aids", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Creating-Effective-Visual-Aids.pdf" },
+        { projectName: "Using descriptive language", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Using-Descriptive-Language.pdf" },
+        { projectName: "Connect with your audience", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Connect-with-your-Audience.pdf" },
+        { projectName: "Focus on the positive", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Focus-on-the-Positive.pdf" },
+        { projectName: "Inspire your audience", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Inspire-Your-Audience.pdf" },
+        { projectName: "Making connections through networking", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Making-Connections-Through-Networking.pdf" },
+        { projectName: "Prepare for an interview", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Prepare-for-an-Interview.pdf" },
+        { projectName: "Understanding vocal variety", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Understanding-Vocal-Variety.pdf" },
+        { projectName: "Active listening", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Active-Listening.pdf" },
+        { projectName: "Know your sense of humor", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Know-Your-Sense-of-Humor-1.pdf" },
+        { projectName: "Researching and Presenting", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Researching-and-Presenting.pdf" },
+      ],
+      enhancement: { meetingRoles: "Toastmaster, Evaluator, Topicsmaster OR Table Topics Speaker OR Introductory Mentor", edSeries: "Successful Club Series (choose 1): Creating the Best Club Climate, Meeting Roles and Responsibilities, Keeping the Commitment, Going Beyond Our Club" },
+    },
+    {
+      levelName: "LEVEL FOUR: Building Skills",
+      projects: [
+        { projectName: "Managing a difficult audience", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Manage-a-Difficult-Audience.pdf" },
+        { projectName: "Create a podcast", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Create-a-Podcast.pdf" },
+        { projectName: "Building a social media presence", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Building-a-Social-Media-Presence.pdf" },
+        { projectName: "Write a compelling blog", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Write-a-Compelling-Blog.pdf" },
+        { projectName: "Manage online meetings", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Manage-Online-Meetings.pdf" },
+        { projectName: "Question and answer session", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Question-and-Answer-Session.pdf" },
+        { projectName: "Public relations strategies", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Public-Relations-Strategies.pdf" },
+        { projectName: "Manage projects successfully", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Manage-Projects-Successfully.pdf" },
+      ],
+      enhancement: { meetingRoles: "Toastmaster, General Evaluator, Evaluator, Table Topics Speaker OR Topicsmaster OR Specialized Role OR repeat", edSeries: "Successful Club Series (choose 1): Finding New Members, Closing the Sale, How to Be a Distinguished Club, Toastmasters Educational Program; Better Speaker Series (choose 1): Beginning Your Speech, Concluding Your Speech, Controlling Your Fear, Impromptu Speaking, Selecting Your Topic, Know Your Audience, Organizing Your Speech, Creating an Introduction, Preparation and Practice, Using Body Language" },
+    },
+    {
+      levelName: "LEVEL FIVE: Demonstrating Expertise",
+      projects: [
+        { projectName: "Prepare to speak professionally", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Prepare-to-Speak-Professionally.pdf" },
+        { projectName: "Reflect on your path", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Reflect-on-Your-Path.pdf" },
+        { projectName: "Lessons learned", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Lessons-Learned.pdf" },
+        { projectName: "Moderate a panel discussion", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Moderate-a-Panel-Discussion.pdf" },
+        { projectName: "Ethical leadership", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Ethical-Leadership.pdf" },
+        { projectName: "Leading in your volunteer organization", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Leading-in-Your-Volunteer-Organization.pdf" },
+        { projectName: "High performance leadership", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/High-Performance-Leadership.pdf" },
+      ],
+      enhancement: { meetingRoles: "General Evaluator (x2), Toastmaster (x2), Evaluator (x2), Table Topics Speaker OR Topicsmaster OR Ah-Counter OR Timer OR Grammarian OR Club Mentor OR Specialized Role OR repeat", edSeries: "Successful Club Series (choose 1): Moments of Truth, Evaluate to Motivate, Mentoring; Leadership Excellence Series (choose 1): Service and Leadership, The Leader as a Coach, Developing a Mission, Motivating People, Building a Team, Delegate to Empower, Resolving Conflict, Visionary Leader, Values and Leadership, Goal Setting and Planning, Giving Effective Feedback" },
+    },
+    ],
+  },
+  "visionary-communication": {
+    id: "visionary-communication",
+    name: "Visionary Communication",
+    category: "current",
+    levels: [
+    {
+      levelName: "LEVEL ONE: Mastering Fundamentals",
+      projects: [
+        { projectName: "Ice Breaker", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Ice-Breaker.pdf" },
+        { projectName: "Writing a Speech with Purpose", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Writing-a-Speech-With-Purpose.pdf" },
+        { projectName: "Introduction to Vocal Variety and Body Language", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Introduction-to-Vocal-Variety-and-Body-Language-1.pdf" },
+        { projectName: "Evaluation and Feedback", elective: false },
+      ],
+      enhancement: { meetingRoles: "Table Topics Speaker, Evaluator, Timer OR Ah-Counter", edSeries: null },
+    },
+    {
+      levelName: "LEVEL TWO: Learning Your Style",
+      projects: [
+        { projectName: "Understanding your leadership style", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Understanding-Your-Leadership-Style.pdf" },
+        { projectName: "Understanding your communication style", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Understanding-Your-Communication-Style.pdf" },
+        { projectName: "Introduction to toastmasters mentoring", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Introduction-to-Toastmasters-Mentoring.pdf" },
+      ],
+      enhancement: { meetingRoles: "Grammarian, Topicsmaster, Evaluator, Toastmaster OR Timer OR Ah-Counter", edSeries: null },
+    },
+    {
+      levelName: "LEVEL THREE: Increasing Knowledge",
+      projects: [
+        { projectName: "Develop a communication plan", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Develop-a-Communications-Plan.pdf" },
+        { projectName: "Deliver social speeches", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Deliver-Social-Speeches.pdf" },
+        { projectName: "Using presentation software", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Using-Presentation-Software.pdf" },
+        { projectName: "Connect with storytelling", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Connect-with-Storytelling.pdf" },
+        { projectName: "Creating effective visual aids", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Creating-Effective-Visual-Aids.pdf" },
+        { projectName: "Using descriptive language", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Using-Descriptive-Language.pdf" },
+        { projectName: "Connect with your audience", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Connect-with-your-Audience.pdf" },
+        { projectName: "Making connections through networking", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Making-Connections-Through-Networking.pdf" },
+        { projectName: "Focus on the positive", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Focus-on-the-Positive.pdf" },
+        { projectName: "Inspire your audience", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Inspire-Your-Audience.pdf" },
+        { projectName: "Prepare for an interview", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Prepare-for-an-Interview.pdf" },
+        { projectName: "Understanding vocal variety", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Understanding-Vocal-Variety.pdf" },
+        { projectName: "Effective body language", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Effective-Body-Language.pdf" },
+        { projectName: "Active listening", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Active-Listening.pdf" },
+        { projectName: "Know your sense of humor", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Know-Your-Sense-of-Humor-1.pdf" },
+        { projectName: "Researching and Presenting", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Researching-and-Presenting.pdf" },
+      ],
+      enhancement: { meetingRoles: "Toastmaster, Evaluator, Topicsmaster OR Table Topics Speaker OR Introductory Mentor", edSeries: "Successful Club Series (choose 1): Creating the Best Club Climate, Meeting Roles and Responsibilities, Keeping the Commitment, Going Beyond Our Club" },
+    },
+    {
+      levelName: "LEVEL FOUR: Building Skills",
+      projects: [
+        { projectName: "Communicate change", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Communicate-Change.pdf" },
+        { projectName: "Create a podcast", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Create-a-Podcast.pdf" },
+        { projectName: "Building a social media presence", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Building-a-Social-Media-Presence.pdf" },
+        { projectName: "Managing a difficult audience", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Manage-a-Difficult-Audience.pdf" },
+        { projectName: "Write a compelling blog", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Write-a-Compelling-Blog.pdf" },
+        { projectName: "Manage online meetings", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Manage-Online-Meetings.pdf" },
+        { projectName: "Question and answer session", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Question-and-Answer-Session.pdf" },
+        { projectName: "Public relations strategies", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Public-Relations-Strategies.pdf" },
+        { projectName: "Manage projects successfully", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Manage-Projects-Successfully.pdf" },
+      ],
+      enhancement: { meetingRoles: "Toastmaster, General Evaluator, Evaluator, Table Topics Speaker OR Topicsmaster OR Specialized Role OR repeat", edSeries: "Successful Club Series (choose 1): Finding New Members, Closing the Sale, How to Be a Distinguished Club, Toastmasters Educational Program; Better Speaker Series (choose 1): Beginning Your Speech, Concluding Your Speech, Controlling Your Fear, Impromptu Speaking, Selecting Your Topic, Know Your Audience, Organizing Your Speech, Creating an Introduction, Preparation and Practice, Using Body Language" },
+    },
+    {
+      levelName: "LEVEL FIVE: Demonstrating Expertise",
+      projects: [
+        { projectName: "Develop your vision", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Develop-Your-Vision.pdf" },
+        { projectName: "Reflect on your path", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Reflect-on-Your-Path.pdf" },
+        { projectName: "Lessons learned", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Lessons-Learned.pdf" },
+        { projectName: "Moderate a panel discussion", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Moderate-a-Panel-Discussion.pdf" },
+        { projectName: "Ethical leadership", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Ethical-Leadership.pdf" },
+        { projectName: "High performance leadership", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/High-Performance-Leadership.pdf" },
+        { projectName: "Leading in your volunteer organization", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Leading-in-Your-Volunteer-Organization.pdf" },
+        { projectName: "Prepare to speak professionally", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Prepare-to-Speak-Professionally.pdf" },
+      ],
+      enhancement: { meetingRoles: "General Evaluator (x2), Toastmaster (x2), Evaluator (x2), Table Topics Speaker OR Topicsmaster OR Ah-Counter OR Timer OR Grammarian OR Club Mentor OR Specialized Role OR repeat", edSeries: "Successful Club Series (choose 1): Moments of Truth, Evaluate to Motivate, Mentoring; Leadership Excellence Series (choose 1): Service and Leadership, The Leader as a Coach, Developing a Mission, Motivating People, Building a Team, Delegate to Empower, Resolving Conflict, Visionary Leader, Values and Leadership, Goal Setting and Planning, Giving Effective Feedback" },
+    },
+    ],
+  },
+  "effective-coaching": {
+    id: "effective-coaching",
+    name: "Effective Coaching",
+    category: "legacy",
+    levels: [
+    {
+      levelName: "LEVEL ONE: Mastering Fundamentals",
+      projects: [
+        { projectName: "Ice breaker", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Ice-Breaker.pdf" },
+        { projectName: "Evaluation and feedback", elective: false },
+        { projectName: "Researching and presenting", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Researching-and-Presenting.pdf" },
+      ],
+      enhancement: null,
+    },
+    {
+      levelName: "LEVEL TWO: Learning Your Style",
+      projects: [
+        { projectName: "Understanding your leadership style", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Understanding-Your-Leadership-Style.pdf" },
+        { projectName: "Understanding your communication style", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Understanding-Your-Communication-Style.pdf" },
+        { projectName: "Introduction to toastmasters mentoring", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Introduction-to-Toastmasters-Mentoring.pdf" },
+      ],
+      enhancement: null,
+    },
+    {
+      levelName: "LEVEL THREE: Increasing Knowledge",
+      projects: [
+        { projectName: "Reaching consensus", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Reaching-Consensus-Assignment-Option-1-2.pdf" },
+        { projectName: "Deliver social speeches", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Deliver-Social-Speeches.pdf" },
+        { projectName: "Using presentation software", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Using-Presentation-Software.pdf" },
+        { projectName: "Connect with storytelling", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Connect-with-Storytelling.pdf" },
+        { projectName: "Creating effective visual aids", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Creating-Effective-Visual-Aids.pdf" },
+        { projectName: "Using descriptive language", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Using-Descriptive-Language.pdf" },
+        { projectName: "Connect with your audience", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Connect-with-your-Audience.pdf" },
+        { projectName: "Make connections through networking", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Making-Connections-Through-Networking.pdf" },
+        { projectName: "Focus on the positive", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Focus-on-the-Positive.pdf" },
+        { projectName: "Inspire your audience", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Inspire-Your-Audience.pdf" },
+        { projectName: "Prepare for an interview", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Prepare-for-an-Interview.pdf" },
+        { projectName: "Understanding vocal variety", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Understanding-Vocal-Variety.pdf" },
+        { projectName: "Effective body language", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Effective-Body-Language.pdf" },
+        { projectName: "Active listening", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Active-Listening.pdf" },
+        { projectName: "Know your sense of humor", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Know-Your-Sense-of-Humor-1.pdf" },
+      ],
+      enhancement: null,
+    },
+    {
+      levelName: "LEVEL FOUR: Building Skills",
+      projects: [
+        { projectName: "Improvement through positive coaching", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Improvement-Through-Positive-Coaching.pdf" },
+        { projectName: "Create a podcast", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Create-a-Podcast.pdf" },
+        { projectName: "Building a social media presence", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Building-a-Social-Media-Presence.pdf" },
+        { projectName: "Managing a difficult audience", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Manage-a-Difficult-Audience.pdf" },
+        { projectName: "Write a compelling blog", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Write-a-Compelling-Blog.pdf" },
+        { projectName: "Manage online meetings", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Manage-Online-Meetings.pdf" },
+        { projectName: "Question and answer session", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Question-and-Answer-Session.pdf" },
+        { projectName: "Public relations strategies", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Public-Relations-Strategies.pdf" },
+        { projectName: "Manage projects successfully", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Manage-Projects-Successfully.pdf" },
+      ],
+      enhancement: null,
+    },
+    {
+      levelName: "LEVEL FIVE: Demonstrating Expertise",
+      projects: [
+        { projectName: "High performance leadership", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/High-Performance-Leadership.pdf" },
+        { projectName: "Reflect on your path", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Reflect-on-Your-Path.pdf" },
+        { projectName: "Lessons learned", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Lessons-Learned.pdf" },
+        { projectName: "Moderate a panel discussion", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Moderate-a-Panel-Discussion.pdf" },
+        { projectName: "Ethical leadership", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Ethical-Leadership.pdf" },
+        { projectName: "Leading in your volunteer organization", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Leading-in-Your-Volunteer-Organization.pdf" },
+        { projectName: "Prepare to speak professionally", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Prepare-to-Speak-Professionally.pdf" },
+      ],
+      enhancement: null,
+    },
+    ],
+  },
+  "innovative-planning": {
+    id: "innovative-planning",
+    name: "Innovative Planning",
+    category: "legacy",
+    levels: [
+    {
+      levelName: "LEVEL ONE: Mastering Fundamentals",
+      projects: [
+        { projectName: "Ice breaker", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Ice-Breaker.pdf" },
+        { projectName: "Evaluation and feedback", elective: false },
+        { projectName: "Researching and presenting", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Researching-and-Presenting.pdf" },
+      ],
+      enhancement: null,
+    },
+    {
+      levelName: "LEVEL TWO: Learning Your Style",
+      projects: [
+        { projectName: "Understanding your leadership style", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Understanding-Your-Leadership-Style.pdf" },
+        { projectName: "Connect with your audience", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Connect-with-your-Audience.pdf" },
+        { projectName: "Introduction to toastmasters mentoring", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Introduction-to-Toastmasters-Mentoring.pdf" },
+      ],
+      enhancement: null,
+    },
+    {
+      levelName: "LEVEL THREE: Increasing Knowledge",
+      projects: [
+        { projectName: "Present a proposal", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Present-a-Proposal.pdf" },
+        { projectName: "Deliver social speeches", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Deliver-Social-Speeches.pdf" },
+        { projectName: "Using presentation software", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Using-Presentation-Software.pdf" },
+        { projectName: "Connect with storytelling", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Connect-with-Storytelling.pdf" },
+        { projectName: "Creating effective visual aids", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Creating-Effective-Visual-Aids.pdf" },
+        { projectName: "Using descriptive language", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Using-Descriptive-Language.pdf" },
+        { projectName: "Make connections through networking", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Making-Connections-Through-Networking.pdf" },
+        { projectName: "Focus on the positive", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Focus-on-the-Positive.pdf" },
+        { projectName: "Inspire your audience", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Inspire-Your-Audience.pdf" },
+        { projectName: "Prepare for an interview", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Prepare-for-an-Interview.pdf" },
+        { projectName: "Understanding vocal variety", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Understanding-Vocal-Variety.pdf" },
+        { projectName: "Effective body language", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Effective-Body-Language.pdf" },
+        { projectName: "Active listening", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Active-Listening.pdf" },
+        { projectName: "Know your sense of humor", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Know-Your-Sense-of-Humor-1.pdf" },
+      ],
+      enhancement: null,
+    },
+    {
+      levelName: "LEVEL FOUR: Building Skills",
+      projects: [
+        { projectName: "Manage projects successfully", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Manage-Projects-Successfully.pdf" },
+        { projectName: "Create a podcast", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Create-a-Podcast.pdf" },
+        { projectName: "Building a social media presence", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Building-a-Social-Media-Presence.pdf" },
+        { projectName: "Managing a difficult audience", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Manage-a-Difficult-Audience.pdf" },
+        { projectName: "Write a compelling blog", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Write-a-Compelling-Blog.pdf" },
+        { projectName: "Manage online meetings", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Manage-Online-Meetings.pdf" },
+        { projectName: "Question and answer session", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Question-and-Answer-Session.pdf" },
+        { projectName: "Public relations strategies", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Public-Relations-Strategies.pdf" },
+      ],
+      enhancement: null,
+    },
+    {
+      levelName: "LEVEL FIVE: Demonstrating Expertise",
+      projects: [
+        { projectName: "High performance leadership", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/High-Performance-Leadership.pdf" },
+        { projectName: "Reflect on your path", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Reflect-on-Your-Path.pdf" },
+        { projectName: "Lessons learned", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Lessons-Learned.pdf" },
+        { projectName: "Moderate a panel discussion", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Moderate-a-Panel-Discussion.pdf" },
+        { projectName: "Ethical leadership", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Ethical-Leadership.pdf" },
+        { projectName: "Leading in your volunteer organization", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Leading-in-Your-Volunteer-Organization.pdf" },
+        { projectName: "Prepare to speak professionally", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Prepare-to-Speak-Professionally.pdf" },
+      ],
+      enhancement: null,
+    },
+    ],
+  },
+  "leadership-development": {
+    id: "leadership-development",
+    name: "Leadership Development",
+    category: "legacy",
+    levels: [
+    {
+      levelName: "LEVEL ONE: Mastering Fundamentals",
+      projects: [
+        { projectName: "Ice breaker", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Ice-Breaker.pdf" },
+        { projectName: "Evaluation and feedback", elective: false },
+        { projectName: "Researching and presenting", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Researching-and-Presenting.pdf" },
+      ],
+      enhancement: null,
+    },
+    {
+      levelName: "LEVEL TWO: Learning Your Style",
+      projects: [
+        { projectName: "Managing time", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Managing-Time.pdf" },
+        { projectName: "Understanding your leadership style", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Understanding-Your-Leadership-Style.pdf" },
+        { projectName: "Introduction to toastmasters mentoring", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Introduction-to-Toastmasters-Mentoring.pdf" },
+      ],
+      enhancement: null,
+    },
+    {
+      levelName: "LEVEL THREE: Increasing Knowledge",
+      projects: [
+        { projectName: "Planning and implementing", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Planning-and-Implementing.pdf" },
+        { projectName: "Deliver social speeches", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Deliver-Social-Speeches.pdf" },
+        { projectName: "Connect with your audience", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Connect-with-your-Audience.pdf" },
+        { projectName: "Using presentation software", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Using-Presentation-Software.pdf" },
+        { projectName: "Connect with storytelling", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Connect-with-Storytelling.pdf" },
+        { projectName: "Creating effective visual aids", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Creating-Effective-Visual-Aids.pdf" },
+        { projectName: "Using descriptive language", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Using-Descriptive-Language.pdf" },
+        { projectName: "Make connections through networking", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Making-Connections-Through-Networking.pdf" },
+        { projectName: "Focus on the positive", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Focus-on-the-Positive.pdf" },
+        { projectName: "Inspire your audience", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Inspire-Your-Audience.pdf" },
+        { projectName: "Prepare for an interview", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Prepare-for-an-Interview.pdf" },
+        { projectName: "Understanding vocal variety", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Understanding-Vocal-Variety.pdf" },
+        { projectName: "Effective body language", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Effective-Body-Language.pdf" },
+        { projectName: "Active listening", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Active-Listening.pdf" },
+        { projectName: "Know your sense of humor", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Know-Your-Sense-of-Humor-1.pdf" },
+      ],
+      enhancement: null,
+    },
+    {
+      levelName: "LEVEL FOUR: Building Skills",
+      projects: [
+        { projectName: "Leading your team", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Leading-Your-Team.pdf" },
+        { projectName: "Create a podcast", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Create-a-Podcast.pdf" },
+        { projectName: "Building a social media presence", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Building-a-Social-Media-Presence.pdf" },
+        { projectName: "Managing a difficult audience", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Manage-a-Difficult-Audience.pdf" },
+        { projectName: "Write a compelling blog", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Write-a-Compelling-Blog.pdf" },
+        { projectName: "Manage online meetings", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Manage-Online-Meetings.pdf" },
+        { projectName: "Question and answer session", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Question-and-Answer-Session.pdf" },
+        { projectName: "Public relations strategies", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Public-Relations-Strategies.pdf" },
+        { projectName: "Manage projects successfully", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Manage-Projects-Successfully.pdf" },
+      ],
+      enhancement: null,
+    },
+    {
+      levelName: "LEVEL FIVE: Demonstrating Expertise",
+      projects: [
+        { projectName: "Manage successful events", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Manage-Successful-Events.pdf" },
+        { projectName: "Reflect on your path", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Reflect-on-Your-Path.pdf" },
+        { projectName: "Lessons learned", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Lessons-Learned.pdf" },
+        { projectName: "Moderate a panel discussion", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Moderate-a-Panel-Discussion.pdf" },
+        { projectName: "Ethical leadership", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Ethical-Leadership.pdf" },
+        { projectName: "Leading in your volunteer organization", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Leading-in-Your-Volunteer-Organization.pdf" },
+        { projectName: "Prepare to speak professionally", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Prepare-to-Speak-Professionally.pdf" },
+        { projectName: "High performance leadership", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/High-Performance-Leadership.pdf" },
+      ],
+      enhancement: null,
+    },
+    ],
+  },
+  "strategic-relationships": {
+    id: "strategic-relationships",
+    name: "Strategic Relationships",
+    category: "legacy",
+    levels: [
+    {
+      levelName: "LEVEL ONE: Mastering Fundamentals",
+      projects: [
+        { projectName: "Ice breaker", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Ice-Breaker.pdf" },
+        { projectName: "Evaluation and feedback", elective: false },
+        { projectName: "Researching and presenting", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Researching-and-Presenting.pdf" },
+      ],
+      enhancement: null,
+    },
+    {
+      levelName: "LEVEL TWO: Learning Your Style",
+      projects: [
+        { projectName: "Understanding your leadership style", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Understanding-Your-Leadership-Style.pdf" },
+        { projectName: "Cross cultural understanding", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Cross-Cultural-Understanding.pdf" },
+        { projectName: "Introduction to toastmasters mentoring", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Introduction-to-Toastmasters-Mentoring.pdf" },
+      ],
+      enhancement: null,
+    },
+    {
+      levelName: "LEVEL THREE: Increasing Knowledge",
+      projects: [
+        { projectName: "Making connections through networking", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Making-Connections-Through-Networking.pdf" },
+        { projectName: "Deliver social speeches", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Deliver-Social-Speeches.pdf" },
+        { projectName: "Using presentation software", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Using-Presentation-Software.pdf" },
+        { projectName: "Connect with storytelling", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Connect-with-Storytelling.pdf" },
+        { projectName: "Creating effective visual aids", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Creating-Effective-Visual-Aids.pdf" },
+        { projectName: "Using descriptive language", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Using-Descriptive-Language.pdf" },
+        { projectName: "Connect with your audience", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Connect-with-your-Audience.pdf" },
+        { projectName: "Focus on the positive", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Focus-on-the-Positive.pdf" },
+        { projectName: "Inspire your audience", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Inspire-Your-Audience.pdf" },
+        { projectName: "Prepare for an interview", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Prepare-for-an-Interview.pdf" },
+        { projectName: "Understanding vocal variety", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Understanding-Vocal-Variety.pdf" },
+        { projectName: "Effective body language", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Effective-Body-Language.pdf" },
+        { projectName: "Active listening", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Active-Listening.pdf" },
+        { projectName: "Know your sense of humor", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Know-Your-Sense-of-Humor-1.pdf" },
+      ],
+      enhancement: null,
+    },
+    {
+      levelName: "LEVEL FOUR: Building Skills",
+      projects: [
+        { projectName: "Public relations strategies", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Public-Relations-Strategies.pdf" },
+        { projectName: "Create a podcast", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Create-a-Podcast.pdf" },
+        { projectName: "Building a social media presence", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Building-a-Social-Media-Presence.pdf" },
+        { projectName: "Managing a difficult audience", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Manage-a-Difficult-Audience.pdf" },
+        { projectName: "Write a compelling blog", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Write-a-Compelling-Blog.pdf" },
+        { projectName: "Manage online meetings", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Manage-Online-Meetings.pdf" },
+        { projectName: "Question and answer session", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Question-and-Answer-Session.pdf" },
+        { projectName: "Manage projects successfully", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Manage-Projects-Successfully.pdf" },
+      ],
+      enhancement: null,
+    },
+    {
+      levelName: "LEVEL FIVE: Demonstrating Expertise",
+      projects: [
+        { projectName: "Leading in your volunteer organization", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Leading-in-Your-Volunteer-Organization.pdf" },
+        { projectName: "Reflect on your path", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Reflect-on-Your-Path.pdf" },
+        { projectName: "Lessons learned", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Lessons-Learned.pdf" },
+        { projectName: "Moderate a panel discussion", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Moderate-a-Panel-Discussion.pdf" },
+        { projectName: "Ethical leadership", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Ethical-Leadership.pdf" },
+        { projectName: "Prepare to speak professionally", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Prepare-to-Speak-Professionally.pdf" },
+        { projectName: "High performance leadership", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/High-Performance-Leadership.pdf" },
+      ],
+      enhancement: null,
+    },
+    ],
+  },
+  "team-collaboration": {
+    id: "team-collaboration",
+    name: "Team Collaboration",
+    category: "legacy",
+    levels: [
+    {
+      levelName: "LEVEL ONE: Mastering Fundamentals",
+      projects: [
+        { projectName: "Ice breaker", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Ice-Breaker.pdf" },
+        { projectName: "Evaluation and feedback", elective: false },
+        { projectName: "Researching and presenting", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Researching-and-Presenting.pdf" },
+      ],
+      enhancement: null,
+    },
+    {
+      levelName: "LEVEL TWO: Learning Your Style",
+      projects: [
+        { projectName: "Understanding your communication style", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Understanding-Your-Communication-Style.pdf" },
+        { projectName: "Active listening", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Active-Listening.pdf" },
+        { projectName: "Introduction to toastmasters mentoring", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Introduction-to-Toastmasters-Mentoring.pdf" },
+      ],
+      enhancement: null,
+    },
+    {
+      levelName: "LEVEL THREE: Increasing Knowledge",
+      projects: [
+        { projectName: "Successful collaboration", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Successful-Collaboration.pdf" },
+        { projectName: "Deliver social speeches", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Deliver-Social-Speeches.pdf" },
+        { projectName: "Using presentation software", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Using-Presentation-Software.pdf" },
+        { projectName: "Connect with storytelling", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Connect-with-Storytelling.pdf" },
+        { projectName: "Creating effective visual aids", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Creating-Effective-Visual-Aids.pdf" },
+        { projectName: "Using descriptive language", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Using-Descriptive-Language.pdf" },
+        { projectName: "Connect with your audience", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Connect-with-your-Audience.pdf" },
+        { projectName: "Make connections through networking", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Making-Connections-Through-Networking.pdf" },
+        { projectName: "Focus on the positive", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Focus-on-the-Positive.pdf" },
+        { projectName: "Inspire your audience", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Inspire-Your-Audience.pdf" },
+        { projectName: "Prepare for an interview", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Prepare-for-an-Interview.pdf" },
+        { projectName: "Understanding vocal variety", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Understanding-Vocal-Variety.pdf" },
+        { projectName: "Effective body language", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Effective-Body-Language.pdf" },
+        { projectName: "Know your sense of humor", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Know-Your-Sense-of-Humor-1.pdf" },
+      ],
+      enhancement: null,
+    },
+    {
+      levelName: "LEVEL FOUR: Building Skills",
+      projects: [
+        { projectName: "Motivate others", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Motivate-Others.pdf" },
+        { projectName: "Create a podcast", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Create-a-Podcast.pdf" },
+        { projectName: "Building a social media presence", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Building-a-Social-Media-Presence.pdf" },
+        { projectName: "Managing a difficult audience", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Manage-a-Difficult-Audience.pdf" },
+        { projectName: "Write a compelling blog", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Write-a-Compelling-Blog.pdf" },
+        { projectName: "Manage online meetings", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Manage-Online-Meetings.pdf" },
+        { projectName: "Question and answer session", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Question-and-Answer-Session.pdf" },
+        { projectName: "Public relations strategies", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Public-Relations-Strategies.pdf" },
+        { projectName: "Manage projects successfully", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Manage-Projects-Successfully.pdf" },
+      ],
+      enhancement: null,
+    },
+    {
+      levelName: "LEVEL FIVE: Demonstrating Expertise",
+      projects: [
+        { projectName: "Lead in any situation", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Lead-in-Any-Situation.pdf" },
+        { projectName: "Reflect on your path", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Reflect-on-Your-Path.pdf" },
+        { projectName: "Lessons learned", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Lessons-Learned.pdf" },
+        { projectName: "Moderate a panel discussion", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Moderate-a-Panel-Discussion.pdf" },
+        { projectName: "Ethical leadership", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Ethical-Leadership.pdf" },
+        { projectName: "Leading in your volunteer organization", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Leading-in-Your-Volunteer-Organization.pdf" },
+        { projectName: "Prepare to speak professionally", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Prepare-to-Speak-Professionally.pdf" },
+        { projectName: "High performance leadership", elective: true, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/High-Performance-Leadership.pdf" },
+      ],
+      enhancement: null,
+    },
+    ],
+  },
+  "basic-training": {
+    id: "basic-training",
+    name: "Basic Training for Toastmasters",
+    category: "vintage",
+    levels: [
+    {
+      levelName: "Introduction to Basic Training",
+      projects: [
+        { projectName: "Speech 1: The Ice Breaker", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/basic-training/basic-training-the-ice-breaker-evaluation-resource.pdf" },
+        { projectName: "Speech 2: Be in Earnest", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/basic-training/basic-training-be-in-earnest-evaluation-resource.pdf" },
+        { projectName: "When You Are Table Topic Chairperson", elective: false },
+      ],
+      enhancement: null,
+    },
+    {
+      levelName: "Level 2",
+      projects: [
+        { projectName: "When You Are Toastmaster of the Evening", elective: false },
+        { projectName: "Speech 3: Building a Speech", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/basic-training/basic-training-building-a-speech-evaluation-resource.pdf" },
+        { projectName: "Speech 4: Hands Up", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/basic-training/basic-training-hands-up-evaluation-resource.pdf" },
+      ],
+      enhancement: null,
+    },
+    {
+      levelName: "Level 3",
+      projects: [
+        { projectName: "Speech 5: Vocal Variety", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/basic-training/basic-training-vocal-variety-evaluation-resource.pdf" },
+        { projectName: "Speech 6: Speech Building", elective: false },
+        { projectName: "When You Are a Critic or Evaluator", elective: false },
+        { projectName: "Take Your Measure Again", elective: false },
+      ],
+      enhancement: null,
+    },
+    {
+      levelName: "Level 4",
+      projects: [
+        { projectName: "Speech 7: Reading the Speech", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/basic-training/basic-training-reading-the-speech-evaluation-resource.pdf" },
+        { projectName: "Speech 8: Illuminate the Speech", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/basic-training/basic-training-illuminate-the-speech-evaluation-resource.pdf" },
+        { projectName: "Speech 9: Working With Words", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/basic-training/basic-training-working-with-words-evaluation-resource.pdf" },
+      ],
+      enhancement: null,
+    },
+    {
+      levelName: "Level 5",
+      projects: [
+        { projectName: "Speech 10: Special Types of Speech", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/basic-training/basic-training-special-types-of-speech-evaluation-resource.pdf" },
+        { projectName: "Speech 11: Organizing the Speech", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/basic-training/basic-training-organizing-the-speech-evaluation-resource.pdf" },
+        { projectName: "Speech 12: Carrying On", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/basic-training/basic-training-carrying-on-evaluation-resource.pdf" },
+        { projectName: "What Did You Get Out of It?", elective: false },
+      ],
+      enhancement: null,
+    },
+    ],
+  },
+  "communication-series": {
+    id: "communication-series",
+    name: "Communication Series",
+    category: "vintage",
+    levels: [
+    {
+      levelName: "Introduction to Competent Communication",
+      projects: [
+        { projectName: "Project 1: The Ice Breaker", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/communication-series/communication-series-the-ice-breaker-evaluation-resource.pdf" },
+        { projectName: "Project 2: Organize Your Speech", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/communication-series/communication-series-organize-your-speech-evaluation-resource.pdf" },
+        { projectName: "Project 3: Get to the Point", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/communication-series/communication-series-get-to-the-point-evaluation-resource.pdf" },
+      ],
+      enhancement: null,
+    },
+    {
+      levelName: "Level 2",
+      projects: [
+        { projectName: "Project 4: How to Say It", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/communication-series/communication-series-how-to-say-it-evaluation-resource.pdf" },
+        { projectName: "Project 5: Your Body Speaks", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/communication-series/communication-series-your-body-speaks-evaluation-resource.pdf" },
+        { projectName: "Evaluate Your Progress Part 1", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/communication-series/communication-series-evaluate-your-progress-part-1-evaluation-resource.pdf" },
+        { projectName: "Project 6: Vocal Variety", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/communication-series/communication-series-vocal-variety-evaluation-resource.pdf" },
+      ],
+      enhancement: null,
+    },
+    {
+      levelName: "Level 3",
+      projects: [
+        { projectName: "Project 7: Research Your Topic", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/communication-series/communication-series-research-your-topic-evaluation-resource.pdf" },
+        { projectName: "Project 8: Get Comfortable with Visual Aids", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/communication-series/communication-series-get-comfortable-with-visual-aids-evaluation-resource.pdf" },
+        { projectName: "Project 9: Persuade with Power", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/communication-series/communication-series-persuade-with-power-evaluation-resource.pdf" },
+        { projectName: "Project 10: Inspire Your Audience", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/communication-series/communication-series-inspire-your-audience-evaluation-resource.pdf" },
+        { projectName: "Evaluate Your Progress Part 2", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/communication-series/communication-series-evaluate-your-progress-part-2-evaluation-resource.pdf" },
+      ],
+      enhancement: null,
+    },
+    {
+      levelName: "The Entertaining Speaker",
+      projects: [
+        { projectName: "Introduction to The Entertaining Speaker", elective: false },
+        { projectName: "Project 1: The Entertaining Speech", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/communication-series/communication-series-the-entertaining-speech-evaluation-resource.pdf" },
+        { projectName: "Project 2: Resources for Entertainment", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/communication-series/communication-series-resources-for-entertainment-evaluation-resource.pdf" },
+        { projectName: "Project 3: Make Them Laugh", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/communication-series/communication-series-make-them-laugh-evaluation-resource.pdf" },
+        { projectName: "Project 4: A Dramatic Talk", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/communication-series/communication-series-a-dramatic-talk-evaluation-resource.pdf" },
+        { projectName: "Project 5: Speaking After Dinner", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/communication-series/communication-series-speaking-after-dinner-evaluation-resource.pdf" },
+      ],
+      enhancement: null,
+    },
+    {
+      levelName: "Storytelling",
+      projects: [
+        { projectName: "Introduction to Storytelling", elective: false },
+        { projectName: "Project 1: The Folk Tale", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/communication-series/communication-series-the-folk-tale-evaluation-resource.pdf" },
+        { projectName: "Project 2: Let's Get Personal", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/communication-series/communication-series-lets-get-personal-evaluation-resource.pdf" },
+        { projectName: "Project 3: The Moral of the Story", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/communication-series/communication-series-the-moral-of-the-story-evaluation-resource.pdf" },
+        { projectName: "Project 4: The Touching Story", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/communication-series/communication-series-the-touching-story-evaluation-resource.pdf" },
+        { projectName: "Project 5: Bringing History to Life", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/communication-series/communication-series-bringing-history-to-life-evaluation-resource.pdf" },
+        { projectName: "Reflect on Your Path", elective: false, evalFormUrl: "https://bond7010.github.io/toastmasters-pathways-app/eval-forms/current-paths/Reflect-on-Your-Path.pdf" },
+      ],
+      enhancement: null,
+    },
+    ],
+  },
+};
+
+// ── Pick Your Path (Section 1) ───────────────────────────────────────────────
 
 const PICKER_GROUP_ORDER = [
   { label: 'Current Paths', key: 'current' },
@@ -1116,7 +2098,7 @@ function renderPickerRow(entry) {
 }
 
 function renderPickerGroup(group) {
-  const entries = PICKER_PATHS.filter(p => p.category === group.key);
+  const entries = Object.values(PATH_CATALOG).filter(p => p.category === group.key);
   return `<div class="picker-group" data-group="${group.key}">
     <h3>${group.label}</h3>
     <div class="card-grid">${entries.map(renderPickerRow).join('')}</div>
@@ -1150,21 +2132,80 @@ function makeInstanceId(pathId) {
   return `${pathId}-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 6)}`;
 }
 
-function addPathInstance(bucket, pathId, pathName) {
-  v6Store[bucket].push({ pathId, pathName, instanceId: makeInstanceId(pathId) });
+function addPathInstance(bucket, pathId) {
+  v6Store[bucket].push({ pathId, instanceId: makeInstanceId(pathId) });
   saveV6Store();
   renderV6Sections();
 }
 
-function renderShellCard(instance) {
-  return `<div class="path-col" data-instance-id="${instance.instanceId}">
-    <div class="path-col-header">
-      <span class="path-name">${instance.pathName}</span>
-    </div>
-    <div class="path-col-body">
-      <p class="path-type-label">Details coming soon</p>
-    </div>
+function removePathInstance(bucket, instanceId) {
+  v6Store[bucket] = v6Store[bucket].filter(inst => inst.instanceId !== instanceId);
+  saveV6Store();
+  renderV6Sections();
+}
+
+// STEP 5: first instance of a path shows its bare name; later instances in
+// the same section get "(2)", "(3)", ... appended, in add order.
+function instanceDisplayName(bucket, pathId, instanceId) {
+  const catalogEntry = PATH_CATALOG[pathId];
+  const baseName = catalogEntry ? catalogEntry.name : pathId;
+  const sameIds = v6Store[bucket].filter(inst => inst.pathId === pathId);
+  const idx = sameIds.findIndex(inst => inst.instanceId === instanceId);
+  return idx > 0 ? `${baseName} (${idx + 1})` : baseName;
+}
+
+function levelProjectPillKey(pathId, instanceId, levelIndex, projectIndex) {
+  return `v6_${pathId}_${instanceId}_${levelIndex}_${projectIndex}`;
+}
+
+function renderCardProject(pathId, instanceId, levelIndex, projectIndex, project) {
+  const key = levelProjectPillKey(pathId, instanceId, levelIndex, projectIndex);
+  const elecBadge = project.elective ? '<span class="elec-badge">E</span>' : '';
+  const evalBtn = project.evalFormUrl
+    ? `<a class="eval-form-btn" href="${project.evalFormUrl}" target="_blank" rel="noopener" title="Download evaluation form">📄</a>`
+    : '';
+  return `<li class="project-item">
+      <span class="project-name">${elecBadge}${project.projectName}</span>
+      ${evalBtn}
+      ${renderPill(key, '—')}
+    </li>`;
+}
+
+function renderCardLevel(pathId, instanceId, levelIndex, level) {
+  let html = `<div class="level-box">`;
+  html += `<p class="level-name">${level.levelName}</p>`;
+  if (level.enhancement) {
+    html += `<div class="enhancement-block pre-oct">`;
+    html += `<span class="pre-oct-label">Enhancement (required after Oct 2025)</span>`;
+    if (level.enhancement.meetingRoles) html += `<p class="meta-line"><strong>Meeting roles:</strong> ${level.enhancement.meetingRoles}</p>`;
+    if (level.enhancement.edSeries) html += `<p class="meta-line ed"><strong>Ed Series:</strong> ${level.enhancement.edSeries}</p>`;
+    html += `</div>`;
+  }
+  html += `<ul class="project-list">`;
+  level.projects.forEach((project, projectIndex) => {
+    html += renderCardProject(pathId, instanceId, levelIndex, projectIndex, project);
+  });
+  html += `</ul></div>`;
+  return html;
+}
+
+function renderPathCard(pathId, instanceId, section) {
+  const pathData = PATH_CATALOG[pathId];
+  if (!pathData) return '';
+  const displayName = instanceDisplayName(section, pathId, instanceId);
+  let html = `<div class="path-card" data-instance-id="${instanceId}" data-path-id="${pathId}" data-section="${section}">`;
+  html += `<div class="path-col-header">
+    <span class="path-name">${displayName}</span>
+    <span class="path-badge ${pathData.category}">${pathData.category}</span>
+    <button class="card-remove-btn" type="button">Remove</button>
   </div>`;
+  html += `<div class="path-col-body">`;
+  html += `<div class="level-scroll-row">`;
+  pathData.levels.forEach((level, levelIndex) => {
+    html += renderCardLevel(pathId, instanceId, levelIndex, level);
+  });
+  html += `</div></div></div>`;
+  return html;
 }
 
 function renderV6Sections() {
@@ -1172,11 +2213,11 @@ function renderV6Sections() {
   const completedContainer = document.getElementById('completed-paths-container');
 
   activeContainer.innerHTML = v6Store.active.length
-    ? v6Store.active.map(renderShellCard).join('')
+    ? v6Store.active.map(inst => renderPathCard(inst.pathId, inst.instanceId, 'active')).join('')
     : '<p class="empty-message">No active paths yet. Pick a path above to get started.</p>';
 
   completedContainer.innerHTML = v6Store.completed.length
-    ? v6Store.completed.map(renderShellCard).join('')
+    ? v6Store.completed.map(inst => renderPathCard(inst.pathId, inst.instanceId, 'completed')).join('')
     : '<p class="empty-message">No completed paths yet.</p>';
 }
 
@@ -1189,9 +2230,20 @@ document.addEventListener('DOMContentLoaded', function () {
   renderPicker();
   renderV6Sections();
 
-  // Pill toggle (event delegation — covers active/completed card containers)
+  // Pill toggle + card removal (event delegation — covers active/completed card containers)
   ['active-paths-container', 'completed-paths-container'].forEach(function (id) {
     document.getElementById(id).addEventListener('click', function (e) {
+      const removeBtn = e.target.closest('.card-remove-btn');
+      if (removeBtn) {
+        const card       = removeBtn.closest('.path-card');
+        const section    = card.dataset.section;
+        const pathId     = card.dataset.pathId;
+        const instanceId = card.dataset.instanceId;
+        const displayName = instanceDisplayName(section, pathId, instanceId);
+        if (!confirm(`Remove this ${displayName}? Your progress will be lost.`)) return;
+        removePathInstance(section, instanceId);
+        return;
+      }
       const pill = e.target.closest('.status-pill');
       if (!pill) return;
       const key     = pill.dataset.key;
@@ -1217,7 +2269,7 @@ document.addEventListener('DOMContentLoaded', function () {
       ? `Add ${pathName} as an Active Path?`
       : `Add ${pathName} as a Completed Path?`;
     if (!confirm(message)) return;
-    addPathInstance(isActive ? 'active' : 'completed', pathId, pathName);
+    addPathInstance(isActive ? 'active' : 'completed', pathId);
   });
 
   // Enhancement toggle
