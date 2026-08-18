@@ -11,9 +11,10 @@ Data: reuse all 8 paths from Bond7010/toastmasters-pathways-app
 ## Current State
 Canonical: pathways-dashboard.html on GitHub Pages. FTH embedding abandoned.
 Phase 6 complete. Three-section layout, Pick Your Path, horizontal cards, eval forms, multi-instance, localStorage, polish done.
+Post-Phase-6 fix: removed the global header Enhancements button and member ID; each path card now has its own independent Enhancements toggle instead.
 
 ## Active Task
-None — Phase 6 closed out. See HANDOFF.md for details and next-step ideas.
+None. See HANDOFF.md for details and next-step ideas.
 
 ## Key Files
 - `pathways-dashboard.html` — the app

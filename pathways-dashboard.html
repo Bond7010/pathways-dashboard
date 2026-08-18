@@ -240,6 +240,22 @@
     transition: background 0.15s, color 0.15s;
   }
   .card-remove-btn:hover { background: #c0392b; color: #fff; }
+  .card-enhancements-btn {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 600;
+    padding: 0.25rem 0.65rem;
+    border-radius: 999px;
+    border: 1.5px solid #004165;
+    background: #fff;
+    color: #004165;
+    cursor: pointer;
+    white-space: nowrap;
+    flex-shrink: 0;
+    transition: background 0.15s, color 0.15s;
+  }
+  .card-enhancements-btn:hover,
+  .card-enhancements-btn.active { background: #004165; color: #fff; }
   .level-scroll-row {
     display: flex;
     gap: 0.85rem;
@@ -370,6 +386,10 @@
   .enhancement-block {
     margin-top: 0.3rem;
   }
+  /* Per-card Enhancements toggle (Sections 2 & 3) — hidden by default,
+     revealed on a .path-card when the card's own toggle button is active. */
+  .enhancement-row { display: none; }
+  .path-card.enhancements-visible .enhancement-row { display: block; }
   .enhancement-block.pre-oct {
     padding: 0.3rem 0.4rem;
     background: #fafafa;
@@ -456,8 +476,7 @@
 </head>
 <body>
 <header>
-  <h1>My Pathways Dashboard (ID: PN-07351286)</h1>
-  <button id="toggle-enhancements" class="toggle-btn">+ Enhancements</button>
+  <h1>My Pathways Dashboard</h1>
 </header>
 <main>
 
@@ -2207,6 +2226,16 @@ function removePathInstance(bucket, instanceId) {
 
 // STEP 4f: an instance is "brand-new" if none of its pill keys have ever
 // been advanced past the blank default.
+// FIX 2: per-card Enhancements toggle — state lives purely as a DOM class
+// on that card, so each instance is independent and resets (hidden) on
+// every fresh render, per spec ("keep cards clean by default").
+function toggleEnhancements(btn) {
+  const card = btn.closest('.path-card');
+  const nowVisible = card.classList.toggle('enhancements-visible');
+  btn.textContent = nowVisible ? '− Enhancements' : '＋ Enhancements';
+  btn.classList.toggle('active', nowVisible);
+}
+
 function instanceIsUntouched(pathId, instanceId) {
   const prefix = `v6_${pathId}_${instanceId}_`;
   return !Object.keys(store).some(function (k) {
@@ -2257,7 +2286,7 @@ function renderCardLevel(pathId, instanceId, levelIndex, level) {
   let html = `<div class="level-box">`;
   html += `<p class="level-name">${level.levelName}</p>`;
   if (level.enhancement) {
-    html += `<div class="enhancement-block pre-oct">`;
+    html += `<div class="enhancement-block pre-oct enhancement-row">`;
     html += `<span class="pre-oct-label">Enhancement (required after Oct 2025)</span>`;
     if (level.enhancement.meetingRoles) html += `<p class="meta-line"><strong>Meeting roles:</strong> ${level.enhancement.meetingRoles}</p>`;
     if (level.enhancement.edSeries) html += `<p class="meta-line ed"><strong>Ed Series:</strong> ${level.enhancement.edSeries}</p>`;
@@ -2281,6 +2310,7 @@ function renderPathCard(pathId, instanceId, section) {
     <span class="path-name">${displayName}</span>
     <span class="path-badge ${pathData.category}">${pathData.category}</span>
     ${isBrandNew ? '<span class="path-badge new">NEW</span>' : ''}
+    <button class="card-enhancements-btn" type="button">＋ Enhancements</button>
     <button class="card-remove-btn" type="button">Remove</button>
   </div>`;
   html += `<div class="path-col-body">`;
@@ -2328,6 +2358,11 @@ document.addEventListener('DOMContentLoaded', function () {
         removePathInstance(section, instanceId);
         return;
       }
+      const enhancementsBtn = e.target.closest('.card-enhancements-btn');
+      if (enhancementsBtn) {
+        toggleEnhancements(enhancementsBtn);
+        return;
+      }
       const pill = e.target.closest('.status-pill');
       if (!pill) return;
       const key     = pill.dataset.key;
@@ -2372,13 +2407,6 @@ document.addEventListener('DOMContentLoaded', function () {
       : `Add ${pathName} as a Completed Path?`;
     if (!confirm(message)) return;
     addPathInstance(isActive ? 'active' : 'completed', pathId, pathName);
-  });
-
-  // Enhancement toggle
-  document.getElementById('toggle-enhancements').addEventListener('click', function () {
-    showEnhancements = !showEnhancements;
-    this.textContent = showEnhancements ? '− Enhancements' : '+ Enhancements';
-    this.classList.toggle('active', showEnhancements);
   });
 });
 </script>
