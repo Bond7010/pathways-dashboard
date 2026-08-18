@@ -1094,12 +1094,19 @@ const PICKER_GROUPS = [
   {
     label: 'Legacy Paths',
     key: 'legacy',
-    paths: ['Competent Communicator', 'Advanced Communicator Bronze', 'Advanced Communicator Silver', 'Advanced Communicator Gold', 'Competent Leader'],
+    paths: [
+      { name: 'Effective Coaching', id: 'effective-coaching-legacy' },
+      { name: 'Innovative Planning', id: 'innovative-planning-legacy' },
+      { name: 'Leadership Development', id: 'leadership-development-legacy' },
+      { name: 'Strategic Relationships', id: 'strategic-relationships-legacy' },
+      { name: 'Team Collaboration', id: 'team-collaboration-legacy' },
+    ],
   },
 ];
 
-function renderPickerRow(name) {
-  const pathId = elecSlug(name);
+function renderPickerRow(pathEntry) {
+  const name   = typeof pathEntry === 'string' ? pathEntry : pathEntry.name;
+  const pathId = typeof pathEntry === 'string' ? elecSlug(name) : pathEntry.id;
   return `<div class="picker-path-row" data-path-id="${pathId}" data-path-name="${name}">
     <span class="picker-path-name">${name}</span>
     <div class="picker-actions">
