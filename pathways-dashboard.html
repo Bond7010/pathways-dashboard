@@ -429,29 +429,6 @@
     transition: background 0.15s;
   }
   .reset-btn:hover { background: #fdf0f0; }
-  #achievements-section { max-width: 600px; }
-  .achievement-list { list-style: none; margin: 0; padding: 0; }
-  .achievement-item {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.4rem 0;
-    border-bottom: 1px solid #eee;
-    font-size: 0.9rem;
-  }
-  .achievement-name { flex: 1; }
-  .achievement-badge {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 0.65rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.03em;
-    padding: 0.1rem 0.45rem;
-    border-radius: 999px;
-    background: var(--maroon-grad);
-    border: none;
-    color: #fff;
-  }
   @media print {
     @page {
       size: A3 landscape;
@@ -470,7 +447,6 @@
       flex-wrap: nowrap !important;
     }
     .path-col { break-inside: avoid; page-break-inside: avoid; }
-    .standalone-section { page-break-before: avoid; }
   }
 </style>
 </head>
@@ -493,24 +469,6 @@
 <section id="completed-paths-section">
   <h2>Completed Paths <span class="section-note">(Click Enhancement to view additional requirements — applies only to current paths completed after Oct 2025)</span></h2>
   <div id="completed-paths-container"></div>
-</section>
-
-<section id="achievements-section">
-  <h2>Standalone Achievements</h2>
-  <ul class="achievement-list">
-    <li class="achievement-item">
-      <span class="achievement-name">Story Collection</span>
-      <span class="achievement-badge">Completed</span>
-    </li>
-    <li class="achievement-item">
-      <span class="achievement-name">Distinguished Toastmaster</span>
-      <span class="achievement-badge">Completed ×2</span>
-    </li>
-    <li class="achievement-item">
-      <span class="achievement-name">Club Coach Program</span>
-      <span class="achievement-badge">Completed</span>
-    </li>
-  </ul>
 </section>
 
 </main>
