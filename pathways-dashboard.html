@@ -127,10 +127,13 @@
     gap: 0.6rem;
     padding: 0.85rem 0.75rem;
     background: #fff;
-    border: 1px solid var(--gray);
+    border-left: 4px solid var(--gray);
     border-radius: 8px;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.12);
   }
+  .picker-path-row--current { border-left-color: var(--blue); }
+  .picker-path-row--legacy { border-left-color: var(--maroon); }
+  .picker-path-row--vintage { border-left-color: var(--gray); }
   .picker-path-name {
     font-family: 'Montserrat', sans-serif;
     font-weight: 700;
@@ -1080,35 +1083,31 @@ function renderPath(path) {
 
 // ── Pick Your Path (Section 1) ───────────────────────────────────────────────
 
-const PICKER_GROUPS = [
-  {
-    label: 'Current Paths',
-    key: 'current',
-    paths: ['Engaging Humor', 'Presentation Mastery', 'Persuasive Influence', 'Dynamic Leadership', 'Innovative Planning', 'Team Collaboration'],
-  },
-  {
-    label: 'Vintage Paths',
-    key: 'vintage',
-    paths: ['Basic Training for Toastmasters', 'Communication Series'],
-  },
-  {
-    label: 'Legacy Paths',
-    key: 'legacy',
-    paths: [
-      { name: 'Effective Coaching', id: 'effective-coaching-legacy' },
-      { name: 'Innovative Planning', id: 'innovative-planning-legacy' },
-      { name: 'Leadership Development', id: 'leadership-development-legacy' },
-      { name: 'Strategic Relationships', id: 'strategic-relationships-legacy' },
-      { name: 'Team Collaboration', id: 'team-collaboration-legacy' },
-    ],
-  },
+const PICKER_PATHS = [
+  { id: 'dynamic-leadership', name: 'Dynamic Leadership', category: 'current' },
+  { id: 'engaging-humor', name: 'Engaging Humor', category: 'current' },
+  { id: 'motivational-strategies', name: 'Motivational Strategies', category: 'current' },
+  { id: 'persuasive-influence', name: 'Persuasive Influence', category: 'current' },
+  { id: 'presentation-mastery', name: 'Presentation Mastery', category: 'current' },
+  { id: 'visionary-communication', name: 'Visionary Communication', category: 'current' },
+  { id: 'effective-coaching', name: 'Effective Coaching', category: 'legacy' },
+  { id: 'innovative-planning', name: 'Innovative Planning', category: 'legacy' },
+  { id: 'leadership-development', name: 'Leadership Development', category: 'legacy' },
+  { id: 'strategic-relationships', name: 'Strategic Relationships', category: 'legacy' },
+  { id: 'team-collaboration', name: 'Team Collaboration', category: 'legacy' },
+  { id: 'basic-training', name: 'Basic Training for Toastmasters', category: 'vintage' },
+  { id: 'communication-series', name: 'Communication Series', category: 'vintage' },
 ];
 
-function renderPickerRow(pathEntry) {
-  const name   = typeof pathEntry === 'string' ? pathEntry : pathEntry.name;
-  const pathId = typeof pathEntry === 'string' ? elecSlug(name) : pathEntry.id;
-  return `<div class="picker-path-row" data-path-id="${pathId}" data-path-name="${name}">
-    <span class="picker-path-name">${name}</span>
+const PICKER_GROUP_ORDER = [
+  { label: 'Current Paths', key: 'current' },
+  { label: 'Vintage Paths', key: 'vintage' },
+  { label: 'Legacy Paths', key: 'legacy' },
+];
+
+function renderPickerRow(entry) {
+  return `<div class="picker-path-row picker-path-row--${entry.category}" data-path-id="${entry.id}" data-path-name="${entry.name}">
+    <span class="picker-path-name">${entry.name}</span>
     <div class="picker-actions">
       <button class="picker-btn picker-btn-active" type="button">＋ Activate</button>
       <button class="picker-btn picker-btn-completed" type="button">＋ Completed</button>
@@ -1117,14 +1116,15 @@ function renderPickerRow(pathEntry) {
 }
 
 function renderPickerGroup(group) {
+  const entries = PICKER_PATHS.filter(p => p.category === group.key);
   return `<div class="picker-group" data-group="${group.key}">
     <h3>${group.label}</h3>
-    <div class="card-grid">${group.paths.map(renderPickerRow).join('')}</div>
+    <div class="card-grid">${entries.map(renderPickerRow).join('')}</div>
   </div>`;
 }
 
 function renderPicker() {
-  document.getElementById('pick-path-list').innerHTML = PICKER_GROUPS.map(renderPickerGroup).join('');
+  document.getElementById('pick-path-list').innerHTML = PICKER_GROUP_ORDER.map(renderPickerGroup).join('');
 }
 
 // ── Active / Completed Path Instances (Sections 2 & 3) ───────────────────────
