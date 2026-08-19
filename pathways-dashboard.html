@@ -664,6 +664,12 @@
     line-height: 1.5;
   }
   #electives-note p { margin: 0; }
+  #path-bars-legend {
+    font-size: 0.8rem;
+    color: #aaa;
+    margin-top: 0.5rem;
+    text-align: center;
+  }
   @media (max-width: 800px) {
     #charts-row-1 { grid-template-columns: 1fr; }
   }
@@ -2952,7 +2958,6 @@ function renderOverallDonut(instances) {
 }
 
 function renderPathBars(instances) {
-  const categoryColor = { current: '#004165', legacy: '#772432', vintage: '#6b7280' };
   const labels = [];
   const values = [];
   const colors = [];
@@ -2966,9 +2971,15 @@ function renderPathBars(instances) {
         if (projectStatus(inst.pathId, inst.instanceId, levelIndex, projectIndex) === 'Complete') complete++;
       });
     });
+    const pct = total ? Math.round((complete / total) * 100) : 0;
+    let color;
+    if (pct === 100) color = '#772432';      // TM maroon — fully complete
+    else if (pct > 0) color = '#F2DF74';     // TM yellow — in progress
+    else color = '#004165';                  // TM blue — not started
+
     labels.push(pathInstanceBarLabel(instances, inst));
-    values.push(total ? Math.round((complete / total) * 100) : 0);
-    colors.push(categoryColor[inst.category] || '#6b7280');
+    values.push(pct);
+    colors.push(color);
   });
 
   const valueLabelPlugin = {
@@ -3187,6 +3198,11 @@ document.addEventListener('DOMContentLoaded', function () {
     <div class="chart-card" id="bars-wrap">
       <h3>Progress by Path</h3>
       <canvas id="pathBars"></canvas>
+      <div id="path-bars-legend">
+        <span style="color:#772432">■</span> Complete &nbsp;
+        <span style="color:#F2DF74">■</span> In Progress &nbsp;
+        <span style="color:#004165">■</span> Not Started
+      </div>
     </div>
   </div>
 
