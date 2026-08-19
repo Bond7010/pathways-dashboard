@@ -7,6 +7,27 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Source+Sans+3:wght@400;600&display=swap">
+<script>
+  // Loads SheetJS on demand (not at page load) from the first CDN that
+  // responds — jsdelivr has intermittently 521'd, so unpkg/cdnjs back it up.
+  function loadSheetJS(callback) {
+    const sources = [
+      'https://unpkg.com/xlsx@0.18.5/dist/xlsx.full.min.js',
+      'https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js',
+      'https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js',
+    ];
+    let idx = 0;
+    function tryNext() {
+      if (idx >= sources.length) { callback(false); return; }
+      const s = document.createElement('script');
+      s.src = sources[idx++];
+      s.onload = () => callback(true);
+      s.onerror = tryNext;
+      document.head.appendChild(s);
+    }
+    tryNext();
+  }
+</script>
 <style>
   :root {
     --maroon:     #772432;
@@ -519,9 +540,9 @@
 <header>
   <h1>My Pathways Dashboard</h1>
   <div class="header-actions">
-    <button id="export-data-btn" type="button" class="toggle-btn">⬇ Export My Data</button>
-    <button id="import-data-btn" type="button" class="toggle-btn">⬆ Import Data</button>
-    <input type="file" id="import-file-input" accept=".json" style="display:none">
+    <button id="export-data-btn" type="button" class="toggle-btn">⬇ Export to Excel</button>
+    <button id="import-data-btn" type="button" class="toggle-btn">⬆ Import from Excel</button>
+    <input type="file" id="import-file-input" accept=".xlsx" style="display:none">
   </div>
 </header>
 <main>
@@ -2401,27 +2422,63 @@ function showMemberIdModal() {
   });
 }
 
-function exportMemberData() {
-  const memberId = currentMemberId() || 'default';
-  const data = {};
-  for (let i = 0; i < localStorage.length; i++) {
-    const key = localStorage.key(i);
-    if (key && key.includes(memberId)) data[key] = localStorage.getItem(key);
+// ── Export/Import — Excel (.xlsx) via SheetJS ───────────────────────────────
+// SheetJS loads on demand (first Export or Import click), not at page load,
+// so the app still works if every CDN source is briefly down.
+
+function exportToExcel() {
+  if (typeof XLSX === 'undefined') {
+    loadSheetJS(function (ok) {
+      if (!ok) {
+        alert('Could not load the Excel library. Please check your internet connection and try again.');
+        return;
+      }
+      exportToExcel();
+    });
+    return;
   }
-  const payload = {
-    memberId: memberId,
-    exportDate: new Date().toISOString().slice(0, 10),
-    data: data,
-  };
-  const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
-  const url  = URL.createObjectURL(blob);
-  const a    = document.createElement('a');
-  a.href     = url;
-  a.download = `pathways-dashboard-${memberId}-${payload.exportDate}.json`;
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  URL.revokeObjectURL(url);
+
+  const memberId   = currentMemberId() || 'default';
+  const exportDate = new Date().toISOString().slice(0, 10);
+
+  const rows = [['pathId', 'pathName', 'instanceId', 'section', 'levelName', 'projectName', 'status']];
+  ['active', 'completed'].forEach(function (section) {
+    v6Store[section].forEach(function (inst) {
+      const pathData = PATH_CATALOG[inst.pathId];
+      if (!pathData) return;
+      const pathName = pathData.name || inst.pathName;
+      pathData.levels.forEach(function (level, levelIndex) {
+        level.projects.forEach(function (project, projectIndex) {
+          const key    = levelProjectPillKey(inst.pathId, inst.instanceId, levelIndex, projectIndex);
+          const status = getStatus(key, '—');
+          rows.push([inst.pathId, pathName, inst.instanceId, section, level.levelName, project.projectName, status]);
+        });
+      });
+    });
+  });
+
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(rows), 'Progress');
+  XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet([
+    ['Member ID', 'Export Date'],
+    [memberId, exportDate],
+  ]), 'Member Info');
+
+  XLSX.writeFile(wb, `Pathways-Dashboard-${memberId}-${exportDate}.xlsx`);
+}
+
+function importFromExcel() {
+  if (typeof XLSX === 'undefined') {
+    loadSheetJS(function (ok) {
+      if (!ok) {
+        alert('Could not load the Excel library. Please check your internet connection and try again.');
+        return;
+      }
+      importFromExcel();
+    });
+    return;
+  }
+  document.getElementById('import-file-input').click();
 }
 
 function handleImportFile(e) {
@@ -2429,32 +2486,75 @@ function handleImportFile(e) {
   if (!file) return;
   const reader = new FileReader();
   reader.onload = function () {
-    let parsed;
+    let wb;
     try {
-      parsed = JSON.parse(reader.result);
+      wb = XLSX.read(reader.result, { type: 'array' });
     } catch (err) {
-      alert('That file is not valid JSON.');
+      alert('That file is not a valid Excel file.');
       e.target.value = '';
       return;
     }
-    const fileMemberId = parsed.memberId || 'unknown';
-    if (!confirm(`Import data for member ${fileMemberId}? This will replace your current data on this device.`)) {
+
+    const infoSheet     = wb.Sheets['Member Info'];
+    const progressSheet = wb.Sheets['Progress'];
+    if (!infoSheet || !progressSheet) {
+      alert('That file is missing the expected sheets. Please use a file exported from this app.');
       e.target.value = '';
       return;
     }
-    Object.keys(parsed.data || {}).forEach(function (key) {
-      localStorage.setItem(key, parsed.data[key]);
+
+    const info           = XLSX.utils.sheet_to_json(infoSheet)[0] || {};
+    const fileMemberId   = info['Member ID'] || 'unknown';
+    const fileExportDate = info['Export Date'] || 'an unknown date';
+
+    if (!confirm(`Import data saved for member ${fileMemberId} on ${fileExportDate}?\nThis will replace your current progress on this device.`)) {
+      e.target.value = '';
+      return;
+    }
+
+    const rows = XLSX.utils.sheet_to_json(progressSheet);
+    const newV6Store     = { active: [], completed: [] };
+    const newStore       = {};
+    const seenInstances  = {};
+
+    rows.forEach(function (row) {
+      const pathId     = row.pathId;
+      const instanceId = row.instanceId;
+      const section    = row.section === 'completed' ? 'completed' : 'active';
+      const status     = row.status || '—';
+      if (!pathId || !instanceId) return;
+
+      const instKey = section + '::' + instanceId;
+      if (!seenInstances[instKey]) {
+        seenInstances[instKey] = true;
+        newV6Store[section].push({ pathId: pathId, instanceId: instanceId, pathName: row.pathName });
+      }
+
+      const pathData = PATH_CATALOG[pathId];
+      if (pathData && status !== '—') {
+        const levelIndex = pathData.levels.findIndex(l => l.levelName === row.levelName);
+        if (levelIndex !== -1) {
+          const projectIndex = pathData.levels[levelIndex].projects.findIndex(p => p.projectName === row.projectName);
+          if (projectIndex !== -1) {
+            newStore[levelProjectPillKey(pathId, instanceId, levelIndex, projectIndex)] = status;
+          }
+        }
+      }
     });
+
+    v6Store = newV6Store;
+    saveV6Store();
+    store = newStore;
+    saveStore();
+
     location.reload();
   };
-  reader.readAsText(file);
+  reader.readAsArrayBuffer(file);
 }
 
 function wireHeaderAndFooterActions() {
-  document.getElementById('export-data-btn').addEventListener('click', exportMemberData);
-  document.getElementById('import-data-btn').addEventListener('click', function () {
-    document.getElementById('import-file-input').click();
-  });
+  document.getElementById('export-data-btn').addEventListener('click', exportToExcel);
+  document.getElementById('import-data-btn').addEventListener('click', importFromExcel);
   document.getElementById('import-file-input').addEventListener('change', handleImportFile);
   document.getElementById('change-member-id-link').addEventListener('click', function (e) {
     e.preventDefault();

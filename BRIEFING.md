@@ -14,6 +14,7 @@ Phase 6 complete. Three-section layout, Pick Your Path, horizontal cards, eval f
 Post-Phase-6 fix: removed the global header Enhancements button and member ID; each path card now has its own independent Enhancements toggle instead.
 Post-Phase-6 fix: card header controls regrouped left (no elements pushed right); NEW badge now only shows on active-section cards, never completed. Standalone Achievements section removed entirely (HTML, CSS, and print-stylesheet references).
 Phase 6 complete + Option B identity: member ID namespacing, first-visit prompt, Export/Import. Ready for member distribution.
+Export/Import uses Excel (.xlsx) via SheetJS. Member-friendly format. Two sheets: progress data + member info. SheetJS loads on demand (first Export/Import click) with multi-CDN fallback (unpkg → jsdelivr → cdnjs) so the app still works if one CDN is down.
 
 ## Active Task
 None. See HANDOFF.md for details and next-step ideas.
