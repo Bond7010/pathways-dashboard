@@ -15,6 +15,7 @@ Post-Phase-6 fix: removed the global header Enhancements button and member ID; e
 Post-Phase-6 fix: card header controls regrouped left (no elements pushed right); NEW badge now only shows on active-section cards, never completed. Standalone Achievements section removed entirely (HTML, CSS, and print-stylesheet references).
 Phase 6 complete + Option B identity: member ID namespacing, first-visit prompt, Export/Import. Ready for member distribution.
 Export/Import uses Excel (.xlsx) via SheetJS. Member-friendly format. Two sheets: progress data + member info. SheetJS loads on demand (first Export/Import click) with multi-CDN fallback (unpkg → jsdelivr → cdnjs) so the app still works if one CDN is down.
+Visual dashboard section added at bottom — 4 charts: overall donut, path progress bars, level heatmap, electives tracker. Dark navy theme. Updates live on pill toggle. Chart.js 4.4.0.
 
 ## Active Task
 None. See HANDOFF.md for details and next-step ideas.

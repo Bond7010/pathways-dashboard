@@ -28,6 +28,27 @@
     tryNext();
   }
 </script>
+<script>
+  // Loads Chart.js on demand (first time the visual dashboard renders),
+  // trying jsdelivr, then cdnjs, then unpkg.
+  function loadChartJS(callback) {
+    const sources = [
+      'https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js',
+      'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js',
+      'https://unpkg.com/chart.js@4.4.0/dist/chart.umd.min.js',
+    ];
+    let idx = 0;
+    function tryNext() {
+      if (idx >= sources.length) { callback(false); return; }
+      const s = document.createElement('script');
+      s.src = sources[idx++];
+      s.onload = () => callback(true);
+      s.onerror = tryNext;
+      document.head.appendChild(s);
+    }
+    tryNext();
+  }
+</script>
 <style>
   :root {
     --maroon:     #772432;
@@ -519,12 +540,117 @@
     }
     header { position: static !important; }
     #pick-path-section { display: none !important; }
+    #visual-dashboard { display: none !important; }
     .paths-row {
       overflow: visible !important;
       display: flex !important;
       flex-wrap: nowrap !important;
     }
     .path-col { break-inside: avoid; page-break-inside: avoid; }
+  }
+
+  /* ── Visual Progress Dashboard (dark theme) ────────────────────────────── */
+  #visual-dashboard {
+    background: #1a1a2e;
+    padding: 2rem;
+    color: #fff;
+  }
+  #visual-dashboard h2 {
+    color: #fff;
+    margin: 0 0 1.5rem;
+  }
+  #visual-dashboard h3 {
+    color: #fff;
+    font-size: 1rem;
+    margin: 0 0 1rem;
+  }
+  .chart-card {
+    background: #16213e;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+  }
+  #stat-cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  .stat-card {
+    flex: 1 1 200px;
+    background: #16213e;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+    text-align: center;
+  }
+  .stat-card .stat-number {
+    display: block;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--yellow);
+  }
+  .stat-card .stat-label {
+    display: block;
+    font-size: 0.85rem;
+    color: #aaa;
+    margin-top: 0.35rem;
+  }
+  #charts-row-1 {
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+  #charts-row-2, #charts-row-3 {
+    margin-bottom: 1rem;
+  }
+  #donut-wrap canvas { max-height: 280px; }
+  #pathBars, #electivesChart { max-height: 320px; }
+  #heatmap-grid {
+    display: grid;
+    grid-auto-rows: 32px;
+    gap: 4px;
+    align-items: center;
+  }
+  .heatmap-row-label {
+    font-size: 0.8rem;
+    color: #ddd;
+    padding-right: 0.5rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .heatmap-col-label {
+    font-size: 0.75rem;
+    color: #aaa;
+    text-align: center;
+  }
+  .heatmap-cell {
+    width: 32px;
+    height: 32px;
+    border-radius: 4px;
+    background: #2d2d2d;
+  }
+  .heatmap-cell.complete    { background: #772432; }
+  .heatmap-cell.in-progress { background: #004165; }
+  .heatmap-cell.not-started { background: #2d2d2d; }
+  .heatmap-cell.no-level {
+    background: #111;
+    color: #555;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+  }
+  .electives-check {
+    color: var(--yellow);
+    font-size: 0.75rem;
+    text-align: center;
+    margin-top: 0.25rem;
+  }
+  @media (max-width: 800px) {
+    #charts-row-1 { grid-template-columns: 1fr; }
   }
 </style>
 </head>
@@ -2269,6 +2395,7 @@ function addPathInstance(bucket, pathId, pathName) {
   v6Store[bucket].push({ pathId, instanceId: makeInstanceId(pathId), pathName });
   saveV6Store();
   renderV6Sections();
+  buildVisualDashboard();
 }
 
 // STEP 3c: removing an instance also purges every pill-state key that
@@ -2285,6 +2412,7 @@ function removePathInstance(bucket, instanceId) {
     saveStore();
   }
   renderV6Sections();
+  buildVisualDashboard();
 }
 
 // STEP 4f: an instance is "brand-new" if none of its pill keys have ever
@@ -2572,6 +2700,7 @@ function initApp() {
   loadV6Store();
   renderPicker();
   renderV6Sections();
+  buildVisualDashboard();
 
   // Pill toggle + card removal (event delegation — covers active/completed card containers)
   ['active-paths-container', 'completed-paths-container'].forEach(function (id) {
@@ -2602,6 +2731,7 @@ function initApp() {
       saveStore();
       pill.textContent = next;
       pill.className   = pillClass(next);
+      buildVisualDashboard();
 
       // Keep the NEW badge in sync without a full card re-render.
       if (key.startsWith('v6_')) {
@@ -2640,6 +2770,331 @@ function initApp() {
   });
 }
 
+// ── Visual Progress Dashboard ────────────────────────────────────────────
+// Standard Toastmasters Pathways elective requirement, by 0-indexed level:
+// Level 3 → choose 2, Level 4 → choose 2, Level 5 → choose 1. Levels with
+// no elective projects on a given path (e.g. all vintage-path levels) are
+// skipped in the electives tracker regardless of this map.
+const REQUIRED_ELECTIVES_BY_LEVEL = { 2: 2, 3: 2, 4: 1 };
+
+let overallDonutChart = null;
+let pathBarsChart = null;
+let electivesChartInstance = null;
+
+function collectDashboardInstances() {
+  const instances = [];
+  ['active', 'completed'].forEach(function (section) {
+    v6Store[section].forEach(function (inst) {
+      const pathData = PATH_CATALOG[inst.pathId];
+      if (!pathData) return;
+      instances.push({
+        pathId: inst.pathId,
+        instanceId: inst.instanceId,
+        pathName: pathData.name || inst.pathName,
+        category: pathData.category,
+        section: section,
+        pathData: pathData,
+      });
+    });
+  });
+  return instances;
+}
+
+function projectStatus(pathId, instanceId, levelIndex, projectIndex) {
+  return getStatus(levelProjectPillKey(pathId, instanceId, levelIndex, projectIndex), '—');
+}
+
+function setStatCard(id, number, label) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.innerHTML = `<span class="stat-number">${number}</span><span class="stat-label">${label}</span>`;
+}
+
+function renderStatCards(instances) {
+  let reqComplete = 0, reqTotal = 0, levelsAllComplete = 0;
+  instances.forEach(function (inst) {
+    inst.pathData.levels.forEach(function (level, levelIndex) {
+      const requiredProjects = level.projects.filter(p => !p.elective);
+      if (!requiredProjects.length) return;
+      let levelAllDone = true;
+      level.projects.forEach(function (project, projectIndex) {
+        if (project.elective) return;
+        reqTotal++;
+        const status = projectStatus(inst.pathId, inst.instanceId, levelIndex, projectIndex);
+        if (status === 'Complete') reqComplete++;
+        else levelAllDone = false;
+      });
+      if (levelAllDone) levelsAllComplete++;
+    });
+  });
+
+  setStatCard('stat-completed', v6Store.completed.length, 'Paths Completed');
+  setStatCard('stat-active', v6Store.active.length, 'Active Paths');
+  setStatCard('stat-projects', `${reqComplete} / ${reqTotal}`, 'Required Projects Complete');
+  setStatCard('stat-levels', levelsAllComplete, 'Levels Fully Complete');
+}
+
+function renderOverallDonut(instances) {
+  let complete = 0, inProgress = 0, notStarted = 0;
+  instances.forEach(function (inst) {
+    inst.pathData.levels.forEach(function (level, levelIndex) {
+      level.projects.forEach(function (project, projectIndex) {
+        if (project.elective) return;
+        const status = projectStatus(inst.pathId, inst.instanceId, levelIndex, projectIndex);
+        if (status === 'Complete') complete++;
+        else if (status === 'In Progress') inProgress++;
+        else notStarted++;
+      });
+    });
+  });
+
+  const total = complete + inProgress + notStarted;
+  const pct   = total ? Math.round((complete / total) * 100) : 0;
+
+  const centerTextPlugin = {
+    id: 'centerText',
+    afterDraw(chart) {
+      const { ctx, chartArea } = chart;
+      const x = (chartArea.left + chartArea.right) / 2;
+      const y = (chartArea.top + chartArea.bottom) / 2;
+      ctx.save();
+      ctx.fillStyle = '#fff';
+      ctx.font = "bold 1.8rem 'Montserrat', sans-serif";
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(pct + '%', x, y);
+      ctx.restore();
+    },
+  };
+
+  if (overallDonutChart) overallDonutChart.destroy();
+  overallDonutChart = new Chart(document.getElementById('overallDonut'), {
+    type: 'doughnut',
+    data: {
+      labels: ['Complete', 'In Progress', 'Not Started'],
+      datasets: [{
+        data: [complete, inProgress, notStarted],
+        backgroundColor: ['#772432', '#F2DF74', '#2d4a6b'],
+        borderWidth: 0,
+      }],
+    },
+    options: {
+      cutout: '70%',
+      maintainAspectRatio: true,
+      aspectRatio: 1.5,
+      plugins: {
+        legend: { position: 'bottom', labels: { color: '#ddd' } },
+      },
+    },
+    plugins: [centerTextPlugin],
+  });
+}
+
+function renderPathBars(instances) {
+  const categoryColor = { current: '#004165', legacy: '#772432', vintage: '#6b7280' };
+  const labels = [];
+  const values = [];
+  const colors = [];
+
+  instances.forEach(function (inst) {
+    let complete = 0, total = 0;
+    inst.pathData.levels.forEach(function (level, levelIndex) {
+      level.projects.forEach(function (project, projectIndex) {
+        if (project.elective) return;
+        total++;
+        if (projectStatus(inst.pathId, inst.instanceId, levelIndex, projectIndex) === 'Complete') complete++;
+      });
+    });
+    labels.push(instanceDisplayName(inst.section, inst.pathId, inst.instanceId));
+    values.push(total ? Math.round((complete / total) * 100) : 0);
+    colors.push(categoryColor[inst.category] || '#6b7280');
+  });
+
+  const valueLabelPlugin = {
+    id: 'barValueLabel',
+    afterDatasetsDraw(chart) {
+      const { ctx } = chart;
+      const meta = chart.getDatasetMeta(0);
+      meta.data.forEach(function (bar, i) {
+        ctx.save();
+        ctx.fillStyle = '#fff';
+        ctx.font = "0.75rem 'Source Sans 3', sans-serif";
+        ctx.textAlign = 'left';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(values[i] + '%', bar.x + 6, bar.y);
+        ctx.restore();
+      });
+    },
+  };
+
+  if (pathBarsChart) pathBarsChart.destroy();
+  const canvas = document.getElementById('pathBars');
+  if (!labels.length) {
+    pathBarsChart = null;
+    canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
+    return;
+  }
+
+  pathBarsChart = new Chart(canvas, {
+    type: 'bar',
+    data: {
+      labels: labels,
+      datasets: [{ data: values, backgroundColor: colors, borderRadius: 4 }],
+    },
+    options: {
+      indexAxis: 'y',
+      maintainAspectRatio: true,
+      aspectRatio: Math.max(1, labels.length * 0.35),
+      scales: {
+        x: { min: 0, max: 100, ticks: { color: '#aaa' }, grid: { color: '#2a2a4a' } },
+        y: { ticks: { color: '#ddd' }, grid: { display: false } },
+      },
+      plugins: { legend: { display: false } },
+    },
+    plugins: [valueLabelPlugin],
+  });
+}
+
+function renderHeatmap(instances) {
+  const grid = document.getElementById('heatmap-grid');
+  if (!instances.length) {
+    grid.style.gridTemplateColumns = '1fr';
+    grid.innerHTML = '<p style="color:#888;">No paths tracked yet.</p>';
+    return;
+  }
+
+  const maxLevels = Math.max(...instances.map(inst => inst.pathData.levels.length));
+  grid.style.gridTemplateColumns = `160px repeat(${maxLevels}, 32px)`;
+
+  let html = '<div></div>';
+  for (let i = 0; i < maxLevels; i++) html += `<div class="heatmap-col-label">L${i + 1}</div>`;
+
+  instances.forEach(function (inst) {
+    const rowLabel = instanceDisplayName(inst.section, inst.pathId, inst.instanceId);
+    html += `<div class="heatmap-row-label" title="${inst.pathName}">${rowLabel}</div>`;
+    for (let levelIndex = 0; levelIndex < maxLevels; levelIndex++) {
+      const level = inst.pathData.levels[levelIndex];
+      if (!level) {
+        html += `<div class="heatmap-cell no-level" title="No level">—</div>`;
+        continue;
+      }
+      const requiredIdx = [];
+      level.projects.forEach(function (p, pi) { if (!p.elective) requiredIdx.push(pi); });
+      if (!requiredIdx.length) {
+        html += `<div class="heatmap-cell no-level" title="No required projects">—</div>`;
+        continue;
+      }
+      let completeCount = 0, startedCount = 0;
+      requiredIdx.forEach(function (pi) {
+        const status = projectStatus(inst.pathId, inst.instanceId, levelIndex, pi);
+        if (status === 'Complete') completeCount++;
+        else if (status === 'In Progress') startedCount++;
+      });
+      let cls = 'not-started', title = 'Not Started';
+      if (completeCount === requiredIdx.length) { cls = 'complete'; title = 'Complete'; }
+      else if (completeCount > 0 || startedCount > 0) { cls = 'in-progress'; title = 'In Progress'; }
+      html += `<div class="heatmap-cell ${cls}" title="${title}"></div>`;
+    }
+  });
+
+  grid.innerHTML = html;
+}
+
+function renderElectivesChart(instances) {
+  const labels = [];
+  const chosenData = [];
+  const requiredData = [];
+  const checkFlags = [];
+
+  instances.forEach(function (inst) {
+    inst.pathData.levels.forEach(function (level, levelIndex) {
+      const electiveIdx = [];
+      level.projects.forEach(function (p, pi) { if (p.elective) electiveIdx.push(pi); });
+      if (!electiveIdx.length) return;
+      const required = REQUIRED_ELECTIVES_BY_LEVEL[levelIndex] || 0;
+      if (!required) return;
+
+      let chosen = 0;
+      electiveIdx.forEach(function (pi) {
+        const status = projectStatus(inst.pathId, inst.instanceId, levelIndex, pi);
+        if (status === 'Complete' || status === 'In Progress') chosen++;
+      });
+
+      labels.push(`${instanceDisplayName(inst.section, inst.pathId, inst.instanceId)} — L${levelIndex + 1}`);
+      chosenData.push(chosen);
+      requiredData.push(required);
+      checkFlags.push(chosen >= required);
+    });
+  });
+
+  const checkPlugin = {
+    id: 'electivesCheck',
+    afterDatasetsDraw(chart) {
+      const { ctx } = chart;
+      const meta = chart.getDatasetMeta(0);
+      meta.data.forEach(function (bar, i) {
+        if (!checkFlags[i]) return;
+        ctx.save();
+        ctx.fillStyle = '#F2DF74';
+        ctx.font = "bold 0.9rem sans-serif";
+        ctx.textAlign = 'center';
+        ctx.fillText('✓', bar.x, bar.y - 8);
+        ctx.restore();
+      });
+    },
+  };
+
+  if (electivesChartInstance) electivesChartInstance.destroy();
+  const canvas = document.getElementById('electivesChart');
+  if (!labels.length) {
+    electivesChartInstance = null;
+    canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
+    return;
+  }
+
+  electivesChartInstance = new Chart(canvas, {
+    type: 'bar',
+    data: {
+      labels: labels,
+      datasets: [
+        { label: 'Chosen', data: chosenData, backgroundColor: '#F2DF74' },
+        { label: 'Required', data: requiredData, backgroundColor: '#772432' },
+      ],
+    },
+    options: {
+      maintainAspectRatio: true,
+      aspectRatio: 2.2,
+      scales: {
+        x: { ticks: { color: '#ddd', maxRotation: 45, minRotation: 0 }, grid: { display: false } },
+        y: { beginAtZero: true, ticks: { color: '#aaa', stepSize: 1 }, grid: { color: '#2a2a4a' } },
+      },
+      plugins: { legend: { position: 'bottom', labels: { color: '#ddd' } } },
+    },
+    plugins: [checkPlugin],
+  });
+}
+
+function buildVisualDashboard() {
+  if (typeof Chart === 'undefined') {
+    loadChartJS(function (ok) {
+      if (ok) {
+        buildVisualDashboard();
+      } else {
+        document.getElementById('visual-dashboard').innerHTML =
+          '<p style="color:#aaa;text-align:center;padding:2rem">Charts unavailable — please check your internet connection.</p>';
+      }
+    });
+    return;
+  }
+
+  const instances = collectDashboardInstances();
+  renderStatCards(instances);
+  renderOverallDonut(instances);
+  renderPathBars(instances);
+  renderHeatmap(instances);
+  renderElectivesChart(instances);
+}
+
 document.addEventListener('DOMContentLoaded', function () {
   wireHeaderAndFooterActions();
   if (currentMemberId()) {
@@ -2649,5 +3104,45 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 });
 </script>
+
+<section id="visual-dashboard">
+  <h2>My Progress Overview</h2>
+
+  <!-- Row 1: Stat cards -->
+  <div id="stat-cards">
+    <div class="stat-card" id="stat-completed"></div>
+    <div class="stat-card" id="stat-active"></div>
+    <div class="stat-card" id="stat-projects"></div>
+    <div class="stat-card" id="stat-levels"></div>
+  </div>
+
+  <!-- Row 2: Big donut + Path progress bars -->
+  <div id="charts-row-1">
+    <div class="chart-card" id="donut-wrap">
+      <h3>Overall Progress</h3>
+      <canvas id="overallDonut"></canvas>
+    </div>
+    <div class="chart-card" id="bars-wrap">
+      <h3>Progress by Path</h3>
+      <canvas id="pathBars"></canvas>
+    </div>
+  </div>
+
+  <!-- Row 3: Level heatmap -->
+  <div id="charts-row-2">
+    <div class="chart-card" id="heatmap-wrap">
+      <h3>Level Completion Heatmap</h3>
+      <div id="heatmap-grid"></div>
+    </div>
+  </div>
+
+  <!-- Row 4: Electives tracker -->
+  <div id="charts-row-3">
+    <div class="chart-card" id="electives-wrap">
+      <h3>Electives Tracker</h3>
+      <canvas id="electivesChart"></canvas>
+    </div>
+  </div>
+</section>
 </body>
 </html>
