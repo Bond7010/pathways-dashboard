@@ -625,9 +625,10 @@
     font-size: 0.75rem;
     color: #aaa;
     text-align: center;
+    min-width: 80px;
   }
   .heatmap-cell {
-    width: 32px;
+    width: 80px;
     height: 32px;
     border-radius: 4px;
     background: #2d2d2d;
@@ -649,6 +650,20 @@
     text-align: center;
     margin-top: 0.25rem;
   }
+  #electives-note {
+    background: rgba(242, 223, 116, 0.1);
+    border-left: 3px solid #F2DF74;
+    border-radius: 6px;
+    padding: 0.75rem 1rem;
+    margin-top: 1rem;
+    display: flex;
+    gap: 0.75rem;
+    align-items: flex-start;
+    color: #ccc;
+    font-size: 0.85rem;
+    line-height: 1.5;
+  }
+  #electives-note p { margin: 0; }
   @media (max-width: 800px) {
     #charts-row-1 { grid-template-columns: 1fr; }
   }
@@ -2777,6 +2792,52 @@ function initApp() {
 // skipped in the electives tracker regardless of this map.
 const REQUIRED_ELECTIVES_BY_LEVEL = { 2: 2, 3: 2, 4: 1 };
 
+const PATH_SHORT_NAME = {
+  'engaging-humor': 'EH',
+  'presentation-mastery': 'PM',
+  'persuasive-influence': 'PI',
+  'team-collaboration': 'TC',
+  'innovative-planning': 'IP',
+  'basic-training': 'BT',
+  'dynamic-leadership': 'DL',
+  'motivational-strategies': 'MS',
+  'visionary-communication': 'VC',
+  'leadership-development': 'LD',
+  'strategic-relationships': 'SR',
+  'effective-coaching': 'EC',
+  'communication-series': 'CS',
+};
+
+function ordinalSuffix(n) {
+  const v = n % 100;
+  if (v >= 11 && v <= 13) return n + 'th';
+  switch (n % 10) {
+    case 1: return n + 'st';
+    case 2: return n + 'nd';
+    case 3: return n + 'rd';
+    default: return n + 'th';
+  }
+}
+
+// instanceId = `${pathId}-${creationTimestampBase36}-${random}` (see
+// makeInstanceId) — used to order same-path instances by creation time
+// regardless of which section (active/completed) they ended up in.
+function instanceCreatedAt(pathId, instanceId) {
+  const rest = instanceId.slice(pathId.length + 1);
+  return parseInt(rest.split('-')[0], 36) || 0;
+}
+
+function pathInstanceBarLabel(instances, inst) {
+  const sameSet = instances.filter(x => x.pathId === inst.pathId);
+  let namePart = inst.pathName;
+  if (sameSet.length > 1) {
+    const ordered = sameSet.slice().sort((a, b) => instanceCreatedAt(a.pathId, a.instanceId) - instanceCreatedAt(b.pathId, b.instanceId));
+    const ordinal = ordered.findIndex(x => x.instanceId === inst.instanceId) + 1;
+    namePart = `${inst.pathName} (${ordinalSuffix(ordinal)})`;
+  }
+  return `${namePart} · ${inst.section}`;
+}
+
 let overallDonutChart = null;
 let pathBarsChart = null;
 let electivesChartInstance = null;
@@ -2905,7 +2966,7 @@ function renderPathBars(instances) {
         if (projectStatus(inst.pathId, inst.instanceId, levelIndex, projectIndex) === 'Complete') complete++;
       });
     });
-    labels.push(instanceDisplayName(inst.section, inst.pathId, inst.instanceId));
+    labels.push(pathInstanceBarLabel(instances, inst));
     values.push(total ? Math.round((complete / total) * 100) : 0);
     colors.push(categoryColor[inst.category] || '#6b7280');
   });
@@ -2964,7 +3025,7 @@ function renderHeatmap(instances) {
   }
 
   const maxLevels = Math.max(...instances.map(inst => inst.pathData.levels.length));
-  grid.style.gridTemplateColumns = `160px repeat(${maxLevels}, 32px)`;
+  grid.style.gridTemplateColumns = `160px repeat(${maxLevels}, 80px)`;
 
   let html = '<div></div>';
   for (let i = 0; i < maxLevels; i++) html += `<div class="heatmap-col-label">L${i + 1}</div>`;
@@ -3020,7 +3081,8 @@ function renderElectivesChart(instances) {
         if (status === 'Complete' || status === 'In Progress') chosen++;
       });
 
-      labels.push(`${instanceDisplayName(inst.section, inst.pathId, inst.instanceId)} — L${levelIndex + 1}`);
+      const shortName = PATH_SHORT_NAME[inst.pathId] || inst.pathName;
+      labels.push(`${shortName} L${levelIndex + 1}`);
       chosenData.push(chosen);
       requiredData.push(required);
       checkFlags.push(chosen >= required);
@@ -3065,7 +3127,7 @@ function renderElectivesChart(instances) {
       maintainAspectRatio: true,
       aspectRatio: 2.2,
       scales: {
-        x: { ticks: { color: '#ddd', maxRotation: 45, minRotation: 0 }, grid: { display: false } },
+        x: { ticks: { color: '#ddd', maxRotation: 45, minRotation: 45 }, grid: { display: false } },
         y: { beginAtZero: true, ticks: { color: '#aaa', stepSize: 1 }, grid: { color: '#2a2a4a' } },
       },
       plugins: { legend: { position: 'bottom', labels: { color: '#ddd' } } },
@@ -3141,6 +3203,15 @@ document.addEventListener('DOMContentLoaded', function () {
     <div class="chart-card" id="electives-wrap">
       <h3>Electives Tracker</h3>
       <canvas id="electivesChart"></canvas>
+      <div id="electives-note">
+        <span>💡</span>
+        <p>
+          You've already met the elective requirement for each level —
+          but there are more elective projects available that you haven't
+          explored yet. Each one builds a real skill. Consider going back
+          to learn them anytime — no submission required.
+        </p>
+      </div>
     </div>
   </div>
 </section>
