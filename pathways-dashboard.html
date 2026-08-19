@@ -29,11 +29,11 @@
     background: var(--blue-grad);
     padding: 0.85rem 1.5rem;
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
   }
+  .header-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; }
   header h1 {
     font-family: 'Montserrat', sans-serif;
     color: #fff;
@@ -59,6 +59,63 @@
     background: rgba(255,255,255,0.18);
     border-color: rgba(255,255,255,0.9);
     color: #fff;
+  }
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.55);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 1rem;
+  }
+  .modal-box {
+    background: #fff;
+    border-radius: 8px;
+    padding: 1.5rem;
+    max-width: 380px;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+  }
+  .modal-box h2 {
+    font-family: 'Montserrat', sans-serif;
+    color: var(--blue);
+    font-size: 1.15rem;
+    margin: 0 0 0.75rem;
+    border: none;
+    padding: 0;
+  }
+  .modal-box p {
+    font-size: 0.85rem;
+    color: #555;
+    line-height: 1.4;
+    margin: 0 0 1rem;
+  }
+  .modal-box input[type="text"] {
+    width: 100%;
+    padding: 0.5rem 0.7rem;
+    border: 1px solid var(--gray);
+    border-radius: 6px;
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+    box-sizing: border-box;
+  }
+  .modal-box button {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 0.85rem;
+    padding: 0.5rem 1.2rem;
+    border-radius: 999px;
+    border: none;
+    background: var(--blue-grad);
+    color: #fff;
+    cursor: pointer;
+  }
+  .change-member-id-link {
+    color: #999;
+    font-size: 0.68rem;
   }
   main { padding: 0.5rem 1.5rem 1.5rem; overflow-x: hidden; }
   #pick-path-section,
@@ -451,8 +508,21 @@
 </style>
 </head>
 <body>
+<div id="member-id-modal" class="modal-overlay" style="display:none;">
+  <div class="modal-box">
+    <h2>Welcome to My Pathways Dashboard</h2>
+    <p>Enter your Toastmasters member ID to get started. Your data will be saved privately on this device.</p>
+    <input type="text" id="member-id-input" placeholder="e.g. PN-07351286">
+    <button id="member-id-submit" type="button">Get Started</button>
+  </div>
+</div>
 <header>
   <h1>My Pathways Dashboard</h1>
+  <div class="header-actions">
+    <button id="export-data-btn" type="button" class="toggle-btn">⬇ Export My Data</button>
+    <button id="import-data-btn" type="button" class="toggle-btn">⬆ Import Data</button>
+    <input type="file" id="import-file-input" accept=".json" style="display:none">
+  </div>
 </header>
 <main>
 
@@ -474,8 +544,22 @@
 </main>
 <footer style="background:#fff;border-top:1px solid #A9B2B1;padding:0.75rem 1.5rem;font-size:0.72rem;color:#555;line-height:1.5;">
   The information on this website is for the sole use of Toastmasters' members, for Toastmasters business only. It is not to be used for solicitation and distribution of non-Toastmasters material or information.
+  <div style="margin-top:0.4rem;"><a href="#" id="change-member-id-link" class="change-member-id-link">Change Member ID</a></div>
 </footer>
 <script>
+// ── Member ID namespacing ────────────────────────────────────────────────
+// Every localStorage container key is suffixed with the member ID so
+// multiple members can share one browser/device without clobbering each
+// other's saved progress.
+function storageKey(base) {
+  const id = localStorage.getItem('tm_member_id') || 'default';
+  return base + '_' + id;
+}
+
+function currentMemberId() {
+  return localStorage.getItem('tm_member_id');
+}
+
 const STORAGE_KEY = 'pathways_dashboard_v1';
 
 const L1_ROLES = 'Table Topics Speaker, Evaluator, Timer OR Ah-Counter';
@@ -976,12 +1060,12 @@ let store = {};
 let showEnhancements = false;
 
 function loadStore() {
-  const raw = localStorage.getItem(STORAGE_KEY);
+  const raw = localStorage.getItem(storageKey(STORAGE_KEY));
   store = raw ? JSON.parse(raw) : {};
 }
 
 function saveStore() {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(store));
+  localStorage.setItem(storageKey(STORAGE_KEY), JSON.stringify(store));
 }
 
 function initDefaults() {
@@ -2143,7 +2227,7 @@ const V6_STORAGE_KEY = 'pathwaysDashboardV6';
 let v6Store = { active: [], completed: [] };
 
 function loadV6Store() {
-  const raw = localStorage.getItem(V6_STORAGE_KEY);
+  const raw = localStorage.getItem(storageKey(V6_STORAGE_KEY));
   let parsed = null;
   try { parsed = raw ? JSON.parse(raw) : null; } catch (err) { parsed = null; }
   v6Store = {
@@ -2153,7 +2237,7 @@ function loadV6Store() {
 }
 
 function saveV6Store() {
-  localStorage.setItem(V6_STORAGE_KEY, JSON.stringify(v6Store));
+  localStorage.setItem(storageKey(V6_STORAGE_KEY), JSON.stringify(v6Store));
 }
 
 function makeInstanceId(pathId) {
@@ -2297,7 +2381,92 @@ function renderV6Sections() {
 
 // ── Boot ───────────────────────────────────────────────────────────────────
 
-document.addEventListener('DOMContentLoaded', function () {
+function showMemberIdModal() {
+  const modal     = document.getElementById('member-id-modal');
+  const input     = document.getElementById('member-id-input');
+  const submitBtn = document.getElementById('member-id-submit');
+  modal.style.display = 'flex';
+  input.focus();
+
+  function submit() {
+    const id = input.value.trim();
+    if (!id) { input.focus(); return; }
+    localStorage.setItem('tm_member_id', id);
+    modal.style.display = 'none';
+    initApp();
+  }
+  submitBtn.addEventListener('click', submit);
+  input.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter') submit();
+  });
+}
+
+function exportMemberData() {
+  const memberId = currentMemberId() || 'default';
+  const data = {};
+  for (let i = 0; i < localStorage.length; i++) {
+    const key = localStorage.key(i);
+    if (key && key.includes(memberId)) data[key] = localStorage.getItem(key);
+  }
+  const payload = {
+    memberId: memberId,
+    exportDate: new Date().toISOString().slice(0, 10),
+    data: data,
+  };
+  const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement('a');
+  a.href     = url;
+  a.download = `pathways-dashboard-${memberId}-${payload.exportDate}.json`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+function handleImportFile(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function () {
+    let parsed;
+    try {
+      parsed = JSON.parse(reader.result);
+    } catch (err) {
+      alert('That file is not valid JSON.');
+      e.target.value = '';
+      return;
+    }
+    const fileMemberId = parsed.memberId || 'unknown';
+    if (!confirm(`Import data for member ${fileMemberId}? This will replace your current data on this device.`)) {
+      e.target.value = '';
+      return;
+    }
+    Object.keys(parsed.data || {}).forEach(function (key) {
+      localStorage.setItem(key, parsed.data[key]);
+    });
+    location.reload();
+  };
+  reader.readAsText(file);
+}
+
+function wireHeaderAndFooterActions() {
+  document.getElementById('export-data-btn').addEventListener('click', exportMemberData);
+  document.getElementById('import-data-btn').addEventListener('click', function () {
+    document.getElementById('import-file-input').click();
+  });
+  document.getElementById('import-file-input').addEventListener('change', handleImportFile);
+  document.getElementById('change-member-id-link').addEventListener('click', function (e) {
+    e.preventDefault();
+    if (!confirm('Change member ID? This will not delete your existing data.')) return;
+    const newId = prompt('Enter new Toastmasters member ID:', currentMemberId() || '');
+    if (!newId) return;
+    localStorage.setItem('tm_member_id', newId.trim());
+    location.reload();
+  });
+}
+
+function initApp() {
   loadStore();
   initDefaults();
   loadV6Store();
@@ -2369,6 +2538,15 @@ document.addEventListener('DOMContentLoaded', function () {
     if (!confirm(message)) return;
     addPathInstance(isActive ? 'active' : 'completed', pathId, pathName);
   });
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+  wireHeaderAndFooterActions();
+  if (currentMemberId()) {
+    initApp();
+  } else {
+    showMemberIdModal();
+  }
 });
 </script>
 </body>

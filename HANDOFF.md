@@ -1,10 +1,57 @@
 # HANDOFF — Pathways Dashboard
-_Written: 2026-06-05, updated 2026-08-18_
+_Written: 2026-06-05, updated 2026-08-19_
 
 ## Last Stable Commit
-Phase 6 P3 — polish, localStorage QA, Evaluation+Feedback 3-form fix, mobile
+Option B — member ID namespacing, first-visit prompt, Export/Import
 
 ## What Was Done
+
+### Option B — member ID identity + Export/Import (2026-08-19)
+Makes the dashboard safe to share as one static file across multiple
+members (e.g. posted for the whole club) instead of being implicitly
+single-user. Also closed out the run of small post-Phase-6 fixes (header
+cleanup, per-card Enhancements, NEW badge scoping, header layout, Standalone
+Achievements removal) that preceded it.
+
+- **`storageKey(base)`** (very top of the `<script>` block, before
+  `STORAGE_KEY`): `base + '_' + (localStorage.getItem('tm_member_id') ||
+  'default')`. Every localStorage *container* key goes through it —
+  `STORAGE_KEY` (`pathways_dashboard_v1`) and `V6_STORAGE_KEY`
+  (`pathwaysDashboardV6`) are still plain base-name constants; only the
+  four call sites (`loadStore`/`saveStore`/`loadV6Store`/`saveV6Store`) wrap
+  them. Individual pill keys (`v6_{pathId}_{instanceId}_{level}_{project}`)
+  live *inside* the `store` JSON blob under one already-namespaced
+  container key, so they don't need their own suffix — namespacing the
+  container was sufficient and avoids double-namespacing.
+- **First-visit gating**: the old single `DOMContentLoaded` boot routine is
+  now split into `wireHeaderAndFooterActions()` (always runs — Export,
+  Import, and Change Member ID need to work even before a member ID is set)
+  and `initApp()` (the old boot body: `loadStore`/`initDefaults`/
+  `loadV6Store`/`renderPicker`/`renderV6Sections`/all the card-container
+  event delegation). `DOMContentLoaded` calls `initApp()` directly if
+  `tm_member_id` is already set, otherwise shows `#member-id-modal` and lets
+  its "Get Started" button call `initApp()` once an ID is saved. Verified
+  via jsdom that zero picker/card DOM exists before the ID is entered.
+- **Export**: walks `localStorage` (via `localStorage.key(i)`, not
+  `Object.keys(localStorage)` — more portable across engines) collecting
+  every key containing the current member ID, bundles
+  `{memberId, exportDate, data}`, downloads as
+  `pathways-dashboard-{memberId}-{date}.json` via a Blob + temporary `<a
+  download>`. `tm_member_id` itself is correctly excluded (the key name
+  doesn't contain the ID value, only the value does).
+- **Import**: file input (`.json`) → `FileReader` → `JSON.parse` → confirm
+  naming the file's `memberId` → writes every `data` key into `localStorage`
+  verbatim (does **not** touch `tm_member_id` on this device) → reloads. This
+  means importing only "shows up" if the device's current member ID matches
+  the file's — by design, so restoring your own backup onto a new
+  device/browser means typing the same ID at the first-visit prompt, then
+  importing. Confirmed end-to-end with a two-JSDOM-instance test (export
+  from instance A, import into a fresh instance B).
+- Old test files (`functional-test*.js`, `reload-test.js` — scratchpad only,
+  not checked in) needed a `beforeParse(window)` hook seeding
+  `tm_member_id` before page scripts run, since JSDOM's `runScripts:
+  'dangerously'` executes `DOMContentLoaded` synchronously during
+  construction — too late to seed `localStorage` afterward.
 
 ### Phase 6 — Pick-a-path rebuild (2026-08-18)
 Replaced the old two-section layout (hardcoded `PATHS_DATA`, 7 paths, one
@@ -126,7 +173,13 @@ than deleted when the new system was built alongside it.
 - Phase 3: path data + dashboard structure
 
 ## Next Step
-GitHub Pages is live at bond7010.github.io/pathways-dashboard/pathways-dashboard.html. FTH embedding is abandoned — pathways-dashboard.html is the canonical file. Phase 6 (three-section rebuild) is functionally complete and covered by jsdom scripted tests, but has not yet been eyeballed in a real browser — do that before announcing it to the club. Worth a look: the old dormant `PATHS_DATA`/`renderPath` code (~500 lines) could be deleted now that `PATH_CATALOG` fully supersedes it, if nothing else ends up depending on it.
+GitHub Pages is live at bond7010.github.io/pathways-dashboard/pathways-dashboard.html. FTH embedding is abandoned — pathways-dashboard.html is the canonical file. Phase 6 (three-section rebuild) and Option B (member ID identity) are both functionally complete and covered by jsdom scripted tests, but neither has been eyeballed in a real browser yet — do that (especially the first-visit modal and Export/Import file dialogs, which jsdom can only simulate) before distributing the link to other members. Worth a look: the old dormant `PATHS_DATA`/`renderPath` code (~500 lines) could be deleted now that `PATH_CATALOG` fully supersedes it, if nothing else ends up depending on it.
+
+## Danger Zones (Option B — member ID identity)
+- Anyone who used the dashboard before this change has un-namespaced data sitting under the bare `pathways_dashboard_v1` / `pathwaysDashboardV6` keys. Nothing migrates it automatically — on their next visit they'll hit the first-visit modal, and whatever ID they type becomes a fresh, empty namespace. The old bare keys are simply orphaned in localStorage, not read by anything anymore.
+- `wireHeaderAndFooterActions()` (Export/Import/Change-ID listeners) runs unconditionally in `DOMContentLoaded`, *before* the `tm_member_id` check — intentional, so those controls work even pre-onboarding — but it means `export-data-btn`/`import-data-btn`/`change-member-id-link` must always exist in the static HTML (they're not part of any conditionally-rendered template).
+- `initApp()` is the entire old boot body and is called from two places: directly in `DOMContentLoaded` (returning visitor) and from the modal's submit handler (first-time visitor). Anything added to first-load boot logic belongs inside `initApp()`, not directly in `DOMContentLoaded`, or first-time visitors won't get it until their *second* page load.
+- Import writes file contents straight into `localStorage` under whatever key names are in the file's `data` object — it does not re-namespace them to the current device's `tm_member_id`. Restoring a backup only works if the ID typed at the first-visit prompt matches the exported file's `memberId`.
 
 ## Danger Zones (Phase 6 — current architecture)
 - `PATH_CATALOG` is the single source of truth for both the picker (Section 1, grouped via `PICKER_GROUP_ORDER` + `.category`) and the cards (Sections 2 & 3) — do not reintroduce a separate picker-only path list, it will drift.
