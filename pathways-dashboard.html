@@ -535,7 +535,7 @@
   .reset-btn:hover { background: #fdf0f0; }
   @media print {
     @page {
-      size: A4 landscape;
+      size: A4 portrait;
       margin: 1cm;
     }
     html {
@@ -560,6 +560,14 @@
     .path-card {
       break-inside: avoid;
       page-break-inside: avoid;
+    }
+    .path-card .level-scroll-row {
+      flex-wrap: wrap;
+      overflow-x: visible;
+    }
+    .path-card .level-box {
+      min-width: 45%;
+      flex: 1 1 45%;
     }
     #visual-dashboard {
       break-before: page;
