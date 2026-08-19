@@ -102,6 +102,11 @@
     border-color: rgba(255,255,255,0.9);
     color: #fff;
   }
+  .toggle-btn.print-btn {
+    background: transparent;
+    border: 1px solid #A9B2B1;
+    color: #A9B2B1;
+  }
   .modal-overlay {
     position: fixed;
     inset: 0;
@@ -530,23 +535,38 @@
   .reset-btn:hover { background: #fdf0f0; }
   @media print {
     @page {
-      size: A3 landscape;
-      margin: 5mm;
+      size: A4 landscape;
+      margin: 1cm;
+    }
+    html {
+      font-size: 0.85rem;
     }
     body {
-      zoom: 0.38;
       -webkit-print-color-adjust: exact;
       print-color-adjust: exact;
     }
     header { position: static !important; }
-    #pick-path-section { display: none !important; }
-    #visual-dashboard { display: none !important; }
-    .paths-row {
-      overflow: visible !important;
-      display: flex !important;
-      flex-wrap: nowrap !important;
+    #member-id-modal,
+    #pick-path-section,
+    #print-pdf-btn,
+    #export-data-btn,
+    #import-data-btn,
+    .card-enhancements-btn,
+    .card-remove-btn,
+    footer,
+    .empty-message {
+      display: none !important;
     }
-    .path-col { break-inside: avoid; page-break-inside: avoid; }
+    .path-card {
+      break-inside: avoid;
+      page-break-inside: avoid;
+    }
+    #visual-dashboard {
+      break-before: page;
+      page-break-before: always;
+      background: #1a1a2e !important;
+      color: #fff !important;
+    }
   }
 
   /* ── Visual Progress Dashboard (dark theme) ────────────────────────────── */
@@ -689,6 +709,7 @@
   <div class="header-actions">
     <button id="export-data-btn" type="button" class="toggle-btn">⬇ Export to Excel</button>
     <button id="import-data-btn" type="button" class="toggle-btn">⬆ Import from Excel</button>
+    <button id="print-pdf-btn" type="button" class="toggle-btn print-btn">🖨 Print to PDF</button>
     <input type="file" id="import-file-input" accept=".xlsx" style="display:none">
   </div>
 </header>
@@ -2705,6 +2726,9 @@ function wireHeaderAndFooterActions() {
   document.getElementById('export-data-btn').addEventListener('click', exportToExcel);
   document.getElementById('import-data-btn').addEventListener('click', importFromExcel);
   document.getElementById('import-file-input').addEventListener('change', handleImportFile);
+  document.getElementById('print-pdf-btn').addEventListener('click', function () {
+    window.print();
+  });
   document.getElementById('change-member-id-link').addEventListener('click', function (e) {
     e.preventDefault();
     if (!confirm('Change member ID? This will not delete your existing data.')) return;
