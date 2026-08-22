@@ -362,13 +362,16 @@
   .card-enhancements-btn.active { background: #004165; color: #fff; }
   .level-scroll-row {
     display: flex;
+    flex-wrap: wrap;
     gap: 0.85rem;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
+    overflow-x: visible;
   }
   .level-box {
-    flex: 0 0 230px;
-    min-width: 230px;
+    flex: 1 1 280px;
+    max-width: 100%;
+    min-width: 0;
+    height: auto;
+    min-height: 0;
     background: var(--gray-light);
     border: 1px solid var(--gray);
     border-radius: 6px;
