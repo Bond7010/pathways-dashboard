@@ -225,13 +225,15 @@
   }
   .card-grid { display: flex; flex-wrap: wrap; gap: 12px; }
   .picker-path-row {
-    width: 180px;
-    min-height: 160px;
+    flex: 1 1 260px;
+    height: auto;
+    min-height: 0;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
-    gap: 0.6rem;
-    padding: 0.85rem 0.75rem;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 8px 12px;
     background: #fff;
     border-left: 4px solid var(--gray);
     border-radius: 8px;
@@ -243,31 +245,32 @@
   .picker-path-name {
     font-family: 'Montserrat', sans-serif;
     font-weight: 700;
-    font-size: 0.85rem;
+    font-size: 0.82rem;
     color: #333;
-    text-align: center;
+    text-align: left;
+    flex: 1;
   }
   .picker-actions {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0.5rem;
-    width: 100%;
-    margin-top: auto;
+    gap: 0.35rem;
+    flex-shrink: 0;
+    width: 108px;
   }
   .picker-btn {
     font-family: 'Montserrat', sans-serif;
-    font-size: 0.68rem;
+    font-size: 0.75rem;
     font-weight: 600;
     letter-spacing: 0.02em;
-    padding: 0.32rem 0.75rem;
+    padding: 4px 8px;
     border-radius: 999px;
     border: none;
     color: #fff;
     cursor: pointer;
     white-space: nowrap;
     transition: opacity 0.15s;
-    width: 90%;
+    width: 100%;
   }
   .picker-btn:hover { opacity: 0.85; }
   .picker-btn-active { background: var(--blue); }
