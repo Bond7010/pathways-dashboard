@@ -3109,8 +3109,9 @@ function renderHeatmap(instances) {
 
 function renderElectivesChart(instances) {
   const labels = [];
-  const chosenData = [];
+  const availableData = [];
   const requiredData = [];
+  const chosenData = [];
   const checkFlags = [];
 
   instances.forEach(function (inst) {
@@ -3129,8 +3130,9 @@ function renderElectivesChart(instances) {
 
       const shortName = PATH_SHORT_NAME[inst.pathId] || inst.pathName;
       labels.push(`${shortName} L${levelIndex + 1}`);
-      chosenData.push(chosen);
+      availableData.push(electiveIdx.length);
       requiredData.push(required);
+      chosenData.push(chosen);
       checkFlags.push(chosen >= required);
     });
   });
@@ -3139,7 +3141,7 @@ function renderElectivesChart(instances) {
     id: 'electivesCheck',
     afterDatasetsDraw(chart) {
       const { ctx } = chart;
-      const meta = chart.getDatasetMeta(0);
+      const meta = chart.getDatasetMeta(2);
       meta.data.forEach(function (bar, i) {
         if (!checkFlags[i]) return;
         ctx.save();
@@ -3165,8 +3167,9 @@ function renderElectivesChart(instances) {
     data: {
       labels: labels,
       datasets: [
-        { label: 'Chosen', data: chosenData, backgroundColor: '#F2DF74' },
+        { label: 'Available', data: availableData, backgroundColor: '#4a4a6a' },
         { label: 'Required', data: requiredData, backgroundColor: '#772432' },
+        { label: 'Chosen', data: chosenData, backgroundColor: '#F2DF74' },
       ],
     },
     options: {
@@ -3257,10 +3260,10 @@ document.addEventListener('DOMContentLoaded', function () {
       <div id="electives-note">
         <span>💡</span>
         <p>
-          You've already met the elective requirement for each level —
-          but there are more elective projects available that you haven't
-          explored yet. Each one builds a real skill. Consider going back
-          to learn them anytime — no submission required.
+          Each level shows: how many electives are available (gray),
+          how many you need to complete (red), and how many you've
+          chosen so far (yellow). You only need to meet the minimum —
+          but every extra elective is a real skill worth learning.
         </p>
       </div>
     </div>
